@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+						   http://www.springframework.org/schema/beans/spring-beans.xsd
+
+
+						   http://www.springframework.org/schema/aop
+						   http://www.springframework.org/schema/aop/spring-aop.xsd
+						   http://www.springframework.org/schema/tx
+						   http://www.springframework.org/schema/tx/spring-tx.xsd"
+	   default-lazy-init="false">
+
+	<description>Spring 系统属性配置文件 -- 声明式事物管理器配置</description>
+
+	<bean id="transactionManager" name="alias_transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		scope="singleton">
+		<description>Spring 事物管理器配置</description>
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- 事物通知 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- 事务的传播行为，propagation： -->
+		<!-- PROPAGATION_REQUIRED - 支持当前事务，如果当前没有事务，就新建一个事务。这是最常见的选择。 -->
+		<!-- PROPAGATION_SUPPORTS - 支持当前事务，如果当前没有事务，就以非事务方式执行。  -->
+		<!-- PROPAGATION_MANDATORY - 支持当前事务，如果当前没有事务，就抛出异常。  -->
+		<!-- PROPAGATION_REQUIRES_NEW - 新建事务，如果当前存在事务，把当前事务挂起。   -->
+		<!-- PROPAGATION_NOT_SUPPORTED - 以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。 -->
+		<!-- PROPAGATION_NEVER - 以非事务方式执行，如果当前存在事务，则抛出异常。  -->
+
+		<!-- Isolation Level(事务隔离等级)，isolation: -->
+		<!-- Serializable：最严格的级别，事务串行执行，资源消耗最大； -->
+		<!-- REPEATABLE READ：保证了一个事务不会修改已经由另一个事务读取但未提交（回滚）的数据。避免了“脏读取”和“不可重复读取”的情况，但是带来了更多的性能损失。 -->
+		<!-- READ COMMITTED:大多数主流数据库的默认事务等级，保证了一个事务不会读到另一个并行事务已修改但未提交的数据，避免了“脏读取”。该级别适用于大多数系统。 -->
+		<!-- Read Uncommitted：保证了读取过程中不会读取到非法数据。 -->
+		<tx:attributes>
+			<!-- 把名称为 find、statistic、query 开头的方法配置为只读事物 -->
+			<tx:method name="get*"       no-rollback-for="Exception"  read-only="true"  isolation="READ_COMMITTED" propagation="REQUIRED"/>
+			<tx:method name="find*"       no-rollback-for="Exception"  read-only="true"  isolation="READ_COMMITTED" propagation="REQUIRED"/>
+			<tx:method name="statistic*"  no-rollback-for="Exception"  read-only="true"  isolation="READ_COMMITTED" propagation="REQUIRED"/>
+			<tx:method name="query*"      no-rollback-for="Exception"  read-only="true"  isolation="READ_COMMITTED" propagation="REQUIRED"/>
+			
+			<!-- 把名称为除get find、statistic、query 开头的方法以外的所有方法配置为读写事物 -->
+			<tx:method name="*" rollback-for="Throwable" read-only="false" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- Aop 代理事物配置 -->
+	<aop:config>
+	    <!-- 事物切入点 事物切面 -->
+    	<aop:pointcut id="allServiceOperation" expression="execution(* com.chinawiserv.deepone.manager.service.*.*(..))"/>
+    	
+    	<!-- 通知器 绑定事物通知与事物切面到一起 -->
+	    <aop:advisor advice-ref="txAdvice" pointcut-ref="allServiceOperation"/>
+	</aop:config>
+	
+</beans>

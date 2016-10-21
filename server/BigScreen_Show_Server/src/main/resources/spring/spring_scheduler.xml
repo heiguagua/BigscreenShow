@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+						   http://www.springframework.org/schema/beans/spring-beans.xsd"
+	   default-lazy-init="false">
+  
+	<description>scheduler相关配置</description>
+
+    <!--<bean id="spring_ssk_systemexecutor_LogExecutor"
+		class="com.chinawiserv.deepone.manager.sysexecutor.LogExecutor"
+		lazy-init="false">
+		<description>作者：AllenZhang； SQL 异步执行器</description>
+		
+		<constructor-arg>
+			<description>异步执行器每两次执行中间的休息时间（秒）</description>
+			<value>6</value>
+		</constructor-arg>
+
+		<constructor-arg>
+			<description>是否显示Command生产的日志（1:显示日志，0:不显示日志）</description>
+			<value>1</value>
+		</constructor-arg>
+	</bean>-->
+</beans>

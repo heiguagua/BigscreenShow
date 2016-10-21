@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>deepone_base_pom</artifactId>
+        <groupId>com.chinawiserv.base.pom</groupId>
+        <version>1.0</version>
+    </parent>
+    <groupId>bigdata_show_system</groupId>
+    <artifactId>bigdata_show_system</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.version>4.2.0.RELEASE</spring.version>
+        <groovy-templates.version>2.3.4</groovy-templates.version>
+        <velocity.version>1.7</velocity.version>
+        <velocity-tools.version>2.0</velocity-tools.version>
+        <jackson.version>2.3.0</jackson.version>
+        <gson.version>2.3.1</gson.version>
+        <protobuf.version>2.5.0</protobuf.version>
+        <jetty.version>9.3.0.M2</jetty.version>
+    </properties>
+
+    <!-- 配置开发人员的信息,用于站点上展示 -->
+    <developers>
+        <developer>
+            <id>wu taoye</id>
+            <name>吴陶冶</name>
+            <email>wuty@chinawiserv.com</email>
+            <organization>com.chinawiserv</organization>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.driver>com.mysql.jdbc.Driver</db.driver>
+                <!--<db.url>jdbc:mysql://192.168.13.240:3306/zw?characterEncoding=UTF-8</db.url>-->
+                <db.url>jdbc:mysql://127.0.0.1:3306/zw?characterEncoding=UTF-8</db.url>
+                <db.username>root</db.username>
+                <db.password>root</db.password>
+                <db.initialSize>3</db.initialSize>
+                <db.maxActive>50</db.maxActive>
+                <db.maxIdle>50</db.maxIdle>
+                <db.minIdle>3</db.minIdle>
+                <db.testWhileIdle>true</db.testWhileIdle>
+                <db.validationQuery>SELECT 1</db.validationQuery>
+                <db.timeBetweenEvictionRunsMillis>30000</db.timeBetweenEvictionRunsMillis>
+                <db.numTestsPerEvictionRun>50</db.numTestsPerEvictionRun>
+                <db.removeAbandoned>true</db.removeAbandoned>
+                <db.removeAbandonedTimeout>180</db.removeAbandonedTimeout>
+                <db.maxWait>1000</db.maxWait>
+                <db.minEvictableIdleTimeMillis>600000</db.minEvictableIdleTimeMillis>
+
+                <Mapping.Url>/**</Mapping.Url>
+                <Access-Control-Allow-Origin>*</Access-Control-Allow-Origin>
+                <Access-Control-Allow-Methods>PUT,GET,DELETE,POST,OPTIONS</Access-Control-Allow-Methods>
+                <Access-Control-Allow-Headers>Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization,Content-Disposition,responsetype</Access-Control-Allow-Headers>
+                <Access-Control-Expose-Headers>Set-Cookie</Access-Control-Expose-Headers>
+                <Access-Control-Allow-Credentials>true</Access-Control-Allow-Credentials>
+                <Access-Control-Max-Age>10</Access-Control-Max-Age>
+                <External-Interface-Url>http://192.168.13.180:8888/</External-Interface-Url>
+                <Solr-Interface-Url>http://192.168.13.187:8123/solr/corpus/select</Solr-Interface-Url>
+
+                <token.invalid.minute>30</token.invalid.minute>
+                <tokens.check.interval.minute>30</tokens.check.interval.minute>
+                <handle.interval.limit.time>500</handle.interval.limit.time>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <db.driver>com.mysql.jdbc.Driver</db.driver>
+                <db.url>jdbc:mysql://192.168.13.185:3306/domdb?characterEncoding=UTF-8</db.url>
+                <db.username>root</db.username>
+                <db.password>123456</db.password>
+                <db.initialSize>100</db.initialSize>
+                <db.maxActive>2000</db.maxActive>
+                <db.maxIdle>500</db.maxIdle>
+                <db.minIdle>100</db.minIdle>
+                <db.testWhileIdle>true</db.testWhileIdle>
+                <db.validationQuery>SELECT 1</db.validationQuery>
+                <db.timeBetweenEvictionRunsMillis>1800000</db.timeBetweenEvictionRunsMillis>
+                <db.numTestsPerEvictionRun>2000</db.numTestsPerEvictionRun>
+                <db.removeAbandoned>true</db.removeAbandoned>
+                <db.removeAbandonedTimeout>300</db.removeAbandonedTimeout>
+                <db.maxWait>5000</db.maxWait>
+                <db.minEvictableIdleTimeMillis>30000</db.minEvictableIdleTimeMillis>
+
+                <Mapping.Url>/**</Mapping.Url>
+                <Access-Control-Allow-Origin>*</Access-Control-Allow-Origin>
+                <Access-Control-Allow-Methods>PUT,GET,DELETE,POST,OPTIONS</Access-Control-Allow-Methods>
+                <Access-Control-Allow-Headers>Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization</Access-Control-Allow-Headers>
+                <Access-Control-Expose-Headers>Set-Cookie</Access-Control-Expose-Headers>
+                <Access-Control-Allow-Credentials>true</Access-Control-Allow-Credentials>
+                <Access-Control-Max-Age>10</Access-Control-Max-Age>
+
+                <token.invalid.minute>10</token.invalid.minute>
+                <tokens.check.interval.minute>10</tokens.check.interval.minute>
+                <handle.interval.limit.time>500</handle.interval.limit.time>
+            </properties>
+        </profile>
+        <profile>
+            <id>product</id>
+            <properties>
+                <db.driver>com.mysql.jdbc.Driver</db.driver>
+                <db.url>jdbc:mysql://localhost:3306/domdb?characterEncoding=UTF-8</db.url>
+                <db.username>root</db.username>
+                <db.password>root</db.password>
+                <db.initialSize>100</db.initialSize>
+                <db.maxActive>2000</db.maxActive>
+                <db.maxIdle>500</db.maxIdle>
+                <db.minIdle>100</db.minIdle>
+                <db.testWhileIdle>true</db.testWhileIdle>
+                <db.validationQuery>SELECT 1</db.validationQuery>
+                <db.timeBetweenEvictionRunsMillis>1800000</db.timeBetweenEvictionRunsMillis>
+                <db.numTestsPerEvictionRun>2000</db.numTestsPerEvictionRun>
+                <db.removeAbandoned>true</db.removeAbandoned>
+                <db.removeAbandonedTimeout>300</db.removeAbandonedTimeout>
+                <db.maxWait>5000</db.maxWait>
+                <db.minEvictableIdleTimeMillis>30000</db.minEvictableIdleTimeMillis>
+
+                <Mapping.Url>/**</Mapping.Url>
+                <Access-Control-Allow-Origin>*</Access-Control-Allow-Origin>
+                <Access-Control-Allow-Methods>PUT,GET,DELETE,POST,OPTIONS</Access-Control-Allow-Methods>
+                <Access-Control-Allow-Headers>Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization</Access-Control-Allow-Headers>
+                <Access-Control-Expose-Headers>Set-Cookie</Access-Control-Expose-Headers>
+                <Access-Control-Allow-Credentials>true</Access-Control-Allow-Credentials>
+                <Access-Control-Max-Age>10</Access-Control-Max-Age>
+
+                <token.invalid.minute>10</token.invalid.minute>
+                <tokens.check.interval.minute>10</tokens.check.interval.minute>
+                <handle.interval.limit.time>500</handle.interval.limit.time>
+            </properties>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.10</version>
+        </dependency>
+        <dependency>
+            <groupId>com.chinawiserv.core</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!-- mssql connector start -->
+        <dependency>
+            <groupId>net.sourceforge.jtds</groupId>
+            <artifactId>jtds</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+        <!-- mssql connector end -->
+
+        <!-- mysql connector start -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!-- mysql connector end -->
+
+        <!-- oracle connector start -->
+        <!--
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>classes12</artifactId>
+            <version>10.2.0.2.0</version>
+            <type>pom</type>
+        </dependency>
+        -->
+        <!-- oracle connector end -->
+
+        <!-- json start -->
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+        </dependency>
+        <!-- json end -->
+
+        <!-- ehcache start -->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>2.9.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- ehcache end -->
+
+        <!-- commons start -->
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-exec</artifactId>
+            <version>1.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.3.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-chain</groupId>
+            <artifactId>commons-chain</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <!-- commons end -->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-instrument</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-instrument-tomcat</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc-portlet</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.protobuf-java-format</groupId>
+            <artifactId>protobuf-java-format</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>${protobuf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-templates</artifactId>
+            <version>${groovy-templates.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+
+        <!-- Servlet & Jsp -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jsp-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.6.0</version>
+        </dependency>
+
+        <!-- poi -->
+        <!--<dependency>-->
+        <!--<groupId>org.apache.poi</groupId>-->
+        <!--<artifactId>poi</artifactId>-->
+        <!--<version>3.14</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>org.apache.poi</groupId>-->
+        <!--<artifactId>poi-ooxml</artifactId>-->
+        <!--<version>3.14</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.apache.servicemix.bundles</groupId>
+            <artifactId>org.apache.servicemix.bundles.poi</artifactId>
+            <version>3.9_2</version>
+        </dependency>
+
+        <!-- itext -->
+        <!--<dependency>-->
+        <!--<groupId>com.lowagie</groupId>-->
+        <!--<artifactId>itext</artifactId>-->
+        <!--<version>2.0.8</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+        <!--<groupId>com.itextpdf</groupId>-->
+        <!--<artifactId>itext-asian</artifactId>-->
+        <!--<version>5.2.0</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+        <!--<groupId>com.itextpdf</groupId>-->
+        <!--<artifactId>itextpdf</artifactId>-->
+        <!--<version>5.4.2</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>com.itextpdf.tool</groupId>-->
+        <!--<artifactId>xmlworker</artifactId>-->
+        <!--<version>5.4.1</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>org.xhtmlrenderer</groupId>-->
+        <!--<artifactId>core-renderer</artifactId>-->
+        <!--<version>R8pre2_cn</version>-->
+        <!--</dependency>-->
+
+        <!--solr 引用-->
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <!-- 资源文件相关配置 -->
+        <resources>
+            <!-- 定义资源文件路径及是否打开资源过滤 -->
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/conf</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <finalName>BigScreenShow</finalName>
+        <!-- 配置插件配置(可继承但除开默认插件绑定,需显示配置插件绑定行为才生效) -->
+        <pluginManagement>
+            <plugins>
+                <!-- 配置测试插件,该配置覆盖了原生命周期默认插件配置,默认已绑定,无需配置插件绑定行为 -->
+                <plugin>
+                    <groupId>${mvn.plugins}</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.12.4</version>
+                    <configuration>
+                        <skip>true</skip><!-- true:跳过测试 false:执行测试 -->
+                        <includes></includes><!-- 可以自定义要测试的类,格式：**/*Test.java, 默认: **/*Test.java **/Test*.java **/*TestCase.java -->
+                        <excludes></excludes><!-- 从includes排除要测试的类 -->
+                    </configuration>
+                </plugin>
+                <!-- 配置编译插件,该配置覆盖了原生命周期默认插件配置,默认已绑定,无需配置插件绑定行为 -->
+                <plugin>
+                    <groupId>${mvn.plugins}</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.0</version>
+                    <configuration>
+                        <target>${maven.compiler.target}</target>
+                        <source>${maven.compiler.source}</source>
+                        <encoding>UTF-8</encoding>
+                        <showWarnings>true</showWarnings>
+                    </configuration>
+                </plugin>
+                <!-- 配置版本发布插件,需要配置插件绑定行为 -->
+                <plugin>
+                    <groupId>${mvn.plugins}</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.3.2</version>
+                    <configuration>
+                        <mavenExecutorId>forked-path</mavenExecutorId>
+                    </configuration>
+                </plugin>
+                <!-- 配置可执行jar包打包插件,需要配置插件绑定行为 -->
+                <plugin>
+                    <groupId>${mvn.plugins}</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>2.3</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>shade</goal>
+                            </goals>
+                            <configuration>
+                                <transformers>
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                        <!-- 定义main入口,值为main所在类,类无后缀,如com.xx.xx.ClassName -->
+                                        <mainClass></mainClass>
+                                    </transformer>
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                        <!-- 定义所需资源文件,以append方式加入到构建的jar包中 -->
+                                        <resource></resource>
+                                    </transformer>
+                                </transformers>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- 配置源码打包插件,需要配置插件绑定行为 -->
+                <plugin>
+                    <groupId>${mvn.plugins}</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.4</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- 配置打包java文档插件,需要配置插件绑定行为 -->
+                <plugin>
+                    <groupId>${mvn.plugins}</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.8</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                        <aggregate>true</aggregate>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-javadoc</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- 针对war项目,启用jetty容器测试 -->
+                <plugin>
+                    <groupId>org.mortbay.jetty</groupId>
+                    <artifactId>jetty-maven-plugin</artifactId>
+                    <configuration>
+                        <stopKey>CTRL+A</stopKey>
+                        <stopPort>8999</stopPort>
+                        <connectors>
+                            <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                                <port>8080</port>
+                            </connector>
+                        </connectors>
+                        <webAppConfig>
+                            <contextPath>/</contextPath>
+                        </webAppConfig>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!-- 针对war项目,启用jetty容器测试 -->
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
