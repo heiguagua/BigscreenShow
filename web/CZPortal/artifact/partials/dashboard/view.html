@@ -27,13 +27,13 @@
       <div class='corner-right-down'></div>
       <div class='chart-full' wiserv-dept-data></div>
       <div class='deptdata-desc'>
-        <p>完成12个政府单位共
-          <strong>84</strong>
+        <p>完成 <strong>12</strong> 个政府单位共
+          <strong>{{dashboard.deptData.depNum}}</strong>
           个科室的数据梳理采集;</p>
         <p>采集数据含
-          <strong>204</strong>
+          <strong>{{dashboard.deptData.tableNum}}</strong>
           个项，
-          <strong>1500</strong>
+          <strong>{{dashboard.deptData.columnNum}}</strong>
           余子项;</p>
         <p>结合政府单位数据存放形态，编制了
           <strong>22</strong>
@@ -60,52 +60,20 @@
           <thead>
             <tr>
               <th></th>
-              <th>db1.bdgm</th>
-              <th>db2.bdgm</th>
-              <th>master.bdgm</th>
-              <th>slave1.bdgm</th>
-              <th>slave2.bdgm</th>
-              <th>slave3.bdgm</th>
-              <th>slavea.bdgm</th>
-              <th>slaveb.bdgm</th>
-              <th>slavec.bdgm</th>
+              <th ng-repeat='node in nodeName'>{{node}}</th>
             </tr>
           </thead>
           <tr>
             <td>硬盘使用率</td>
-            <td>30.76%</td>
-            <td>12.34%</td>
-            <td>45.2%</td>
-            <td>34.55%</td>
-            <td>15.32%</td>
-            <td>59.98%</td>
-            <td>41.92%</td>
-            <td>17.56%</td>
-            <td>49.36%</td>
+            <td ng-repeat='diskRate in diskRateList track by $index'>{{diskRate}}%</td>
           </tr>
           <tr>
             <td>CPU使用率</td>
-            <td>13.68%</td>
-            <td>26.53%</td>
-            <td>25.52%</td>
-            <td>3.45%</td>
-            <td>8.32%</td>
-            <td>13.9%</td>
-            <td>32.02%</td>
-            <td>23.18%</td>
-            <td>16.32%</td>
+            <td ng-repeat='cpuRate in cpuRateList track by $index'>{{cpuRate}}%</td>
           </tr>
           <tr>
             <td>内存使用率</td>
-            <td>3.78%</td>
-            <td>4.65%</td>
-            <td>14.13%</td>
-            <td>17.86%</td>
-            <td>4.85%</td>
-            <td>16.11%</td>
-            <td>9.46%</td>
-            <td>7.23%</td>
-            <td>12.4%</td>
+            <td ng-repeat='memRate in memRateList track by $index'>{{memRate}}%</td>
           </tr>
         </table>
       </div>

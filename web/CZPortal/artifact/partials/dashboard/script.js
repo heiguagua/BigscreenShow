@@ -5,17 +5,29 @@
   /** Controller */
   dashboard.controller('dashboardController', [
     '$scope', 'dashboardService',
-    function($scope, dashboardFactory) {
+    function($scope, dashboardService) {
       var vm = this;
-
+      // get deptartment data count
+      dashboardService.getDeptDataQuantity().then(function(result) {
+        var data = result.data.body[0];
+        if (data) {
+          vm.deptData = data;
+        }
+      })
     }
   ]);
 
   /** Service */
-  dashboard.factory('dashboardService', [
-    function() {
+  dashboard.factory('dashboardService', ['$http', 'URL',
+    function($http, URL) {
       return {
+        getDeptDataQuantity: getDeptDataQuantity
+      }
 
+      function getDeptDataQuantity() {
+        return $http.get(
+          URL + '/depDataInfo/quantity'
+        )
       }
     }
   ]);
@@ -48,17 +60,45 @@
     }
   ]);
 
-  dashboard.service('dashboard.chartDeptData', ['$http', 'URL',
+  dashboard.service('dashboard.chartDeptDataTable', ['$http', 'URL',
     function($http, URL) {
-      // if (URL) {
-      //   return $http({
-      //     method: 'GET',
-      //     url: URL + '/',
-      //     withCredentials: true
-      //   });
-      // } else {
-      //   console.error('API Not Found in config.js');
-      // }
+      if (URL) {
+        return $http({
+          method: 'GET',
+          url: URL + '/depDataInfo/table',
+          withCredentials: true
+        });
+      } else {
+        console.error('API Not Found in config.js');
+      }
+    }
+  ]);
+
+  dashboard.service('dashboard.chartDeptDataColumn', ['$http', 'URL',
+    function($http, URL) {
+      if (URL) {
+        return $http({
+          method: 'GET',
+          url: URL + '/depDataInfo/column',
+          withCredentials: true
+        });
+      } else {
+        console.error('API Not Found in config.js');
+      }
+    }
+  ]);
+
+  dashboard.service('dashboard.chartIdcUse', ['$http', 'URL',
+    function($http, URL) {
+      if (URL) {
+        return $http({
+          method: 'GET',
+          url: URL + '/serverMonitor/detail',
+          withCredentials: true
+        });
+      } else {
+        console.error('API Not Found in config.js');
+      }
     }
   ]);
 
@@ -295,15 +335,21 @@
   ]);
 
 
-  dashboard.directive('wiservDeptData', ['dashboard.chartDeptData',
-    function(deptDataService) {
+  dashboard.directive('wiservDeptData', ['dashboard.chartDeptDataTable', 'dashboard.chartDeptDataColumn',
+    function(deptDataTable, deptDataColumn) {
       return {
         restrict: 'ACE',
         template: "<div id='deptData'></div>",
         link: function(scope, element, attrs) {
-          // lawsChart.then(function(response){
-          //   var data = response.data.body;
-          // })
+          deptDataTable.then(function(response) {
+              return response.data.body;
+            }).then(function(table) {
+              deptDataColumn.then(function(rescolumn) {
+                var table = table;
+                var column = rescolumn.data.body;
+              })
+            })
+            //var data = response.data.body[0];
           var option = {
             legend: {
               data: [{
@@ -411,56 +457,88 @@
               data: [12, 29, 13, 33, 32, 48, 40, 69, 21]
             }]
           };
-
-
           echarts.init((element.find('#deptData'))[0]).setOption(option);
+          //})
+
         }
       }
     }
   ]);
 
-  dashboard.directive('wiservIdcUse', [
-    function() {
+  dashboard.directive('wiservIdcUse', ['dashboard.chartIdcUse',
+    function(idcUseService) {
       return {
         restrict: 'ACE',
         template: "<div id='idcUse' style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          //Plotly.d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/api_docs/mt_bruno_elevation.csv', function(err, rows) {
-            var rows = [{
-              "": "0",
-              0: "70.15",
-              1: '76.77',
-              2: "61.39",
-              3: '59.32',
-              4: '62.58',
-              5: '28.89',
-              6: '58.43',
-              7: '32.54',
-              8: '35.42'
-            }, {
-              "": "1",
-              0: "0",
-              1: "0",
-              2: '48.32',
-              3: '12.56',
-              4: '19.68',
-              5: '9.15',
-              6: '2.7',
-              7: '35.13',
-              8: '12.43'
-            }, {
-              "": "2",
-              0: "0",
-              1: "0",
-              2: '3.48',
-              3: '2.61',
-              4: '2.47',
-              5: '1.24',
-              6: '3.41',
-              7: '5.76',
-              8: '6.87'
-            }];
+          idcUseService.then(function(response) {
+            var rateData = response.data.body;
+            scope.memRateList = _.map(rateData,'memRate');
+            scope.cpuRateList = _.map(rateData,'cpuRate');
+            scope.diskRateList = _.map(rateData,'diskRate');
+            var rows = [];
+            for (var i = 0; i < 3; i++) {
+              var monitors = {};
+              monitors[""] = i.toString();
+              switch (i) {
+                case 0:
+                  for (var j = 0; j < rateData.length; j++) {
+                    console.log(rateData[j]);
+                    monitors[j] = rateData[j].memRate.toString();
+                  }
+                  break;
+                case 1:
+                  for (var j = 0; j < rateData.length; j++) {
+                    monitors[j] = rateData[j].cpuRate.toString();
+                  }
+                  break;
+                case 2:
+                  for (var j = 0; j < rateData.length; j++) {
+                    monitors[j] = rateData[j].diskRate.toString();
+                  }
+                  break;
+                default:
+                  break;
+              }
+              rows.push(monitors);
+            }
+            scope.nodeName = _.map(rateData, 'nodeName');
             console.log(rows);
+
+            // var rows = [{
+            //   "": "0",
+            //   0: "70.15",
+            //   1: '76.77',
+            //   2: "61.39",
+            //   3: '59.32',
+            //   4: '62.58',
+            //   5: '28.89',
+            //   6: '58.43',
+            //   7: '32.54',
+            //   8: '35.42'
+            // }, {
+            //   "": "1",
+            //   0: "0",
+            //   1: "0",
+            //   2: '48.32',
+            //   3: '12.56',
+            //   4: '19.68',
+            //   5: '9.15',
+            //   6: '2.7',
+            //   7: '35.13',
+            //   8: '12.43'
+            // }, {
+            //   "": "2",
+            //   0: "0",
+            //   1: "0",
+            //   2: '3.48',
+            //   3: '2.61',
+            //   4: '2.47',
+            //   5: '1.24',
+            //   6: '3.41',
+            //   7: '5.76',
+            //   8: '6.87'
+            // }];
 
             function unpack(rows, key) {
               return rows.map(function(row) {
@@ -472,7 +550,6 @@
             for (var i = 0; i < 9; i++) {
               z_data.push(unpack(rows, i));
             }
-            console.log(z_data);
             var data = [{
               z: z_data,
               type: 'surface'
@@ -534,7 +611,7 @@
                     size: 14,
                     color: 'rgb(230, 230, 230)'
                   },
-                  ticktext: ['db1.bdgm', 'db2.bdgm', 'master.bdgm', 'slave2.bdgm', 'slave3.bdgm', 'slavea.bdgm', 'slaveb.bdgm', 'slavec.bdgm', 'slaved.bdgm'],
+                  ticktext: scope.nodeName,
                   tickvals: [0, 1, 2, 3, 4, 5, 6, 7, 8]
                 },
                 zaxis: {
@@ -563,7 +640,8 @@
             Plotly.newPlot('idcUse', data, layout, {
               displayModeBar: false
             });
-          //});
+          })
+
         }
       }
     }
@@ -575,18 +653,21 @@
         restrict: 'ACE',
         template: '<svg width="730" height="730" ></svg>',
         link: function(scope, element, attrs) {
-          console.log(element.find('svg')[0]);
           var svg = d3.select(element.find('svg')[0]),
-              width = +svg.attr("width"),
-              height = +svg.attr("height"),
-              g = svg.append("g").attr("transform", "translate(" + (width / 2 ) + "," + (height / 2 ) + ")");
+            width = +svg.attr("width"),
+            height = +svg.attr("height"),
+            g = svg.append("g").attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")");
 
           var stratify = d3.stratify()
-              .parentId(function(d) { return d.id.substring(0, d.id.lastIndexOf(".")); });
+            .parentId(function(d) {
+              return d.id.substring(0, d.id.lastIndexOf("."));
+            });
 
           var tree = d3.tree()
-              .size([230, 230])
-              .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+            .size([230, 230])
+            .separation(function(a, b) {
+              return (a.parent == b.parent ? 1 : 2) / a.depth;
+            });
 
           d3.csv("assets/file/flare.csv", function(error, data) {
             if (error) throw error;
@@ -596,33 +677,43 @@
             var link = g.selectAll(".link")
               .data(root.descendants().slice(1))
               .enter().append("path")
-                .attr("class", "link")
-                .attr("d", function(d) {
-                  return "M" + project(d.x, d.y)
-                      + "C" + project(d.x, (d.y + d.parent.y) / 2)
-                      + " " + project(d.parent.x, (d.y + d.parent.y) / 2)
-                      + " " + project(d.parent.x, d.parent.y);
-                });
+              .attr("class", "link")
+              .attr("d", function(d) {
+                return "M" + project(d.x, d.y) + "C" + project(d.x, (d.y + d.parent.y) / 2) + " " + project(d.parent.x, (d.y + d.parent.y) / 2) + " " + project(d.parent.x, d.parent.y);
+              });
 
             var node = g.selectAll(".node")
               .data(root.descendants())
               .enter().append("g")
-                .attr("class", function(d) { return "node" + (d.children ? " node--internal" : " node--leaf"); })
-                .attr("transform", function(d) { return "translate(" + project(d.x, d.y) + ")"; });
+              .attr("class", function(d) {
+                return "node" + (d.children ? " node--internal" : " node--leaf");
+              })
+              .attr("transform", function(d) {
+                return "translate(" + project(d.x, d.y) + ")";
+              });
 
             node.append("circle")
-                .attr("r", 9.5);
+              .attr("r", 9.5);
 
             node.append("text")
-                .attr("dy", ".31em")
-                .attr("x", function(d) { return d.x < 180 === !d.children ? -12 : 12; })
-                .style("text-anchor", function(d) { return d.x < 180 === !d.children ? "end" : "start"; })
-                .attr("transform", function(d) { return "rotate(" + (d.x < 180 ? d.x - 90 : d.x + 90) + ")"; })
-                .text(function(d) { return d.id.substring(d.id.lastIndexOf(".") + 1); });
+              .attr("dy", ".31em")
+              .attr("x", function(d) {
+                return d.x < 180 === !d.children ? -12 : 12;
+              })
+              .style("text-anchor", function(d) {
+                return d.x < 180 === !d.children ? "end" : "start";
+              })
+              .attr("transform", function(d) {
+                return "rotate(" + (d.x < 180 ? d.x - 90 : d.x + 90) + ")";
+              })
+              .text(function(d) {
+                return d.id.substring(d.id.lastIndexOf(".") + 1);
+              });
           });
 
           function project(x, y) {
-            var angle = (x - 90) / 180 * Math.PI, radius = y;
+            var angle = (x - 90) / 180 * Math.PI,
+              radius = y;
             return [-radius * Math.cos(angle), -radius * Math.sin(angle)];
           }
         }

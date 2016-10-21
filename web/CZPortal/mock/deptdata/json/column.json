@@ -1,0 +1,42 @@
+{
+  "head": {
+    "status": 200,
+    "token": null,
+    "message": null,
+    "total": 0
+  },
+  "body": [{
+    "depName": "规划局",
+    "columnNum": "12"
+  }, {
+    "depName": "水务局",
+    "columnNum": "212"
+  }, {
+    "depName": "国土局",
+    "columnNum": "35"
+  }, {
+    "depName": "住建局",
+    "columnNum": "192"
+  }, {
+    "depName": "民政局",
+    "columnNum": "25"
+  }, {
+    "depName": "市监局",
+    "columnNum": "48"
+  }, {
+    "depName": "城管局",
+    "columnNum": "186"
+  }, {
+    "depName": "交通局",
+    "columnNum": "454"
+  }, {
+    "depName": "经信局",
+    "columnNum": "794"
+  }, {
+    "depName": "文旅局",
+    "columnNum": "175"
+  }, {
+    "depName": "卫计局",
+    "columnNum": "221"
+  }]
+}

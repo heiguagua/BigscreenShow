@@ -1,0 +1,42 @@
+{
+  "head": {
+    "status": 200,
+    "token": null,
+    "message": null,
+    "total": 0
+  },
+  "body": [{
+    "depName": "水务局",
+    "tableNum": 19
+  }, {
+    "depName": "文旅局",
+    "tableNum": 19
+  }, {
+    "depName": "住建局",
+    "tableNum": 15
+  }, {
+    "depName": "国土局",
+    "tableNum": 6
+  }, {
+    "depName": "交通局",
+    "tableNum": 29
+  }, {
+    "depName": "民政局",
+    "tableNum": 5
+  }, {
+    "depName": "卫计局",
+    "tableNum": 17
+  }, {
+    "depName": "市监局",
+    "tableNum": 3
+  }, {
+    "depName": "经信局",
+    "tableNum": 93
+  }, {
+    "depName": "城管局",
+    "tableNum": 16
+  }, {
+    "depName": "规划局",
+    "tableNum": 1
+  }]
+}

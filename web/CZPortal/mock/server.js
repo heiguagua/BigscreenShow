@@ -28,6 +28,6 @@ console.info(Color.blue('Development started on http://localhost:6008/dev'));
 console.info(Color.blue('Production  started on http://localhost:6008/pro'));
 
 /** Routers */
-// App.use('/', require('./login/api'));
-// App.use('/', require('./judgment/api'));
+App.use('/', require('./deptdata/api'));
+App.use('/', require('./serverMonitor/api'));
 // App.use('/', require('./repository/api'));

@@ -1,0 +1,13 @@
+{
+  "head": {
+    "status": 200,
+    "token": null,
+    "message": null,
+    "total": 0
+  },
+  "body": [{
+    "tableNum": 226,
+    "columnNum": 2378,
+    "depNum": 31
+  }]
+}
