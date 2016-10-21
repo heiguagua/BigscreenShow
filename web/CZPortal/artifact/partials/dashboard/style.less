@@ -1,0 +1,289 @@
+#dashboard {
+  .section {
+    width: 1920px;
+    height: 1080px;
+    padding: 30px 20px 30px 30px;
+    float: left;
+    h1 {
+      font-size: 50px;
+      color: #dbea05;
+      font-family: '微软雅黑';
+      font-weight: normal;
+      margin: 10px 0 20px 10px;
+    }
+    .content {
+      position: relative;
+      border: 1px solid rgba(0,225,227,1);
+      height: 935px;
+      box-shadow: 0 0 0 1px rgba(0,153,234,1);
+      .corner-left-up {
+        position: absolute;
+        left: -3px;
+        top: -3px;
+        width: 96px;
+        height: 96px;
+        border-top: 5px solid #00f8f8;
+        content: '';
+        border-left: 5px solid #00f8f8;
+      }
+      .corner-right-up {
+        position: absolute;
+        right: -3px;
+        top: -3px;
+        width: 96px;
+        height: 96px;
+        border-top: 5px solid #00f8f8;
+        content: '';
+        border-right: 5px solid #00f8f8;
+      }
+      .corner-left-down {
+        position: absolute;
+        left: -3px;
+        bottom: -3px;
+        width: 96px;
+        height: 96px;
+        border-left: 5px solid #00f8f8;
+        content: '';
+        border-bottom: 5px solid #00f8f8;
+      }
+      .corner-right-down {
+        position: absolute;
+        right: -3px;
+        bottom: -3px;
+        width: 96px;
+        height: 96px;
+        border-right: 5px solid #00f8f8;
+        content: '';
+        border-bottom: 5px solid #00f8f8;
+      }
+      .line-left-down {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        content: '';
+        border-left: 90px solid #00e1e3;
+        background: transparent;
+        border-top: 90px solid transparent;
+      }
+      .line-left-downcover {
+        position: absolute;
+        left: -2px;
+        bottom: -2px;
+        content: '';
+        border-left: 91px solid #020b13;
+        background: transparent;
+        border-top: 91px solid transparent;
+      }
+      .line-right-down {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        content: '';
+        border-bottom: 90px solid rgba(0,225,227,1);
+        background: transparent;
+        border-left: 90px solid transparent;
+      }
+      .line-right-downcover {
+        position: absolute;
+        right: -2px;
+        bottom: -2px;
+        content: '';
+        border-bottom: 91px solid #082b45;
+        background: transparent;
+        border-left: 91px solid transparent;
+        &.idc-cover {
+          border-bottom: 91px solid #061e33;
+        }
+      }
+      .line-right-up {
+        position: absolute;
+        right: 0;
+        top: 0;
+        content: '';
+        border-right: 90px solid #00e1e3;
+        background: transparent;
+        border-bottom: 90px solid transparent;
+      }
+      .line-right-upcover {
+        position: absolute;
+        right: -3px;
+        top: -3px;
+        content: '';
+        border-right: 93px solid #050e21;
+        background: transparent;
+        border-bottom: 93px solid transparent;
+      }
+      .chart-left {
+        width: 46%;
+        float: left;
+        height: 80%;
+        #dockProgress {
+          width: 100%;
+          height: 100%;
+          padding: 30px 20px;
+        }
+      }
+      .chart-full {
+        width: 86%;
+        float: left;
+        height: 100%;
+        #deptData {
+          width: 100%;
+          height: 100%;
+          padding: 30px 20px;
+        }
+      }
+      .chart-idc-use {
+        width: 86%;
+        float: left;
+        height: 75%;
+      }
+      .deptdata-desc,
+      .idcuse-desc {
+        width: 13%;
+        float: left;
+        position: relative;
+        top: 20%;
+        bottom: 10%;
+        right: 2%;
+        padding: 20px 18px;
+        border: 1px solid rgb(0, 216, 255);
+        border-radius: 10px;
+        box-shadow: 0 0 7px 6px rgb(12,58,103);
+        background: rgba(0,216,255,.2);
+        p {
+          color: #FFF;
+          font-size: 24px;
+          font-family: '微软雅黑';
+          font-weight: normal;
+          text-indent: 24px;
+          line-height: 46px;
+          strong {
+            color: rgb(0,255,255);
+            font-size: 29px;
+            font-weight: normal;
+          }
+        }
+      }
+      .chart-right {
+        width: 54%;
+        float: left;
+        height: 80%;
+        #dockDataset {
+          width: 100%;
+          height: 100%;
+          padding: 0 20px;
+        }
+      }
+      .support-desc {
+        clear: left;
+        color: #FFF;
+        font-size: 24px;
+        font-family: '微软雅黑';
+        font-weight: normal;
+        width: 90%;
+        margin: 0 auto;
+        text-indent: 24px;
+        line-height: 46px;
+        padding: 20px 18px;
+        border: 1px solid rgb(0, 216, 255);
+        border-radius: 10px;
+        box-shadow: 0 0 7px 6px rgb(12,58,103);
+        background: rgba(0,216,255,.2);
+        strong {
+          color: rgb(0,255,255);
+          font-size: 29px;
+          font-weight: normal;
+        }
+      }
+      .idc-datatable {
+        clear: left;
+        width: 87%;
+        margin: 0 auto;
+        padding: 48px 34px 0 0;
+        table {
+          color: #e4e4e4;
+          border: 1px solid #00bcde;
+          background: rgba(0, 72, 101, 0.6);
+          font-size: 14px;
+          font-family: '微软雅黑';
+          tbody {
+            tr:nth-of-type(odd) {
+              background: rgba(3, 113, 156, 0.32);
+            }
+          }
+          th,
+          td {
+            border: 1px solid #00bcde;
+            text-align: center;
+            font-weight: normal;
+          }
+        }
+      }
+      .data-category {
+        width: 45%;
+        float: left;
+        h2 {
+          color: #0ff;
+          text-align: center;
+          font-family: '微软雅黑';
+          font-size: 32px;
+          margin-top: 36px;
+          margin-bottom: 20px;
+        }
+      }
+      .data-map {
+        width: 55%;
+        float: left;
+        h2 {
+          color: #0ff;
+          text-align: center;
+          font-family: '微软雅黑';
+          font-size: 32px;
+          margin-top: 36px;
+          margin-bottom: 20px;
+        }
+        .map-chart {
+          width: 802px;
+          height: 802px;
+          border: 36px solid rgba(10, 62, 108, 0.5);
+          border-left-color: rgba(10, 136, 180, 0.5);
+          border-right-color: rgba(113, 62, 38, 0.7);
+          border-top-color: rgba(10, 136, 180, 0.5);
+          margin: 0 auto;
+          border-radius: 50%;
+          .node {
+            circle {
+              fill: rgba(123,80,71,.8);
+            }
+            text {
+              font: 20px sans-serif;
+              fill: #FFF;
+            }
+          }
+          .node--internal {
+            display: none;
+            circle {
+              fill: rgba(123,80,71,.8);
+            }
+            text {
+              text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
+            }
+          }
+          .link {
+            fill: none;
+            stroke: rgb(185, 104, 87);
+            stroke-opacity: 0.4;
+            stroke-width: 3.5px;
+            &:nth-child(1),&:nth-child(2){
+              display:none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.main-svg {
+  background: rgba(255,255,255,0) !important;
+}
