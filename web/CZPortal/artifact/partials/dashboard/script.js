@@ -220,7 +220,12 @@
                     shadowOffsetY: 0,
                     shadowBlur: 12
                   }
-                }
+                },
+                itemStyle:{
+                        normal:{
+                            color:'rgb(69,128,180)'
+                        }
+                    }
               }]
             }]
           }
@@ -567,26 +572,25 @@
                   center: {
                     x: -1.1,
                     y: 0,
-                    z: 0
+                    z: -1
                   },
                   eye: {
-                    x: 2.8,
-                    y: 2.6,
-                    z: 0
+                    x: 5.4,
+                    y: 4.6,
+                    z: 0.4
                   },
                   up: {
-                    x: 0,
+                    x:0,
                     y: 0,
                     z: 1
                   }
                 },
                 aspectmode: "manuel",
                 aspectratio: {
-                  x: 1,
-                  y: 4.8,
-                  z: 1.6
+                  x:1.8,
+                  y:9,
+                  z: 3.6
                 },
-
                 autosize: false,
                 xaxis: {
                   title: '',
