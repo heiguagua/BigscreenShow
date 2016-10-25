@@ -488,7 +488,6 @@
               switch (i) {
                 case 0:
                   for (var j = 0; j < rateData.length; j++) {
-                    console.log(rateData[j]);
                     monitors[j] = rateData[j].memRate.toString();
                   }
                   break;
@@ -508,7 +507,6 @@
               rows.push(monitors);
             }
             scope.nodeName = _.map(rateData, 'nodeName');
-            console.log(rows);
 
             // var rows = [{
             //   "": "0",
@@ -725,6 +723,39 @@
     }
   ])
 
+  dashboard.directive('wiservNestData', [
+    function() {
+      return {
+        restrict: 'ACE',
+        template:
+        '<a class="nav a0" target="_blank" href="#"><s></s>块0<b></b></a>'+
+        '<a class="nav a1" target="_blank" href="#"><s></s>块1<b></b></a>'+
+        '<a class="nav a2" target="_blank" href="#"><s></s>块2<b></b></a>',
+        link: function(scope, element, attrs) {
+          var parent_width = element.parent()[0].offsetWidth;
+          var parent_height = element.parent()[0].offsetHeight;
+          var a_width = element.find('a')[0].offsetWidth;
+          var a_height = element.find('a')[0].offsetHeight;
+          var s_width = element.find('s')[0].offsetWidth;
+          var s_height = element.find('s')[0].offsetHeight;
+          console.log(element.find('s'));
+          console.log(s_width);
+          console.log(s_height);
+          console.log(parent_height);
+          console.log(a_width);
+          console.log(a_height);
+
+          var a0 = element.find('a.a0')[0];
+          a0.style.top = parent_height/2-a_height + 'px';
+          a0.style.left = '50px';
+
+          var a1 = element.find('a.a1')[0];
+          a1.style.top = parent_height/2-3*a_height/2 - 6 + 'px';
+          a1.style.left = a_width + s_width - 10 + 'px';
+        }
+      }
+    }
+  ])
 
 
 })();

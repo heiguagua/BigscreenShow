@@ -1,33 +1,25 @@
 <div id='dashboard'>
-  <section class='section app-support'>
-    <h1>上层应用支持情况</h1>
-    <div class='content'>
-      <div class='corner-left-up'></div>
-      <div class='line-right-up'></div>
-      <div class='line-right-upcover'></div>
-      <div class='corner-left-down'></div>
-      <div class='corner-right-down'></div>
-      <div class='chart-left' wiserv-dock-progress></div>
-      <div class='chart-right' wiserv-dock-dataset></div>
-      <div class='support-desc'>
-        自2016年起对市民一卡通系统、省行权平台、数字化城管系统、成都崇州行政审批系统、成都市企业信用系统、 综合执法智慧服务平台、公务员管理系统、成都市公共气象服务平台、气象观测系统进行依次对接，共采集数据项
-        <strong>84</strong>
-        大项。
+  <section class='section'>
+    <h1>崇州政务数据标准制定情况</h1>
+    <div class='content standard-made'>
+      <div class="nest-wrap wiserv-nest-data">
       </div>
     </div>
   </section>
 
-  <section class='section dept-data'>
+  <section class='section-center'>
+    <div class='title'></div>
+    <div class='content-center'></div>
+  </section>
+
+  <section class='section'>
     <h1>各部门数据汇集情况</h1>
-    <div class='content'>
-      <div class='corner-left-up'></div>
-      <div class='corner-right-up'></div>
-      <div class='line-left-down'></div>
-      <div class='line-left-downcover'></div>
-      <div class='corner-right-down'></div>
+    <div class='content dept-data'>
       <div class='chart-full' wiserv-dept-data></div>
       <div class='deptdata-desc'>
-        <p>完成 <strong>12</strong> 个政府单位共
+        <p>完成
+          <strong>12</strong>
+          个政府单位共
           <strong>{{dashboard.deptData.depNum}}</strong>
           个科室的数据梳理采集;</p>
         <p>采集数据含
@@ -42,18 +34,51 @@
     </div>
   </section>
 
-  <section class='section idc-use'>
-    <h1>IDC硬件和软件使用情况</h1>
+  <section class='section'>
+    <h1>上层应用支持情况</h1>
+    <div class='content app-support'>
+
+      <div class='chart-left' wiserv-dock-progress></div>
+      <div class='chart-right' wiserv-dock-dataset></div>
+      <div class='support-desc'>
+        自2016年起对市民一卡通系统、省行权平台、数字化城管系统、成都崇州行政审批系统、成都市企业信用系统、 综合执法智慧服务平台、公务员管理系统、成都市公共气象服务平台、气象观测系统进行依次对接，共采集数据项
+        <strong>84</strong>
+        大项。
+      </div>
+    </div>
+  </section>
+
+  <section class='section city-datamap'>
+    <h1 class='text-center'>崇州城市数据图谱</h1>
     <div class='content'>
       <div class='corner-left-up'></div>
       <div class='corner-right-up'></div>
       <div class='corder-left-down'></div>
       <div class='line-right-down'></div>
       <div class='line-right-downcover idc-cover'></div>
+      <div class='data-category'>
+        <h2>数据目录</h2>
+        <div></div>
+      </div>
+      <div class='data-map'>
+        <h2>数据图谱</h2>
+        <div class='map-chart'>
+          <div wiserv-map-chart style='width:100%;height:100%;'></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class='section'>
+    <h1 class='text-center'>IDC硬件和软件使用情况</h1>
+    <div class='content idc-use'>
       <div id='myDiv' class='chart-idc-use' wiserv-idc-use></div>
       <div class='idcuse-desc'>
-        <p><strong>2</strong>台服务器及其部署的
-          <strong>9</strong>个虚拟机设备<strong>运行均正常</strong></p>
+        <p>
+          <strong>2</strong>台服务器及其部署的
+          <strong>9</strong>个虚拟机设备
+          <strong>运行均正常</strong>
+        </p>
       </div>
       <div class='idc-datatable'>
         <table class="table table-bordered table-striped text-center">
@@ -80,24 +105,9 @@
     </div>
   </section>
 
-  <section class='section city-datamap'>
-    <h1>崇州城市数据图谱</h1>
-    <div class='content'>
-      <div class='corner-left-up'></div>
-      <div class='corner-right-up'></div>
-      <div class='corder-left-down'></div>
-      <div class='line-right-down'></div>
-      <div class='line-right-downcover idc-cover'></div>
-      <div class='data-category'>
-        <h2>数据目录</h2>
-        <div></div>
-      </div>
-      <div class='data-map'>
-        <h2>数据图谱</h2>
-        <div class='map-chart'>
-          <div wiserv-map-chart style='width:100%;height:100%;'></div>
-        </div>
-      </div>
+  <section class='section'>
+    <h1>崇州大数据产业综合指数</h1>
+    <div class='content big-data-indicate'>
     </div>
   </section>
 
