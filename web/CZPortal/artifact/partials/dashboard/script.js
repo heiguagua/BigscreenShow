@@ -123,6 +123,9 @@
                 fontWeight: 'normal'
               }
             },
+            tooltip: {
+              trigger: 'axis'
+            },
             radar: [{
               indicator: [{
                 text: '市民一卡通系统',
@@ -166,7 +169,7 @@
               name: {
                 formatter: '{value}',
                 textStyle: {
-                  color: '#FFF',
+                  color: 'rgba(220, 220, 220, 1)',
                   fontSize: 16
                 }
               },
@@ -199,6 +202,9 @@
             series: [{
               name: '雷达图',
               type: 'radar',
+              tooltip: {
+                trigger: 'item'
+              },
               itemStyle: {
                 emphasis: {
                   // color: 各异,
@@ -209,7 +215,7 @@
               },
               data: [{
                 value: [60, 30, 60, 10, 50, 20, 68, 50, 10],
-                name: '图一',
+                name: '对接进度',
                 symbolSize: 5,
                 lineStyle: {
                   normal: {
@@ -221,15 +227,16 @@
                     shadowBlur: 12
                   }
                 },
-                itemStyle:{
-                        normal:{
-                            color:'rgb(69,128,180)'
-                        }
-                    }
+                itemStyle: {
+                  normal: {
+                    color: 'rgb(69,128,180)'
+                  }
+                }
               }]
             }]
           }
-          echarts.init((element.find('#dockProgress'))[0]).setOption(option);
+          var chartProgress = echarts.init((element.find('#dockProgress'))[0]);
+          chartProgress.setOption(option);
         }
       }
     }
@@ -279,7 +286,7 @@
                 rotate: 45,
                 interval: 0,
                 textStyle: {
-                  color: '#FFF',
+                  color: 'rgba(220, 220, 220, 1)',
                   fontSize: 16
                 }
               },
@@ -299,7 +306,8 @@
               },
               axisLabel: {
                 textStyle: {
-                  color: '#FFF'
+                  color: 'rgba(220, 220, 220, 1)',
+                  fontSize: 16
                 }
               },
               splitLine: {
@@ -317,7 +325,8 @@
                   show: true,
                   position: 'top',
                   textStyle: {
-                    color: '#FFF'
+                    color: 'rgba(240, 240, 240, 1)',
+                    fontSize: 16
                   }
                 }
               },
@@ -328,12 +337,30 @@
                   shadowBlur: 8
                 }
               },
-              data: [6, 0, 5, 0, 6, 18, 8, 27, 14]
+              data: [16, 5, 15, 4, 16, 28, 18, 37, 24]
             }]
           };
 
+          var charDataset = echarts.init((element.find('#dockDataset'))[0]);
+          charDataset.setOption(option);
+          var i = 0;
+          setInterval(function() {
+            if(i == 9) {
+              i = 0;
+            }
+            charDataset.dispatchAction({
+              type: 'showTip',
+              seriesIndex: 1,
+              dataIndex: i
+            });
+            i++;
+          }, 2000);
 
-          echarts.init((element.find('#dockDataset'))[0]).setOption(option);
+
+
+          // charDataset.on('mouseover',function(params) {
+          //   console.log(params);
+          // })
         }
       }
     }
@@ -478,9 +505,9 @@
         link: function(scope, element, attrs) {
           idcUseService.then(function(response) {
             var rateData = response.data.body;
-            scope.memRateList = _.map(rateData,'memRate');
-            scope.cpuRateList = _.map(rateData,'cpuRate');
-            scope.diskRateList = _.map(rateData,'diskRate');
+            scope.memRateList = _.map(rateData, 'memRate');
+            scope.cpuRateList = _.map(rateData, 'cpuRate');
+            scope.diskRateList = _.map(rateData, 'diskRate');
             var rows = [];
             for (var i = 0; i < 3; i++) {
               var monitors = {};
@@ -578,15 +605,15 @@
                     z: 0.4
                   },
                   up: {
-                    x:0,
+                    x: 0,
                     y: 0,
                     z: 1
                   }
                 },
                 aspectmode: "manuel",
                 aspectratio: {
-                  x:1.8,
-                  y:9,
+                  x: 1.8,
+                  y: 9,
                   z: 3.6
                 },
                 autosize: false,
@@ -727,10 +754,9 @@
     function() {
       return {
         restrict: 'ACE',
-        template:
-        '<a class="nav a0" target="_blank" href="#"><s></s>块0<b></b></a>'+
-        '<a class="nav a1" target="_blank" href="#"><s></s>块1<b></b></a>'+
-        '<a class="nav a2" target="_blank" href="#"><s></s>块2<b></b></a>',
+        template: '<a class="nav a0" target="_blank" href="#"><s></s>块0<b></b></a>' +
+          '<a class="nav a1" target="_blank" href="#"><s></s>块1<b></b></a>' +
+          '<a class="nav a2" target="_blank" href="#"><s></s>块2<b></b></a>',
         link: function(scope, element, attrs) {
           var parent_width = element.parent()[0].offsetWidth;
           var parent_height = element.parent()[0].offsetHeight;
@@ -746,16 +772,134 @@
           console.log(a_height);
 
           var a0 = element.find('a.a0')[0];
-          a0.style.top = parent_height/2-a_height + 'px';
+          a0.style.top = parent_height / 2 - a_height + 'px';
           a0.style.left = '50px';
 
           var a1 = element.find('a.a1')[0];
-          a1.style.top = parent_height/2-3*a_height/2 - 6 + 'px';
+          a1.style.top = parent_height / 2 - 3 * a_height / 2 - 6 + 'px';
           a1.style.left = a_width + s_width - 10 + 'px';
         }
       }
     }
   ])
+
+  dashboard.directive('wiservChartBigdata', [
+    function() {
+      return {
+        restrict: 'ACE',
+        template: '<div id="chartBigData" style="width:100%;height:100%"></div>',
+        link: function(scope, element, attrs) {
+          var option = {
+            title: {
+              text: '崇州大数据产业综合指数',
+              left: 'center',
+              top: 125,
+              textStyle: {
+                color: 'rgb(0,225,252)',
+                fontSize: 32,
+                fontWeight: 'normal'
+              }
+            },
+            tooltip: {
+              trigger: 'item',
+              formatter: '综合指数 <br/>{b} : {c}'
+            },
+            xAxis: {
+              type: 'category',
+              name: 'x',
+              splitLine: {
+                show: false
+              },
+              axisLabel: {
+                interval: 0,
+                margin: 14,
+                textStyle: {
+                  color: 'rgba(220, 220, 220, 1)',
+                  fontSize: 20
+                }
+              },
+              axisLine: {
+                lineStyle: {
+                  width: 2,
+                  color: 'rgba(210, 210, 210, 1)'
+                }
+              },
+              data: ['第一期', '第二期']
+            },
+            grid: {
+              top: '30%',
+              left: '3%',
+              right: '4%',
+              bottom: '23%',
+              containLabel: true
+            },
+            yAxis: {
+              type: 'value',
+              name: 'y',
+              axisTick: {
+                show: true,
+                length: 8
+              },
+              axisLabel: {
+                margin: 14,
+                textStyle: {
+                  color: 'rgba(220, 220, 220, 1)',
+                  fontSize: 18
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  color: ['rgba(210, 210, 210, 1)']
+                }
+              },
+              axisLine: {
+                lineStyle: {
+                  color: 'rgba(210, 210, 210, 1)',
+                  width: 2
+                }
+              },
+            },
+            series: [{
+              name: '崇州大数据产业综合指数',
+              type: 'line',
+              symbol: 'circle',
+              symbolSize: 12,
+              label: {
+                normal: {
+                  show: true,
+                  position: 'top',
+                  textStyle: {
+                    color: 'rgb(0,235,252)',
+                    fontSize: 20
+                  }
+                }
+              },
+              itemStyle: {
+                normal: {
+                  color: 'rgb(0,235,252)',
+                  shadowColor: 'rgb(0,255,252)',
+                  shadowBlur: 10
+                }
+              },
+              lineStyle: {
+                normal: {
+                  color: 'rgb(0,225,252)',
+                  width: 2,
+                  shadowColor: 'rgb(0,235,252)',
+                  shadowOffsetX: 0,
+                  shadowOffsetY: 0,
+                  shadowBlur: 12
+                }
+              },
+              data: [427, 532.29]
+            }]
+          };
+
+          echarts.init((element.find('#chartBigData'))[0]).setOption(option);
+        }
+      }
+    }
+  ]);
 
 
 })();
