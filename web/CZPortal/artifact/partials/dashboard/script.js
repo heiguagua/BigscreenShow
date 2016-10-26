@@ -345,7 +345,7 @@
           charDataset.setOption(option);
           var i = 0;
           setInterval(function() {
-            if(i == 9) {
+            if (i == 9) {
               i = 0;
             }
             charDataset.dispatchAction({
@@ -375,121 +375,142 @@
         link: function(scope, element, attrs) {
           deptDataTable.then(function(response) {
               return response.data.body;
-            }).then(function(table) {
+            }).then(function(tableData) {
+              var table = tableData;
               deptDataColumn.then(function(rescolumn) {
-                var table = table;
                 var column = rescolumn.data.body;
+                _.forEach(table, function(tobj) {
+                  _.forEach(column, function(cobj) {
+                    if(tobj.depName == cobj.depName) {
+                      tobj.columnNum = parseInt(cobj.columnNum);
+                    }
+                  });
+                });
+                console.log(table);
+                var option = {
+                  legend: {
+                    data: [{
+                      name: '大类',
+                      icon: 'rect'
+                    }, {
+                      name: '小类',
+                      icon: 'rect'
+                    }],
+                    itemWidth: 90,
+                    itemHeight: 30,
+                    padding: 10,
+                    align: 'left',
+                    textStyle: {
+                      color: 'rgb(220,220,220)',
+                      fontSize: 24
+                    },
+                    itemGap: 50,
+                    top: 34,
+                    left: '44%'
+                  },
+                  color: ['#3398DB'],
+                  tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                      type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                  },
+                  grid: {
+                    top: '18%',
+                    left: '3%',
+                    right: '4%',
+                    bottom: '6%',
+                    containLabel: true
+                  },
+                  xAxis: [{
+                    type: 'category',
+                    data: _.map(table,'depName'),
+                    boundaryGap: true,
+                    axisTick: {
+                      alignWithLabel: false,
+                      length: 12
+                    },
+                    axisLabel: {
+                      interval: 0,
+                      margin: 24,
+                      textStyle: {
+                        color: 'rgb(220,220,220)',
+                        fontSize: 18
+                      }
+                    },
+                    axisLine: {
+                      lineStyle: {
+                        color: 'rgba(204, 204, 204, 0.9)'
+                      }
+                    }
+                  }],
+                  yAxis: [{
+                    type: 'value',
+                    axisTick: {
+                      show: true
+                    },
+                    axisLine: {
+                      lineStyle: {
+                        color: 'rgba(204, 204, 204, 0.9)'
+                      }
+                    },
+                    axisLabel: {
+                      textStyle: {
+                        color: '#FFF',
+                        fontSize: 18
+                      }
+                    },
+                    splitLine: {
+                      lineStyle: {
+                        color: ['rgba(204, 204, 204, 0.5)']
+                      }
+                    }
+                  }],
+                  series: [{
+                    name: '大类',
+                    type: 'bar',
+                    barWidth: '32%',
+                    itemStyle: {
+                      normal: {
+                        color: 'rgb(0,203,254)',
+                        shadowColor: 'rgb(0, 230, 255)',
+                        shadowBlur: 12
+                      }
+                    },
+                    data: _.map(table,'tableNum')
+                  }, {
+                    name: '小类',
+                    type: 'line',
+                    smooth: false,
+                    symbol: 'circle',
+                    symbolSize: 12,
+                    itemStyle: {
+                      normal: {
+                        color: 'rgb(234,255,0)',
+                        shadowColor: 'rgb(234,255,200)',
+                        shadowBlur: 10
+                      }
+                    },
+                    data: _.map(table,'columnNum')
+                  }],
+                  animationDelay:500,
+                  chartInstance:1800
+                };
+
+                var chartInstance = echarts.init((element.find('#deptData'))[0]);
+                chartInstance.setOption(option);
+
+
+                setInterval(function() {
+                  chartInstance.clear();
+                chartInstance.setOption(option);
+              }, 5000);
+
               })
             })
-            //var data = response.data.body[0];
-          var option = {
-            legend: {
-              data: [{
-                name: '大类',
-                icon: 'rect'
-              }, {
-                name: '小类',
-                icon: 'rect'
-              }],
-              itemWidth: 90,
-              itemHeight: 30,
-              padding: 10,
-              align: 'left',
-              textStyle: {
-                color: 'rgb(220,220,220)',
-                fontSize: 24
-              },
-              itemGap: 50,
-              top: 34,
-              left: '44%'
-            },
-            color: ['#3398DB'],
-            tooltip: {
-              trigger: 'axis',
-              axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-              }
-            },
-            grid: {
-              top: '18%',
-              left: '3%',
-              right: '4%',
-              bottom: '6%',
-              containLabel: true
-            },
-            xAxis: [{
-              type: 'category',
-              data: ['城管局', '规划局', '国土局', '地税局', '公安局', '交通局', '社保局', '安监局', '安检局'],
-              boundaryGap: true,
-              axisTick: {
-                alignWithLabel: false,
-                length: 12
-              },
-              axisLabel: {
-                interval: 0,
-                margin: 24,
-                textStyle: {
-                  color: 'rgb(220,220,220)',
-                  fontSize: 18
-                }
-              },
-              axisLine: {
-                lineStyle: {
-                  color: 'rgba(204, 204, 204, 0.9)'
-                }
-              }
-            }],
-            yAxis: [{
-              type: 'value',
-              axisTick: {
-                show: true
-              },
-              axisLine: {
-                lineStyle: {
-                  color: 'rgba(204, 204, 204, 0.9)'
-                }
-              },
-              axisLabel: {
-                textStyle: {
-                  color: '#FFF',
-                  fontSize: 18
-                }
-              },
-              splitLine: {
-                lineStyle: {
-                  color: ['rgba(204, 204, 204, 0.5)']
-                }
-              }
-            }],
-            series: [{
-              name: '大类',
-              type: 'bar',
-              barWidth: '32%',
-              itemStyle: {
-                normal: {
-                  color: 'rgb(0,203,254)',
-                  shadowColor: 'rgb(0, 230, 255)',
-                  shadowBlur: 12
-                }
-              },
-              data: [58, 45, 27, 29, 52, 64, 43, 73, 37]
-            }, {
-              name: '小类',
-              type: 'line',
-              smooth: false,
-              symbol: 'circle',
-              symbolSize: 12,
-              itemStyle: {
-                normal: {
-                  color: 'rgb(234,255,0)',
-                  shadowColor: 'rgb(234,255,200)',
-                  shadowBlur: 10
-                }
-              },
-              data: [12, 29, 13, 33, 32, 48, 40, 69, 21]
-            }]
-          };
-          echarts.init((element.find('#deptData'))[0]).setOption(option);
+            //var data = response.data.body[0];restore
+
+
           //})
 
         }
