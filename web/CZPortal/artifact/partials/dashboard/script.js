@@ -924,4 +924,64 @@
   ]);
 
 
+  dashboard.directive('wiservStandardSection', function() {
+    return {
+        restrict : 'A',
+        templateUrl : "partials/standard/view.html",
+        replace : true
+    };
+    //
+});
+
+dashboard.directive('wiservCenterSection', function() {
+  return {
+      restrict : 'A',
+      templateUrl : "partials/center/view.html",
+      replace : true
+  };
+});
+
+dashboard.directive('wiservDeptSection', function() {
+  return {
+      restrict : 'A',
+      templateUrl : "partials/dept/view.html",
+      replace : true
+  };
+});
+
+dashboard.directive('wiservSupportSection', function() {
+  return {
+      restrict : 'A',
+      templateUrl : "partials/support/view.html",
+      replace : true
+  };
+});
+
+dashboard.directive('wiservDatamapSection', function() {
+  return {
+      restrict : 'A',
+      templateUrl : "partials/datamap/view.html",
+      replace : true
+  };
+});
+
+dashboard.directive('wiservIdcuseSection', function() {
+  return {
+      restrict : 'A',
+      templateUrl : "partials/idcuse/view.html",
+      replace : true
+  };
+});
+dashboard.directive('wiservBigdataSection', function() {
+  return {
+      restrict : 'A',
+      templateUrl : "partials/bigdata/view.html",
+      replace : true
+  };
+});
+
+
+
+
+
 })();

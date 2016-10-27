@@ -1,111 +1,30 @@
 <div id='dashboard'>
-  <section class='section'>
-    <h1>崇州政务数据标准制定情况</h1>
-    <div class='content standard-made'>
-      <div class="nest-wrap wiserv-nest-data">
-      </div>
-    </div>
+  <section wiserv-standard-section>
+
   </section>
 
-  <section class='section-center'>
-    <div class='title'></div>
-    <div class='content-center'></div>
+  <section wiserv-center-section>
+
   </section>
 
-  <section class='section'>
-    <h1>各部门数据汇集情况</h1>
-    <div class='content dept-data'>
-      <div class='chart-full' wiserv-dept-data></div>
-      <div class='deptdata-desc'>
-        <p>完成
-          <strong>12</strong>
-          个政府单位共
-          <strong>{{dashboard.deptData.depNum}}</strong>
-          个科室的数据梳理采集;</p>
-        <p>采集数据含
-          <strong>{{dashboard.deptData.tableNum}}</strong>
-          个项，
-          <strong>{{dashboard.deptData.columnNum}}</strong>
-          余子项;</p>
-        <p>结合政府单位数据存放形态，编制了
-          <strong>22</strong>
-          种数据采集方案。</p>
-      </div>
-    </div>
+  <section wiserv-dept-section>
+
   </section>
 
-  <section class='section'>
-    <h1>上层应用支持情况</h1>
-    <div class='content app-support'>
+  <section wiserv-support-section>
 
-      <div class='chart-left' wiserv-dock-progress></div>
-      <div class='chart-right' wiserv-dock-dataset></div>
-      <div class='support-desc'>
-        自2016年起对市民一卡通系统、省行权平台、数字化城管系统、成都崇州行政审批系统、成都市企业信用系统、 综合执法智慧服务平台、公务员管理系统、成都市公共气象服务平台、气象观测系统进行依次对接，共采集数据项
-        <strong>84</strong>
-        大项。
-      </div>
-    </div>
   </section>
 
-  <section class='section city-datamap'>
-    <h1 class='text-center'>崇州城市数据图谱</h1>
-    <div class='content'>
-      <!-- <div class='data-category'>
-        <h2>数据目录</h2>
-        <div></div>
-      </div>
-      <div class='data-map'>
-        <h2>数据图谱</h2>
-        <div class='map-chart'>
-          <div wiserv-map-chart style='width:100%;height:100%;'></div>
-        </div>
-      </div> -->
-    </div>
+  <section  wiserv-datamap-section>
+
   </section>
 
-  <section class='section'>
-    <h1 class='text-center'>IDC硬件和软件使用情况</h1>
-    <div class='content idc-use'>
-      <div id='myDiv' class='chart-idc-use' wiserv-idc-use></div>
-      <div class='idcuse-desc'>
-        <p>
-          <strong>2</strong>台服务器及其部署的
-          <strong>9</strong>个虚拟机设备
-          <strong>运行均正常</strong>
-        </p>
-      </div>
-      <div class='idc-datatable'>
-        <table class="table table-bordered table-striped text-center">
-          <thead>
-            <tr>
-              <th></th>
-              <th ng-repeat='node in nodeName'>{{node}}</th>
-            </tr>
-          </thead>
-          <tr>
-            <td>硬盘使用率</td>
-            <td ng-repeat='diskRate in diskRateList track by $index'>{{diskRate}}%</td>
-          </tr>
-          <tr>
-            <td>CPU使用率</td>
-            <td ng-repeat='cpuRate in cpuRateList track by $index'>{{cpuRate}}%</td>
-          </tr>
-          <tr>
-            <td>内存使用率</td>
-            <td ng-repeat='memRate in memRateList track by $index'>{{memRate}}%</td>
-          </tr>
-        </table>
-      </div>
-    </div>
+  <section  wiserv-idcuse-section>
+
   </section>
 
-  <section class='section'>
-    <h1>崇州大数据产业综合指数</h1>
-    <div class='content big-data-indicate'>
-      <div class='data-line'></div>
-      <div class='data-chart' wiserv-chart-bigdata></div>
-    </div>
+  <section  wiserv-bigdata-section>
+    
   </section>
 
 </div>

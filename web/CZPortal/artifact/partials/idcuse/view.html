@@ -1,0 +1,35 @@
+<div class='section'>
+  <h1 class='text-center'>IDC硬件和软件使用情况</h1>
+  <div class='content idc-use'>
+    <div id='myDiv' class='chart-idc-use' wiserv-idc-use></div>
+    <div class='idcuse-desc'>
+      <p>
+        <strong>2</strong>台服务器及其部署的
+        <strong>9</strong>个虚拟机设备
+        <strong>运行均正常</strong>
+      </p>
+    </div>
+    <div class='idc-datatable'>
+      <table class="table table-bordered table-striped text-center">
+        <thead>
+          <tr>
+            <th></th>
+            <th ng-repeat='node in nodeName'>{{node}}</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>硬盘使用率</td>
+          <td ng-repeat='diskRate in diskRateList track by $index'>{{diskRate}}%</td>
+        </tr>
+        <tr>
+          <td>CPU使用率</td>
+          <td ng-repeat='cpuRate in cpuRateList track by $index'>{{cpuRate}}%</td>
+        </tr>
+        <tr>
+          <td>内存使用率</td>
+          <td ng-repeat='memRate in memRateList track by $index'>{{memRate}}%</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
