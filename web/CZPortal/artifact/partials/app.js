@@ -79,6 +79,50 @@
         controller: 'dashboardController',
         controllerAs: 'dashboard',
       });
+
+      /** HTTP Interceptor */
+      $httpProvider.interceptors.push(interceptor);
+      interceptor.$inject = ['$q', '$location'];
+      function interceptor($q, $location) {
+        return {
+          'request': function(config) {
+            var screen_width = screen.width;
+            var screen_height = screen.height;
+            var path = $location.path();
+            console.log(screen_width);
+            console.log(screen_height);
+            //$('body').css({'font-size':document.documentElement.clientWidth / 6.4 + 'px'});
+            setTimeout(function(){
+              if(path.indexOf('main') > -1) {
+                $('.section').css({'height':screen_height/2 +'px','width':screen_width/2+'px'});
+                $('.section-main').css({'height':screen_height +'px','width':screen_width+'px'});
+                $('.section-center').css({'height':screen_height/2 +'px','width':screen_width+'px'});
+                $('.section h1').css({'line-height':'3rem'});
+              }
+              if(path.indexOf('dept') > -1 || path.indexOf('standard') > -1 || path.indexOf('support') > -1 || path.indexOf('datamap') > -1  || path.indexOf('idcuse') > -1  || path.indexOf('bigdata') > -1 ) {
+                $('.section').css({'height':screen_height+'px','width':screen_width+'px'});
+              }
+              if(path.indexOf('dashboard') > -1) {
+                $('#dashboard').css({'height':screen_height +'px','width':screen_width+'px'});
+                $('.section').css({'height':screen_height/2 +'px','width':screen_width/4+'px'});
+                $('.section-center').css({'height':screen_height/2 +'px','width':screen_width/2+'px'});
+                $('.section.support').css({'position':'absolute','top':screen_height/2 +'px','left':0});
+                $('.section.city-datamap').css({'position':'absolute','top':screen_height/2 +'px','left':screen_width/4+'px'});
+                $('.section.idcuse').css({'position':'absolute','top':screen_height/2 +'px','right':screen_width/4+'px'});
+                $('.section.bigdata').css({'position':'absolute','top':screen_height/2 +'px','right':0});
+              }
+            },500)
+            return config;
+
+          },
+          'response': function(response) {
+            $q.when(response, function(result){
+
+            });
+            return response;
+          }
+        };
+      };
   };
 
 })();

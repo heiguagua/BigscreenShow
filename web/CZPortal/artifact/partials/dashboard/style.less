@@ -1,331 +1,354 @@
-#dashboard{
-  width:7680px;
-  height:2160px;
+#dashboard {
+  width: 7680px;
+  height: 2160px;
+  overflow: hidden;
   // background:url(../assets/images/bg.png) no-repeat;
 }
-  .section-center{
-    width:3840px;
-    height:1080px;
-    float:left;
-    background:url(../assets/images/bg_2.png) center no-repeat;
-    .title{
-      width:100%;
-      height:294px;
-      background:url(../assets/images/bg_title.png) center no-repeat;
-    }
-    .content-center{
-      position: relative;
-      height: 820px;
-      top:-58px;
-      background:url(../assets/images/timeline.png) center no-repeat;
-    }
+.section-center {
+  width: 3840px;
+  height: 1080px;
+  float: left;
+  background-size: 100% 100%;
+  overflow: hidden;
+  background: url("../assets/images/bg_2.png") center no-repeat;
+  .title {
+    width: 100%;
+    height: 20%;
+    background: url("../assets/images/bg_title.png") center no-repeat;
+    background-size: 100% 100%;
   }
-  .section-main{
-    width:3840px;
-    height:2160px;
+  .content-center {
+    position: relative;
+    height: 80%;
+    // top:-58px;
+    background: url("../assets/images/timeline.png") center no-repeat;
+    background-size: 100% 100%;
   }
-  .section {
-    width: 1920px;
-    height: 1080px;
-    padding: 0 40px;
-    float: left;
-    &.city-datamap{
-      background:url(../assets/images/bg_5.png) center no-repeat;
-      .content{
-        background:url(../assets/images/bg_datamap.png) center no-repeat;
-      }
-    }
-    &.standard{
-      background:url(../assets/images/bg_1.png) center no-repeat;
-    }
-    &.dept{
-      background:url(../assets/images/bg_3.png) center no-repeat;
-    }
-    &.support{
-      background:url(../assets/images/bg_4.png) center no-repeat;
-    }
-    &.idcuse{
-      background:url(../assets/images/bg_6.png) center no-repeat;
-    }
-    &.bigdata{
-      background:url(../assets/images/bg_7.png) center no-repeat;
-    }
-    h1 {
-      font-size: 50px;
-      color: #dbea05;
-      font-family: '微软雅黑';
-      font-weight: normal;
-      margin: 10px 0 20px 10px;
-    }
+}
+.section-main {
+  width: 3840px;
+  height: 2160px;
+  overflow: hidden;
+}
+.section {
+  width: 1920px;
+  height: 1080px;
+  padding: 0;
+  float: left;
+  overflow: hidden;
+  &.city-datamap {
+    background: url("../assets/images/bg_5.png") center no-repeat;
+    background-size: 100% 100%;
     .content {
-      position: relative;
-      // border: 1px solid rgba(0,225,227,1);
-      height: 935px;
-      // box-shadow: 0 0 0 1px rgba(0,153,234,1);
-      &.app-support{
-        background:url(../assets/images/bg_app_support.png) center no-repeat;
-      }
-      &.standard-made{
-        background:url(../assets/images/bg_standard_made.png) center no-repeat;
-      }
-      &.idc-use{
-        background:url(../assets/images/bg_IDC.png) center no-repeat;
-      }
-      &.dept-data{
-        background:url(../assets/images/bg_dept_data.png) center no-repeat;
-      }
-      &.big-data-indicate{
-        background:url(../assets/images/bg_big_data.png) center no-repeat;
-      }
-
-      .chart-left {
-        width: 46%;
-        float: left;
-        height: 80%;
-        #dockProgress {
-          width: 100%;
-          height: 100%;
-          padding: 30px 20px;
-        }
-      }
-      .chart-full {
-        width: 86%;
-        float: left;
-        height: 100%;
-        #deptData {
-          width: 100%;
-          height: 100%;
-          padding: 30px 20px;
-        }
-      }
-      .chart-idc-use {
-        width: 86%;
-        float: left;
-        height: 75%;
-      }
-      .deptdata-desc,
-      .idcuse-desc {
-        width: 13%;
-        float: left;
-        position: relative;
-        top: 20%;
-        bottom: 10%;
-        right: 2%;
-        padding: 20px 18px;
-        border: 1px solid rgb(0, 216, 255);
-        border-radius: 10px;
-        box-shadow: 0 0 7px 6px rgb(12,58,103);
-        background: rgba(0,216,255,.2);
-        p {
-          color: #FFF;
-          font-size: 24px;
-          font-family: '微软雅黑';
-          font-weight: normal;
-          text-indent: 24px;
-          line-height: 46px;
-          strong {
-            color: rgb(0,255,255);
-            font-size: 29px;
-            font-weight: normal;
-          }
-        }
-      }
-      .chart-right {
-        width: 54%;
-        float: left;
-        height: 80%;
-        #dockDataset {
-          width: 100%;
-          height: 100%;
-          padding: 0 20px;
-        }
-      }
-      .support-desc {
-        clear: left;
-        color: #FFF;
-        font-size: 24px;
-        font-family: '微软雅黑';
-        font-weight: normal;
-        width: 90%;
-        margin: 0 auto;
-        text-indent: 24px;
-        line-height: 46px;
-        padding: 20px 18px;
-        border: 1px solid rgb(0, 216, 255);
-        border-radius: 10px;
-        box-shadow: 0 0 7px 6px rgb(12,58,103);
-        background: rgba(0,216,255,.2);
-        strong {
-          color: rgb(0,255,255);
-          font-size: 29px;
-          font-weight: normal;
-        }
-      }
-      .idc-datatable {
-        clear: left;
-        width: 87%;
-        margin: 0 auto;
-        padding: 48px 34px 0 0;
-        table {
-          color: #e4e4e4;
-          border: 1px solid #00bcde;
-          background: rgba(0, 72, 101, 0.6);
-          font-size: 14px;
-          font-family: '微软雅黑';
-          tbody {
-            tr:nth-of-type(odd) {
-              background: rgba(3, 113, 156, 0.32);
-            }
-          }
-          th,
-          td {
-            border: 1px solid #00bcde;
-            text-align: center;
-            font-weight: normal;
-          }
-        }
-      }
-      .data-category {
-        width: 45%;
-        float: left;
-        h2 {
-          color: #0ff;
-          text-align: center;
-          font-family: '微软雅黑';
-          font-size: 32px;
-          margin-top: 36px;
-          margin-bottom: 20px;
-        }
-      }
-      .data-map {
-        width: 55%;
-        float: left;
-        h2 {
-          color: #0ff;
-          text-align: center;
-          font-family: '微软雅黑';
-          font-size: 32px;
-          margin-top: 36px;
-          margin-bottom: 20px;
-        }
-        .map-chart {
-          width: 802px;
-          height: 802px;
-          border: 36px solid rgba(10, 62, 108, 0.5);
-          border-left-color: rgba(10, 136, 180, 0.5);
-          border-right-color: rgba(113, 62, 38, 0.7);
-          border-top-color: rgba(10, 136, 180, 0.5);
-          margin: 0 auto;
-          border-radius: 50%;
-          .node {
-            circle {
-              fill: rgba(123,80,71,.8);
-            }
-            text {
-              font: 20px sans-serif;
-              fill: #FFF;
-            }
-          }
-          .node--internal {
-            display: none;
-            circle {
-              fill: rgba(123,80,71,.8);
-            }
-            text {
-              text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
-            }
-          }
-          .link {
-            fill: none;
-            stroke: rgb(185, 104, 87);
-            stroke-opacity: 0.4;
-            stroke-width: 3.5px;
-            &:nth-child(1),
-            &:nth-child(2) {
-              display: none;
-            }
-          }
-        }
-      }
-      .nest-wrap {
+      background: url("../assets/images/bg_datamap.png") center no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+  &.standard {
+    background: url("../assets/images/bg_1.png") center no-repeat;
+    background-size: 100% 100%;
+  }
+  &.dept {
+    background: url("../assets/images/bg_3.png") center no-repeat;
+    background-size: 100% 100%;
+  }
+  &.support {
+    background: url("../assets/images/bg_4.png") center no-repeat;
+    background-size: 100% 100%;
+  }
+  &.idcuse {
+    background: url("../assets/images/bg_6.png") center no-repeat;
+    background-size: 100% 100%;
+  }
+  &.bigdata {
+    background: url("../assets/images/bg_7.png") center no-repeat;
+    background-size: 100% 100%;
+  }
+  h1 {
+    font-size: 2.1rem;
+    color: #dbea05;
+    font-family: '微软雅黑';
+    font-weight: normal;
+    margin: 10px 0 20px 10px;
+    line-height: 5.1rem;
+    height: 7%;
+  }
+  .content {
+    position: relative;
+    // border: 1px solid rgba(0,225,227,1);
+    height: 87%;
+    // box-shadow: 0 0 0 1px rgba(0,153,234,1);
+    &.app-support {
+      background: url("../assets/images/bg_app_support.png") center no-repeat;
+      background-size: 100% 100%;
+    }
+    &.standard-made {
+      background: url("../assets/images/bg_standard_made.png") center no-repeat;
+      background-size: 100% 100%;
+    }
+    &.idc-use {
+      background: url("../assets/images/bg_IDC.png") center no-repeat;
+      background-size: 100% 100%;
+      overflow: hidden;
+    }
+    &.dept-data {
+      background: url("../assets/images/bg_dept_data.png") center no-repeat;
+      background-size: 100% 100%;
+    }
+    &.big-data-indicate {
+      background: url("../assets/images/bg_big_data.png") center no-repeat;
+      background-size: 100% 100%;
+    }
+    .chart-left {
+      width: 46%;
+      float: left;
+      height: 80%;
+      #dockProgress {
         width: 100%;
         height: 100%;
-        padding: 50px 80px;
-        overflow: hidden;
-        background:url(../assets/images/standard_made_content.png) center no-repeat;
-        .inner-wrap{
-          width:100%;
-          height:100%;
-        }
-        .nav {
-          width: 78px;
-          height: 140px;
-          background: #339933;
-          display: inline-block;
-          position: relative;
-          line-height: 58px;
-          text-align: center;
-          color: #ffffff;
-          font-size: 20px;
-          text-decoration: none;
-          float: left;
-          s {
-            width: 0;
-            height: 0;
-            display: block;
-            overflow: hidden;
-            position: absolute;
-            border-right: 42px solid #339933;
-            border-bottom: 70px dotted transparent;
-            border-top: 70px dotted transparent;
-            right: 78px;
-          }
-          b {
-            width: 0;
-            height: 0;
-            display: block;
-            overflow: hidden;
-            position: absolute;
-            border-left: 42px solid #339933;
-            border-top: 70px dotted transparent;
-            bottom: 0;
-            left: 78px;
-            border-bottom: 70px dotted transparent;
-          }
-          &.a0 {
-          }
-          &.a1 {
-          }
-          &.a2 {
-          }
-          &.a3 {}
-          &:hover {
-            background: #8CBF26;
-            color: #333333;
-            s {
-              border-right-color: #8CBF26;
-            }
-            b {
-              border-left-color: #8CBF26;
-            }
-          }
-        }
-      }
-      .data-line{
-        width:58%;
-        height:100%;
-        float:left;
-        background:url(../assets/images/zonghezhishu.png) center no-repeat;
-      }
-      .data-chart{
-        width:42%;
-        padding:20px 30px;
-        height:100%;
-        float:left;
+        padding: 30px 20px;
       }
     }
+    .chart-full {
+      width: 86%;
+      float: left;
+      height: 100%;
+      #deptData {
+        width: 100%;
+        height: 100%;
+        padding: 30px 20px;
+      }
+    }
+    .chart-idc-use {
+      width: 86%;
+      float: left;
+      height: 75%;
+    }
+    .deptdata-desc,
+    .idcuse-desc {
+      width: 14%;
+      float: left;
+      position: relative;
+      top: 5%;
+      bottom: 10%;
+      right: 2%;
+      padding: 20px 18px;
+      border: 1px solid rgb(0, 216, 255);
+      border-radius: 10px;
+      box-shadow: 0 0 7px 6px rgb(12,58,103);
+      background: rgba(0,216,255,.2);
+      p {
+        color: #FFF;
+        font-size: 1.1rem;
+        font-family: '微软雅黑';
+        font-weight: normal;
+        text-indent: 24px;
+        line-height: inherit;
+        strong {
+          color: rgb(0,255,255);
+          font-size: 1.2rem;
+          font-weight: normal;
+        }
+      }
+    }
+    .chart-right {
+      width: 54%;
+      float: left;
+      height: 80%;
+      #dockDataset {
+        width: 100%;
+        height: 100%;
+        padding: 0 20px;
+      }
+    }
+    .support-desc {
+      clear: left;
+      color: #FFF;
+      font-size: 1.1rem;
+      font-family: '微软雅黑';
+      font-weight: normal;
+      width: 90%;
+      margin: 0 auto;
+      text-indent: 24px;
+      line-height: 2rem;
+      padding: 20px 18px;
+      border: 1px solid rgb(0, 216, 255);
+      border-radius: 10px;
+      box-shadow: 0 0 7px 6px rgb(12,58,103);
+      background: rgba(0,216,255,.2);
+      strong {
+        color: rgb(0,255,255);
+        font-size: 1.2rem;
+        font-weight: normal;
+      }
+    }
+    .idc-datatable {
+      clear: left;
+      width: 87%;
+      margin: 0 auto;
+      padding: 8px 34px 0 0;
+      table {
+        color: #e4e4e4;
+        border: 1px solid #00bcde;
+        background: rgba(0, 72, 101, 0.6);
+        font-size: 14px;
+        font-family: '微软雅黑';
+        table-layout: fixed;
+        tbody {
+          tr:nth-of-type(odd) {
+            background: rgba(3, 113, 156, 0.32);
+          }
+        }
+        th,
+        td {
+          border: 1px solid #00bcde;
+          text-align: center;
+          font-weight: normal;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
+    }
+    .data-category {
+      width: 45%;
+      float: left;
+      h2 {
+        color: #0ff;
+        text-align: center;
+        font-family: '微软雅黑';
+        font-size: 32px;
+        margin-top: 36px;
+        margin-bottom: 20px;
+      }
+    }
+    .data-map {
+      width: 55%;
+      float: left;
+      h2 {
+        color: #0ff;
+        text-align: center;
+        font-family: '微软雅黑';
+        font-size: 32px;
+        margin-top: 36px;
+        margin-bottom: 20px;
+      }
+      .map-chart {
+        width: 802px;
+        height: 802px;
+        border: 36px solid rgba(10, 62, 108, 0.5);
+        border-left-color: rgba(10, 136, 180, 0.5);
+        border-right-color: rgba(113, 62, 38, 0.7);
+        border-top-color: rgba(10, 136, 180, 0.5);
+        margin: 0 auto;
+        border-radius: 50%;
+        .node {
+          circle {
+            fill: rgba(123,80,71,.8);
+          }
+          text {
+            font: 20px sans-serif;
+            fill: #FFF;
+          }
+        }
+        .node--internal {
+          display: none;
+          circle {
+            fill: rgba(123,80,71,.8);
+          }
+          text {
+            text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
+          }
+        }
+        .link {
+          fill: none;
+          stroke: rgb(185, 104, 87);
+          stroke-opacity: 0.4;
+          stroke-width: 3.5px;
+          &:nth-child(1),
+          &:nth-child(2) {
+            display: none;
+          }
+        }
+      }
+    }
+    .nest-wrap {
+      width: 100%;
+      height: 100%;
+      padding: 50px 80px;
+      overflow: hidden;
+      background: url("../assets/images/standard_made_content.png") center no-repeat;
+      background-size: 100% 100%;
+      .inner-wrap {
+        width: 100%;
+        height: 100%;
+      }
+      .nav {
+        width: 78px;
+        height: 140px;
+        background: #339933;
+        display: inline-block;
+        position: relative;
+        line-height: 58px;
+        text-align: center;
+        color: #ffffff;
+        font-size: 20px;
+        text-decoration: none;
+        float: left;
+        s {
+          width: 0;
+          height: 0;
+          display: block;
+          overflow: hidden;
+          position: absolute;
+          border-right: 42px solid #339933;
+          border-bottom: 70px dotted transparent;
+          border-top: 70px dotted transparent;
+          right: 78px;
+        }
+        b {
+          width: 0;
+          height: 0;
+          display: block;
+          overflow: hidden;
+          position: absolute;
+          border-left: 42px solid #339933;
+          border-top: 70px dotted transparent;
+          bottom: 0;
+          left: 78px;
+          border-bottom: 70px dotted transparent;
+        }
+        &.a0 {}
+        &.a1 {}
+        &.a2 {}
+        &.a3 {}
+        &:hover {
+          background: #8CBF26;
+          color: #333333;
+          s {
+            border-right-color: #8CBF26;
+          }
+          b {
+            border-left-color: #8CBF26;
+          }
+        }
+      }
+    }
+    .data-line {
+      width: 58%;
+      height: 100%;
+      float: left;
+      background: url("../assets/images/zonghezhishu.png") center no-repeat;
+      background-size: 100% 100%;
+    }
+    .data-chart {
+      width: 42%;
+      padding: 20px 30px;
+      height: 100%;
+      float: left;
+    }
   }
-
+}
 .main-svg {
   background: rgba(255,255,255,0) !important;
 }

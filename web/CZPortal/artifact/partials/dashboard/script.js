@@ -1,7 +1,7 @@
 (function() {
   /** Module */
   var dashboard = angular.module('app.dashboard', [])
-
+dashboard.$inject = ['$location'];
   /** Controller */
   dashboard.controller('dashboardController', [
     '$scope', 'dashboardService',
@@ -112,6 +112,14 @@
           // lawsChart.then(function(response){
           //   var data = response.data.body;
           // })
+          var screen_width = screen.width;
+          var base_level = 4;
+          if(screen_width<2000) {
+            base_level = 4;
+          }
+          if(screen_width<1600) {
+            base_level = 3;
+          }
           var option = {
             title: {
               text: '对接进度',
@@ -119,7 +127,7 @@
               top: 15,
               textStyle: {
                 color: 'rgb(0,225,252)',
-                fontSize: 36,
+                fontSize: 8*base_level,
                 fontWeight: 'normal'
               }
             },
@@ -164,13 +172,13 @@
                 axisLabel: false
               }],
               center: ['52%', '55%'],
-              radius: 218,
+              radius: base_level*50,
               splitNumber: 7,
               name: {
                 formatter: '{value}',
                 textStyle: {
                   color: 'rgba(220, 220, 220, 1)',
-                  fontSize: 16
+                  fontSize: 4*base_level
                 }
               },
               splitArea: {
@@ -236,7 +244,17 @@
             }]
           }
           var chartProgress = echarts.init((element.find('#dockProgress'))[0]);
+          //chartProgress.setOption(option);
+
+          setTimeout(function() {
+            console.log('width:'+element.find('#dockProgress')[0].clientWidth);
+            var box_width = element.find('#dockProgress')[0].clientWidth;
+            $('#dockProgress').css({'width':box_width});
+            chartProgress.clear();
+            chartProgress.resize();
           chartProgress.setOption(option);
+        }, 1000);
+
         }
       }
     }
@@ -251,6 +269,14 @@
           // lawsChart.then(function(response){
           //   var data = response.data.body;
           // })
+          var screen_width = screen.width;
+          var base_level = 4;
+          if(screen_width<2000) {
+            base_level = 4;
+          }
+          if(screen_width<1600) {
+            base_level = 3;
+          }
           var option = {
             title: {
               text: '对接后采集到平台的数据项',
@@ -258,7 +284,7 @@
               top: 48,
               textStyle: {
                 color: 'rgb(0,225,252)',
-                fontSize: 36,
+                fontSize: 8*base_level,
                 fontWeight: 'normal'
               }
             },
@@ -287,7 +313,7 @@
                 interval: 0,
                 textStyle: {
                   color: 'rgba(220, 220, 220, 1)',
-                  fontSize: 16
+                  fontSize: 4*base_level
                 }
               },
               axisLine: {
@@ -307,7 +333,7 @@
               axisLabel: {
                 textStyle: {
                   color: 'rgba(220, 220, 220, 1)',
-                  fontSize: 16
+                  fontSize: 3*base_level
                 }
               },
               splitLine: {
@@ -326,7 +352,7 @@
                   position: 'top',
                   textStyle: {
                     color: 'rgba(240, 240, 240, 1)',
-                    fontSize: 16
+                    fontSize: 3*base_level
                   }
                 }
               },
@@ -342,7 +368,16 @@
           };
 
           var charDataset = echarts.init((element.find('#dockDataset'))[0]);
+          //charDataset.setOption(option);
+
+          setTimeout(function() {
+            var box_width = element.find('#dockDataset')[0].clientWidth;
+            $('#dockDataset').css({'width':box_width});
+            charDataset.clear();
+            charDataset.resize();
           charDataset.setOption(option);
+        }, 2000);
+
           var i = 0;
           setInterval(function() {
             if (i == 9) {
@@ -354,7 +389,7 @@
               dataIndex: i
             });
             i++;
-          }, 2000);
+          }, 2500);
 
 
 
@@ -371,7 +406,7 @@
     function(deptDataTable, deptDataColumn) {
       return {
         restrict: 'ACE',
-        template: "<div id='deptData'></div>",
+        template: "<div id='deptData' style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           deptDataTable.then(function(response) {
               return response.data.body;
@@ -386,6 +421,7 @@
                     }
                   });
                 });
+                console.log(element);
                 console.log(table);
                 var option = {
                   legend: {
@@ -493,18 +529,21 @@
                     },
                     data: _.map(table,'columnNum')
                   }],
-                  animationDelay:500,
-                  chartInstance:1800
+                  animationDelay:500
                 };
 
                 var chartInstance = echarts.init((element.find('#deptData'))[0]);
-                chartInstance.setOption(option);
+                //chartInstance.setOption(option);
 
 
                 setInterval(function() {
+                  console.log('width:'+element.find('#deptData')[0].clientWidth);
+                  var box_width = element.find('#deptData')[0].clientWidth;
+                  $('#deptData').css({'width':box_width});
                   chartInstance.clear();
+                  chartInstance.resize();
                 chartInstance.setOption(option);
-              }, 5000);
+              }, 4000);
 
               })
             })
@@ -518,12 +557,26 @@
     }
   ]);
 
-  dashboard.directive('wiservIdcUse', ['dashboard.chartIdcUse',
-    function(idcUseService) {
+  dashboard.directive('wiservIdcUse', ['dashboard.chartIdcUse','$location',
+    function(idcUseService,location) {
       return {
         restrict: 'ACE',
         template: "<div id='idcUse' style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
+          var screen_width = screen.width;
+          var screen_height = screen.height;
+          var path = location.path();
+          var plotly_width = 500;
+          var plotly_height = 300;
+          if(path.indexOf('main') > -1) {
+            plotly_width = (screen_width/2)*0.8;
+            plotly_height = (screen_height/2)*0.6;
+          }
+          if(path.indexOf('dept') > -1 || path.indexOf('standard') > -1 || path.indexOf('support') > -1 || path.indexOf('datamap') > -1  || path.indexOf('idcuse') > -1  || path.indexOf('bigdata') > -1 ) {
+            plotly_width = screen_width*0.8;
+            plotly_height = screen_height*0.6;
+          }
+
           idcUseService.then(function(response) {
             var rateData = response.data.body;
             scope.memRateList = _.map(rateData, 'memRate');
@@ -678,8 +731,8 @@
                 }
               },
               autosize: false,
-              width: '1550',
-              height: '670',
+              width: plotly_width,
+              height: plotly_height,
               margin: {
                 l: 0,
                 r: 10,
@@ -809,13 +862,13 @@
     function() {
       return {
         restrict: 'ACE',
-        template: '<div id="chartBigData" style="width:100%;height:100%"></div>',
+        template: '<div id="chartBigData" style="width:100%;height:100%;padding: 10% 0;    padding-right: 10%;"></div>',
         link: function(scope, element, attrs) {
           var option = {
             title: {
               text: '崇州大数据产业综合指数',
               left: 'center',
-              top: 125,
+              top: 25,
               textStyle: {
                 color: 'rgb(0,225,252)',
                 fontSize: 32,
@@ -837,7 +890,7 @@
                 margin: 14,
                 textStyle: {
                   color: 'rgba(220, 220, 220, 1)',
-                  fontSize: 20
+                  fontSize: 16
                 }
               },
               axisLine: {
@@ -849,7 +902,7 @@
               data: ['第一期', '第二期']
             },
             grid: {
-              top: '30%',
+              top: '18%',
               left: '3%',
               right: '4%',
               bottom: '23%',
@@ -980,7 +1033,27 @@ dashboard.directive('wiservBigdataSection', function() {
   };
 });
 
-
+dashboard.directive('wiservDashboard', ['$location',function(location) {
+  return {
+      restrict : 'A',
+      templateUrl : "partials/dashboard/part.html",
+      replace : true,
+      link: function(scope, element, attrs) {
+        var screen_width = screen.width;
+        var screen_height = screen.height;
+        var path = location.path();
+        console.log(path);
+        console.log(path.indexOf('main'));
+        if(path.indexOf('main') > -1) {
+          console.log($('.section'));
+          $('.section').css({'height':screen_height/2 +'px'});
+        }
+        // if(path.indexOf('dashboard')) {
+        //   $('.section').css('width',)
+        // }
+      }
+  };
+}]);
 
 
 
