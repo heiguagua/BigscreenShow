@@ -37,6 +37,13 @@
         controller: 'dashboardController',
         controllerAs: 'dashboard',
       })
+      .state('main', {
+        url: '/main',
+        templateUrl: 'partials/main/view.html',
+        //templateUrl: 'circle/qzc.html',
+        controller: 'dashboardController',
+        controllerAs: 'dashboard',
+      })
       .state('bigdata', {
         url: '/bigdata',
         templateUrl: 'partials/bigdata/view.html',
