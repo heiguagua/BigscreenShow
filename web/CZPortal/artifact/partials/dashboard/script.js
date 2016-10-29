@@ -1,7 +1,7 @@
 (function() {
   /** Module */
   var dashboard = angular.module('app.dashboard', [])
-dashboard.$inject = ['$location'];
+  dashboard.$inject = ['$location'];
   /** Controller */
   dashboard.controller('dashboardController', [
     '$scope', 'dashboardService',
@@ -114,10 +114,10 @@ dashboard.$inject = ['$location'];
           // })
           var screen_width = screen.width;
           var base_level = 4;
-          if(screen_width<2000) {
+          if (screen_width < 2000) {
             base_level = 4;
           }
-          if(screen_width<1600) {
+          if (screen_width < 1600) {
             base_level = 3;
           }
           var option = {
@@ -127,7 +127,7 @@ dashboard.$inject = ['$location'];
               top: 15,
               textStyle: {
                 color: 'rgb(0,225,252)',
-                fontSize: 8*base_level,
+                fontSize: 8 * base_level,
                 fontWeight: 'normal'
               }
             },
@@ -172,13 +172,13 @@ dashboard.$inject = ['$location'];
                 axisLabel: false
               }],
               center: ['52%', '55%'],
-              radius: base_level*50,
+              radius: base_level * 50,
               splitNumber: 7,
               name: {
                 formatter: '{value}',
                 textStyle: {
                   color: 'rgba(220, 220, 220, 1)',
-                  fontSize: 4*base_level
+                  fontSize: 4 * base_level
                 }
               },
               splitArea: {
@@ -247,13 +247,15 @@ dashboard.$inject = ['$location'];
           //chartProgress.setOption(option);
 
           setTimeout(function() {
-            console.log('width:'+element.find('#dockProgress')[0].clientWidth);
+            console.log('width:' + element.find('#dockProgress')[0].clientWidth);
             var box_width = element.find('#dockProgress')[0].clientWidth;
-            $('#dockProgress').css({'width':box_width});
+            $('#dockProgress').css({
+              'width': box_width
+            });
             chartProgress.clear();
             chartProgress.resize();
-          chartProgress.setOption(option);
-        }, 1000);
+            chartProgress.setOption(option);
+          }, 1000);
 
         }
       }
@@ -271,10 +273,10 @@ dashboard.$inject = ['$location'];
           // })
           var screen_width = screen.width;
           var base_level = 4;
-          if(screen_width<2000) {
+          if (screen_width < 2000) {
             base_level = 4;
           }
-          if(screen_width<1600) {
+          if (screen_width < 1600) {
             base_level = 3;
           }
           var option = {
@@ -284,7 +286,7 @@ dashboard.$inject = ['$location'];
               top: 48,
               textStyle: {
                 color: 'rgb(0,225,252)',
-                fontSize: 8*base_level,
+                fontSize: 8 * base_level,
                 fontWeight: 'normal'
               }
             },
@@ -313,7 +315,7 @@ dashboard.$inject = ['$location'];
                 interval: 0,
                 textStyle: {
                   color: 'rgba(220, 220, 220, 1)',
-                  fontSize: 4*base_level
+                  fontSize: 4 * base_level
                 }
               },
               axisLine: {
@@ -333,7 +335,7 @@ dashboard.$inject = ['$location'];
               axisLabel: {
                 textStyle: {
                   color: 'rgba(220, 220, 220, 1)',
-                  fontSize: 3*base_level
+                  fontSize: 3 * base_level
                 }
               },
               splitLine: {
@@ -352,7 +354,7 @@ dashboard.$inject = ['$location'];
                   position: 'top',
                   textStyle: {
                     color: 'rgba(240, 240, 240, 1)',
-                    fontSize: 3*base_level
+                    fontSize: 3 * base_level
                   }
                 }
               },
@@ -372,11 +374,13 @@ dashboard.$inject = ['$location'];
 
           setTimeout(function() {
             var box_width = element.find('#dockDataset')[0].clientWidth;
-            $('#dockDataset').css({'width':box_width});
+            $('#dockDataset').css({
+              'width': box_width
+            });
             charDataset.clear();
             charDataset.resize();
-          charDataset.setOption(option);
-        }, 2000);
+            charDataset.setOption(option);
+          }, 2000);
 
           var i = 0;
           setInterval(function() {
@@ -416,7 +420,7 @@ dashboard.$inject = ['$location'];
                 var column = rescolumn.data.body;
                 _.forEach(table, function(tobj) {
                   _.forEach(column, function(cobj) {
-                    if(tobj.depName == cobj.depName) {
+                    if (tobj.depName == cobj.depName) {
                       tobj.columnNum = parseInt(cobj.columnNum);
                     }
                   });
@@ -460,7 +464,7 @@ dashboard.$inject = ['$location'];
                   },
                   xAxis: [{
                     type: 'category',
-                    data: _.map(table,'depName'),
+                    data: _.map(table, 'depName'),
                     boundaryGap: true,
                     axisTick: {
                       alignWithLabel: false,
@@ -513,7 +517,7 @@ dashboard.$inject = ['$location'];
                         shadowBlur: 12
                       }
                     },
-                    data: _.map(table,'tableNum')
+                    data: _.map(table, 'tableNum')
                   }, {
                     name: '小类',
                     type: 'line',
@@ -527,9 +531,9 @@ dashboard.$inject = ['$location'];
                         shadowBlur: 10
                       }
                     },
-                    data: _.map(table,'columnNum')
+                    data: _.map(table, 'columnNum')
                   }],
-                  animationDelay:500
+                  animationDelay: 500
                 };
 
                 var chartInstance = echarts.init((element.find('#deptData'))[0]);
@@ -537,13 +541,15 @@ dashboard.$inject = ['$location'];
 
 
                 setInterval(function() {
-                  console.log('width:'+element.find('#deptData')[0].clientWidth);
+                  console.log('width:' + element.find('#deptData')[0].clientWidth);
                   var box_width = element.find('#deptData')[0].clientWidth;
-                  $('#deptData').css({'width':box_width});
+                  $('#deptData').css({
+                    'width': box_width
+                  });
                   chartInstance.clear();
                   chartInstance.resize();
-                chartInstance.setOption(option);
-              }, 4000);
+                  chartInstance.setOption(option);
+                }, 4000);
 
               })
             })
@@ -557,8 +563,8 @@ dashboard.$inject = ['$location'];
     }
   ]);
 
-  dashboard.directive('wiservIdcUse', ['dashboard.chartIdcUse','$location',
-    function(idcUseService,location) {
+  dashboard.directive('wiservIdcUse', ['dashboard.chartIdcUse', '$location',
+    function(idcUseService, location) {
       return {
         restrict: 'ACE',
         template: "<div id='idcUse' style='width:100%;height:100%'></div>",
@@ -568,13 +574,13 @@ dashboard.$inject = ['$location'];
           var path = location.path();
           var plotly_width = 500;
           var plotly_height = 300;
-          if(path.indexOf('main') > -1) {
-            plotly_width = (screen_width/2)*0.8;
-            plotly_height = (screen_height/2)*0.6;
+          if (path.indexOf('main') > -1) {
+            plotly_width = (screen_width / 2) * 0.8;
+            plotly_height = (screen_height / 2) * 0.6;
           }
-          if(path.indexOf('dept') > -1 || path.indexOf('standard') > -1 || path.indexOf('support') > -1 || path.indexOf('datamap') > -1  || path.indexOf('idcuse') > -1  || path.indexOf('bigdata') > -1 ) {
-            plotly_width = screen_width*0.8;
-            plotly_height = screen_height*0.6;
+          if (path.indexOf('dept') > -1 || path.indexOf('standard') > -1 || path.indexOf('support') > -1 || path.indexOf('datamap') > -1 || path.indexOf('idcuse') > -1 || path.indexOf('bigdata') > -1) {
+            plotly_width = screen_width * 0.8;
+            plotly_height = screen_height * 0.6;
           }
 
           idcUseService.then(function(response) {
@@ -656,16 +662,51 @@ dashboard.$inject = ['$location'];
             }
             var data = [{
               z: z_data,
-              type: 'surface'
+              type: 'surface',
+              "colorbar": {
+                "tickcolor": "#e4e4e4",
+                tickfont: {
+                  "family": "微软雅黑",
+                  size: 14,
+                  color: '#e4e4e4'
+                },
+            },
+              "scl": [
+                [
+                  "0.0",
+                  "rgb(20,119,178)"
+                ],
+                [
+                  "0.222222222222",
+                  "rgb(20,119,178)"
+                ],
+                [
+                  "0.555555555556",
+                  "rgb(116,173,209)"
+                ],
+                [
+                  "0.777777777778",
+                  "rgb(171,217,233)"
+                ],
+                [
+                  "1.0",
+                  "rgb(254,224,144)"
+                ]
+              ],
+
             }];
 
             var layout = {
-              title: 'Mt Bruno Elevation',
+              title: '',
               plot_bgcolor: 'transparent',
+              "font": {
+            "family": "\"Open sans\", verdana, arial, sans-serif",
+            "size": 16,
+        },
               scene: {
                 domain: {
                   x: [0.00, 1],
-                  y: [-0.5, 1]
+                  y: [0, 1]
                 },
                 camera: {
                   center: {
@@ -694,12 +735,14 @@ dashboard.$inject = ['$location'];
                 xaxis: {
                   title: '',
                   backgroundcolor: "transparent",
-                  gridcolor: "rgb(230, 230, 230)",
+                  gridcolor: "#e4e4e4",
                   showbackground: true,
-                  zerolinecolor: "rgb(230, 230, 230)",
+                  zerolinecolor: "#e4e4e4",
+
                   tickfont: {
+                    "family": "微软雅黑",
                     size: 14,
-                    color: 'rgb(230, 230, 230)'
+                    color: '#e4e4e4'
                   },
                   ticktext: ['内存使用率', 'CPU使用率', '硬盘使用率'],
                   tickvals: [0, 1, 2]
@@ -707,12 +750,13 @@ dashboard.$inject = ['$location'];
                 yaxis: {
                   title: '',
                   backgroundcolor: "transparent",
-                  gridcolor: "rgb(230, 230, 230)",
+                  gridcolor: "#e4e4e4",
                   showbackground: true,
-                  zerolinecolor: "rgb(230, 230, 230)",
+                  zerolinecolor: "#e4e4e4",
                   tickfont: {
+                    "family": "微软雅黑",
                     size: 14,
-                    color: 'rgb(230, 230, 230)'
+                    color: '#e4e4e4'
                   },
                   ticktext: scope.nodeName,
                   tickvals: [0, 1, 2, 3, 4, 5, 6, 7, 8]
@@ -720,12 +764,12 @@ dashboard.$inject = ['$location'];
                 zaxis: {
                   title: '',
                   backgroundcolor: "transparent",
-                  gridcolor: "rgb(230, 230, 230)",
+                  gridcolor: "#e4e4e4",
                   showbackground: true,
-                  zerolinecolor: "rgb(230, 230, 230)",
+                  zerolinecolor: "#e4e4e4",
                   tickfont: {
                     size: 14,
-                    color: 'rgb(230, 230, 230)'
+                    color: '#e4e4e4'
                   },
                   ticksuffix: '%'
                 }
@@ -828,7 +872,7 @@ dashboard.$inject = ['$location'];
     function() {
       return {
         restrict: 'ACE',
-        template:'',
+        template: '',
         // template: '<a class="nav a0" target="_blank" href="#"><s></s>块0<b></b></a>' +
         //   '<a class="nav a1" target="_blank" href="#"><s></s>块1<b></b></a>' +
         //   '<a class="nav a2" target="_blank" href="#"><s></s>块2<b></b></a>',
@@ -979,81 +1023,83 @@ dashboard.$inject = ['$location'];
 
   dashboard.directive('wiservStandardSection', function() {
     return {
-        restrict : 'A',
-        templateUrl : "partials/standard/view.html",
-        replace : true
+      restrict: 'A',
+      templateUrl: "partials/standard/view.html",
+      replace: true
     };
     //
-});
+  });
 
-dashboard.directive('wiservCenterSection', function() {
-  return {
-      restrict : 'A',
-      templateUrl : "partials/center/view.html",
-      replace : true
-  };
-});
+  dashboard.directive('wiservCenterSection', function() {
+    return {
+      restrict: 'A',
+      templateUrl: "partials/center/view.html",
+      replace: true
+    };
+  });
 
-dashboard.directive('wiservDeptSection', function() {
-  return {
-      restrict : 'A',
-      templateUrl : "partials/dept/view.html",
-      replace : true
-  };
-});
+  dashboard.directive('wiservDeptSection', function() {
+    return {
+      restrict: 'A',
+      templateUrl: "partials/dept/view.html",
+      replace: true
+    };
+  });
 
-dashboard.directive('wiservSupportSection', function() {
-  return {
-      restrict : 'A',
-      templateUrl : "partials/support/view.html",
-      replace : true
-  };
-});
+  dashboard.directive('wiservSupportSection', function() {
+    return {
+      restrict: 'A',
+      templateUrl: "partials/support/view.html",
+      replace: true
+    };
+  });
 
-dashboard.directive('wiservDatamapSection', function() {
-  return {
-      restrict : 'A',
-      templateUrl : "partials/datamap/view.html",
-      replace : true
-  };
-});
+  dashboard.directive('wiservDatamapSection', function() {
+    return {
+      restrict: 'A',
+      templateUrl: "partials/datamap/view.html",
+      replace: true
+    };
+  });
 
-dashboard.directive('wiservIdcuseSection', function() {
-  return {
-      restrict : 'A',
-      templateUrl : "partials/idcuse/view.html",
-      replace : true
-  };
-});
-dashboard.directive('wiservBigdataSection', function() {
-  return {
-      restrict : 'A',
-      templateUrl : "partials/bigdata/view.html",
-      replace : true
-  };
-});
+  dashboard.directive('wiservIdcuseSection', function() {
+    return {
+      restrict: 'A',
+      templateUrl: "partials/idcuse/view.html",
+      replace: true
+    };
+  });
+  dashboard.directive('wiservBigdataSection', function() {
+    return {
+      restrict: 'A',
+      templateUrl: "partials/bigdata/view.html",
+      replace: true
+    };
+  });
 
-dashboard.directive('wiservDashboard', ['$location',function(location) {
-  return {
-      restrict : 'A',
-      templateUrl : "partials/dashboard/part.html",
-      replace : true,
+  dashboard.directive('wiservDashboard', ['$location', function(location) {
+    return {
+      restrict: 'A',
+      templateUrl: "partials/dashboard/part.html",
+      replace: true,
       link: function(scope, element, attrs) {
         var screen_width = screen.width;
         var screen_height = screen.height;
         var path = location.path();
         console.log(path);
         console.log(path.indexOf('main'));
-        if(path.indexOf('main') > -1) {
+        if (path.indexOf('main') > -1) {
           console.log($('.section'));
-          $('.section').css({'height':screen_height/2 +'px'});
+          $('.section').css({
+            'height': screen_height / 2 + 'px'
+          });
         }
         // if(path.indexOf('dashboard')) {
         //   $('.section').css('width',)
         // }
       }
-  };
-}]);
+    };
+  }]);
 
 
 

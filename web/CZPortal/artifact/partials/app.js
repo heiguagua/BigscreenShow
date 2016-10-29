@@ -103,6 +103,7 @@
                 $('.section').css({'height':screen_height+'px','width':screen_width+'px'});
               }
               if(path.indexOf('dashboard') > -1) {
+                $('html').css({'font-size':'16px'});
                 $('#dashboard').css({'height':screen_height +'px','width':screen_width+'px'});
                 $('.section').css({'height':screen_height/2 +'px','width':screen_width/4+'px'});
                 $('.section-center').css({'height':screen_height/2 +'px','width':screen_width/2+'px'});
