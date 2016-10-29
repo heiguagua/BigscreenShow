@@ -17,16 +17,52 @@
     }
   ]);
 
+  dashboard.run(['$rootScope', '$interval', '$location', 'dashboardService', function($rootScope, $interval, $location, dashboardService) {
+    $rootScope.state = ''; // 全屏，不动态切换
+    var timer = $interval(function() {
+      var current_url = $location.path();
+      dashboardService.getStatus().then(function(result) {
+        var data = result.data;
+        if (data == "1") { // 切换
+          $rootScope.state = '1';
+          if (current_url.indexOf('standard') > -1) {
+            $location.path('/idcuse')
+          }
+          if (current_url.indexOf('support') > -1) {
+            $location.path('/datamap')
+          }
+          if (current_url.indexOf('datamap') > -1) {
+            $location.path('/support')
+          }
+          if (current_url.indexOf('idcuse') > -1) {
+            $location.path('/standard')
+          }
+        } else { // 不切换
+          if ($rootScope.state == '1') { // 已经在切换,需要停止切换
+            $rootScope.state = "";
+          }
+        }
+      })
+    }, 5000)
+  }]);
+
   /** Service */
   dashboard.factory('dashboardService', ['$http', 'URL',
     function($http, URL) {
       return {
-        getDeptDataQuantity: getDeptDataQuantity
+        getDeptDataQuantity: getDeptDataQuantity,
+        getStatus: getStatus
       }
 
       function getDeptDataQuantity() {
         return $http.get(
           URL + '/depDataInfo/quantity'
+        )
+      }
+
+      function getStatus() {
+        return $http.get(
+          URL + '/status/get'
         )
       }
     }
@@ -670,7 +706,7 @@
                   size: 14,
                   color: '#e4e4e4'
                 },
-            },
+              },
               "scl": [
                 [
                   "0.0",
@@ -700,9 +736,9 @@
               title: '',
               plot_bgcolor: 'transparent',
               "font": {
-            "family": "\"Open sans\", verdana, arial, sans-serif",
-            "size": 16,
-        },
+                "family": "\"Open sans\", verdana, arial, sans-serif",
+                "size": 16,
+              },
               scene: {
                 domain: {
                   x: [0.00, 1],
