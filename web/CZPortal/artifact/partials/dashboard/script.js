@@ -944,6 +944,14 @@
         restrict: 'ACE',
         template: '<div id="chartBigData" style="width:100%;height:100%;padding: 10% 0;    padding-right: 10%;"></div>',
         link: function(scope, element, attrs) {
+          var screen_width = screen.width;
+          var base_level = 4;
+          if (screen_width < 2000) {
+            base_level = 4.5;
+          }
+          if (screen_width < 1600) {
+            base_level = 3;
+          }
           var option = {
             title: {
               text: '崇州大数据产业综合指数',
@@ -951,7 +959,7 @@
               top: 25,
               textStyle: {
                 color: 'rgb(0,225,252)',
-                fontSize: 32,
+                fontSize: base_level*8,
                 fontWeight: 'normal'
               }
             },
@@ -982,7 +990,7 @@
               data: ['第一期', '第二期']
             },
             grid: {
-              top: '18%',
+              top: '34%',
               left: '3%',
               right: '4%',
               bottom: '23%',
@@ -1050,7 +1058,20 @@
             }]
           };
 
-          echarts.init((element.find('#chartBigData'))[0]).setOption(option);
+          var chartInstance = echarts.init((element.find('#chartBigData'))[0]);
+          //chartInstance.setOption(option);
+
+          setTimeout(function() {
+            console.log('width:' + element.find('#chartBigData')[0].clientWidth);
+            var box_width = element.find('#chartBigData')[0].clientWidth;
+            $('#chartBigData').css({
+              'width': box_width
+            });
+            chartInstance.clear();
+            chartInstance.resize();
+            chartInstance.setOption(option);
+          }, 500);
+
         }
       }
     }
