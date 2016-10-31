@@ -4,9 +4,10 @@
   dashboard.$inject = ['$location'];
   /** Controller */
   dashboard.controller('dashboardController', [
-    '$scope', 'dashboardService',
-    function($scope, dashboardService) {
+    '$scope', 'dashboardService', '$rootScope',
+    function($scope, dashboardService, $rootScope) {
       var vm = this;
+      $rootScope.change_flag = false; // 不切换
       // get deptartment data count
       dashboardService.getDeptDataQuantity().then(function(result) {
         var data = result.data.body[0];
@@ -14,6 +15,24 @@
           vm.deptData = data;
         }
       })
+
+
+      $scope.changeRoute = function() {
+        dashboardService.getStatus().then(function(result) {
+          var data = result.data;
+          var newValue = "";
+          if(data == 1) {
+            newValue = "";
+          }
+          else{
+            newValue = 1;
+          }
+          console.log(newValue);
+          dashboardService.setStatus(newValue).then(function(){
+
+          })
+        })
+      }
     }
   ]);
 
@@ -23,9 +42,9 @@
       var current_url = $location.path();
       dashboardService.getStatus().then(function(result) {
         var data = result.data;
-        if (data == "1") { // 切换
-          $rootScope.state = '1';
-          if (current_url.indexOf('standard') > -1) {
+        console.log(data);
+        if (data == 1) { // 切换
+          if (current_url.indexOf('bigdata') > -1) {
             $location.path('/idcuse')
           }
           if (current_url.indexOf('support') > -1) {
@@ -35,14 +54,11 @@
             $location.path('/support')
           }
           if (current_url.indexOf('idcuse') > -1) {
-            $location.path('/standard')
-          }
-        } else { // 不切换
-          if ($rootScope.state == '1') { // 已经在切换,需要停止切换
-            $rootScope.state = "";
+            $location.path('/bigdata')
           }
         }
       })
+
     }, 5000)
   }]);
 
@@ -53,7 +69,8 @@
         getDeptDataQuantity: getDeptDataQuantity,
         getStatus: getStatus,
         getIdcUse: getIdcUse,
-        getIdcUseTime:getIdcUseTime
+        getIdcUseTime: getIdcUseTime,
+        setStatus: setStatus
       }
 
       function getDeptDataQuantity() {
@@ -77,6 +94,11 @@
       function getIdcUseTime() {
         return $http.get(
           URL + '/serverMonitor/detailTime'
+        )
+      }
+      function setStatus(data) {
+        return $http.put(
+          URL + '/status/set?value='+data
         )
       }
     }
@@ -477,10 +499,10 @@
                 var option = {
                   legend: {
                     data: [{
-                      name: '大类',
+                      name: '数据集',
                       icon: 'rect'
                     }, {
-                      name: '小类',
+                      name: '数据项',
                       icon: 'rect'
                     }],
                     itemWidth: 90,
@@ -554,7 +576,7 @@
                     }
                   }],
                   series: [{
-                    name: '大类',
+                    name: '数据集',
                     type: 'bar',
                     barWidth: '32%',
                     itemStyle: {
@@ -566,7 +588,7 @@
                     },
                     data: _.map(table, 'tableNum')
                   }, {
-                    name: '小类',
+                    name: '数据项',
                     type: 'line',
                     smooth: false,
                     symbol: 'circle',
@@ -798,7 +820,7 @@
 
                   tickfont: {
                     "family": "微软雅黑",
-                    size: 14,
+                    size: 13,
                     color: '#e4e4e4'
                   },
                   ticktext: ['内存使用率', 'CPU使用率', '硬盘使用率'],
@@ -812,7 +834,7 @@
                   zerolinecolor: "#e4e4e4",
                   tickfont: {
                     "family": "微软雅黑",
-                    size: 14,
+                    size: 13,
                     color: '#e4e4e4'
                   },
                   ticktext: scope.nodeName,
@@ -825,7 +847,7 @@
                   showbackground: true,
                   zerolinecolor: "#e4e4e4",
                   tickfont: {
-                    size: 14,
+                    size: 13,
                     color: '#e4e4e4'
                   },
                   ticksuffix: '%'
@@ -848,16 +870,16 @@
 
             setInterval(function() {
               var container = document.getElementById('idcUse');
-              if(container) {
+              if (container) {
                 dashboardService.getIdcUse().then(function(resTime) {
-                  if(response.data != resTime.data && resTime.data.body) {
+                  if (response.data != resTime.data && resTime.data.body) {
                     container.data[0].z = groupData(resTime);
                     Plotly.redraw(container);
                   }
                 });
               }
 
-            },4000)
+            }, 4000)
           })
 
         }
@@ -994,7 +1016,7 @@
               top: 25,
               textStyle: {
                 color: 'rgb(0,225,252)',
-                fontSize: base_level*8,
+                fontSize: base_level * 8,
                 fontWeight: 'normal'
               }
             },

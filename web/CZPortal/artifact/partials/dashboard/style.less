@@ -23,44 +23,41 @@
     // top:-58px;
     background: url("../assets/images/timeline.png") center no-repeat;
     background-size: 100% 100%;
-    .light{
-      width:100%;
-      height:100%;
+    .light {
+      width: 100%;
+      height: 100%;
       background: url("../assets/images/timeline_light.png") center no-repeat;
       background-size: 100% 100%;
-      -webkit-animation-name:slideInLeftLight;
-    -moz-animation-name:slideInLeftLight;
-    -ms-animation-name:slideInLeftLight;
-    animation-name:slideInLeftLight;
-    // -webkit-animation-delay:2.4s;
-    // -moz-animation-delay:2.4s;
-    // -ms-animation-delay:2.4s;
-    // animation-delay:2.4s;
-
-    -webkit-animation-duration:3.4s;
-  -moz-animation-duration:3.4s;
-  -o-animation-duration:3.4s;
-  animation-duration:3.4s;
-  -webkit-animation-delay:6.4s;
-  -moz-animation-delay:6.4s;
-  -ms-animation-delay:6.4s;
-  animation-delay:6.4s;
-  -webkit-animation-fill-mode:both;
-  -moz-animation-fill-mode:both;
-  -o-animtaion-fill-mode:both;
-  animation-fill-mode:both;
-  -webkit-animation-timing-function: linear;
-  -moz-animation-timing-function: linear;
-  -o-animation-timing-function: linear;
-  animation-timing-function: linear;
-  -ms-animation-duration:1.4s;
-  -ms-animation-fill-mode:both;
-  -ms-animation-timing-function:linear;
-  animation-iteration-count:infinite;
-  -webkit-animation-iteration-count:infinite;
+      -webkit-animation-name: slideInLeftLight;
+      -moz-animation-name: slideInLeftLight;
+      -ms-animation-name: slideInLeftLight;
+      animation-name: slideInLeftLight;
+      // -webkit-animation-delay:2.4s;
+      // -moz-animation-delay:2.4s;
+      // -ms-animation-delay:2.4s;
+      // animation-delay:2.4s;
+      -webkit-animation-duration: 3.4s;
+      -moz-animation-duration: 3.4s;
+      -o-animation-duration: 3.4s;
+      animation-duration: 3.4s;
+      -webkit-animation-delay: 6.4s;
+      -moz-animation-delay: 6.4s;
+      -ms-animation-delay: 6.4s;
+      animation-delay: 6.4s;
+      -webkit-animation-fill-mode: both;
+      -moz-animation-fill-mode: both;
+      -o-animtaion-fill-mode: both;
+      animation-fill-mode: both;
+      -webkit-animation-timing-function: linear;
+      -moz-animation-timing-function: linear;
+      -o-animation-timing-function: linear;
+      animation-timing-function: linear;
+      -ms-animation-duration: 1.4s;
+      -ms-animation-fill-mode: both;
+      -ms-animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      -webkit-animation-iteration-count: infinite;
     }
-
-
   }
 }
 .section-main {
@@ -107,7 +104,7 @@
     color: #dbea05;
     font-family: '微软雅黑';
     font-weight: normal;
-    margin:0.5rem 0 0.5rem 0.5rem;
+    margin: 0.5rem 0 0.5rem 0.5rem;
     line-height: 4.1rem;
     height: 7%;
   }
@@ -128,6 +125,12 @@
       background: url("../assets/images/bg_IDC.png") center no-repeat;
       background-size: 100% 100%;
       overflow: hidden;
+      .exchange {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        opacity: 0;
+      }
     }
     &.dept-data {
       background: url("../assets/images/bg_dept_data.png") center no-repeat;
@@ -396,20 +399,17 @@
     transform: translate3d(-100%, 0, 0);
     visibility: visible;
   }
-
   to {
     -webkit-transform: translate3d(100%, 0, 0);
     transform: translate3d(100%, 0, 0);
   }
 }
-
 @keyframes slideInLeftLight {
   from {
     -webkit-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
     visibility: visible;
   }
-
   to {
     -webkit-transform: translate3d(100%, 0, 0);
     transform: translate3d(100%, 0, 0);

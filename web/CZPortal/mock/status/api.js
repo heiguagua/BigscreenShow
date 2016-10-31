@@ -5,5 +5,9 @@ Router.route('/status/get')
   .get(function(request, response) {
     response.json(Util.json('/status/json/get.json'));
 });
+Router.route('/status/set')
+  .put(function(request, response) {
+    response.json(Util.json('/status/json/get.json'));
+});
 /** Module export */
 module.exports = Router;
