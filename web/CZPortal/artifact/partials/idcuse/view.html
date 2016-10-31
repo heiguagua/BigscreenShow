@@ -14,20 +14,20 @@
         <thead>
           <tr>
             <th></th>
-            <th ng-repeat='node in nodeName'>{{node}}</th>
+            <th ng-repeat='node in nodeName' title={{node}}>{{node}}</th>
           </tr>
         </thead>
         <tr>
-          <td>硬盘使用率</td>
-          <td ng-repeat='diskRate in diskRateList track by $index'>{{diskRate}}%</td>
+          <td title='硬盘使用率'>硬盘使用率</td>
+          <td ng-repeat='diskRate in diskRateList track by $index' title='{{diskRate}}%'>{{diskRate}}%</td>
         </tr>
         <tr>
-          <td>CPU使用率</td>
-          <td ng-repeat='cpuRate in cpuRateList track by $index'>{{cpuRate}}%</td>
+          <td title='CPU使用率'>CPU使用率</td>
+          <td ng-repeat='cpuRate in cpuRateList track by $index' title='{{cpuRate}}%'>{{cpuRate}}%</td>
         </tr>
         <tr>
-          <td>内存使用率</td>
-          <td ng-repeat='memRate in memRateList track by $index'>{{memRate}}%</td>
+          <td title='内存使用率'>内存使用率</td>
+          <td ng-repeat='memRate in memRateList track by $index' title='{{memRate}}%'>{{memRate}}%</td>
         </tr>
       </table>
     </div>
