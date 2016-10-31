@@ -51,7 +51,9 @@
     function($http, URL) {
       return {
         getDeptDataQuantity: getDeptDataQuantity,
-        getStatus: getStatus
+        getStatus: getStatus,
+        getIdcUse: getIdcUse,
+        getIdcUseTime:getIdcUseTime
       }
 
       function getDeptDataQuantity() {
@@ -63,6 +65,18 @@
       function getStatus() {
         return $http.get(
           URL + '/status/get'
+        )
+      }
+
+      function getIdcUse() {
+        return $http.get(
+          URL + '/serverMonitor/detail'
+        )
+      }
+
+      function getIdcUseTime() {
+        return $http.get(
+          URL + '/serverMonitor/detailTime'
         )
       }
     }
@@ -123,20 +137,20 @@
       }
     }
   ]);
-
-  dashboard.service('dashboard.chartIdcUse', ['$http', 'URL',
-    function($http, URL) {
-      if (URL) {
-        return $http({
-          method: 'GET',
-          url: URL + '/serverMonitor/detail',
-          withCredentials: true
-        });
-      } else {
-        console.error('API Not Found in config.js');
-      }
-    }
-  ]);
+  //
+  // dashboard.service('dashboard.chartIdcUse', ['$http', 'URL',
+  //   function($http, URL) {
+  //     if (URL) {
+  //       return $http({
+  //         method: 'GET',
+  //         url: URL + '/serverMonitor/detail',
+  //         withCredentials: true
+  //       });
+  //     } else {
+  //       console.error('API Not Found in config.js');
+  //     }
+  //   }
+  // ]);
 
   /** Directive */
   dashboard.directive('wiservDockProgress', ['dashboard.chartDockProgress',
@@ -283,7 +297,6 @@
           //chartProgress.setOption(option);
 
           setTimeout(function() {
-            console.log('width:' + element.find('#dockProgress')[0].clientWidth);
             var box_width = element.find('#dockProgress')[0].clientWidth;
             $('#dockProgress').css({
               'width': box_width
@@ -461,8 +474,6 @@
                     }
                   });
                 });
-                console.log(element);
-                console.log(table);
                 var option = {
                   legend: {
                     data: [{
@@ -577,7 +588,6 @@
 
 
                 setInterval(function() {
-                  console.log('width:' + element.find('#deptData')[0].clientWidth);
                   var box_width = element.find('#deptData')[0].clientWidth;
                   $('#deptData').css({
                     'width': box_width
@@ -585,7 +595,7 @@
                   chartInstance.clear();
                   chartInstance.resize();
                   chartInstance.setOption(option);
-                }, 4000);
+                }, 2000);
 
               })
             })
@@ -599,8 +609,8 @@
     }
   ]);
 
-  dashboard.directive('wiservIdcUse', ['dashboard.chartIdcUse', '$location',
-    function(idcUseService, location) {
+  dashboard.directive('wiservIdcUse', ['dashboardService', '$location',
+    function(dashboardService, location) {
       return {
         restrict: 'ACE',
         template: "<div id='idcUse' style='width:100%;height:100%'></div>",
@@ -619,36 +629,11 @@
             plotly_height = screen_height * 0.6;
           }
 
-          idcUseService.then(function(response) {
+          dashboardService.getIdcUse().then(function(response) {
             var rateData = response.data.body;
             scope.memRateList = _.map(rateData, 'memRate');
             scope.cpuRateList = _.map(rateData, 'cpuRate');
             scope.diskRateList = _.map(rateData, 'diskRate');
-            var rows = [];
-            for (var i = 0; i < 3; i++) {
-              var monitors = {};
-              monitors[""] = i.toString();
-              switch (i) {
-                case 0:
-                  for (var j = 0; j < rateData.length; j++) {
-                    monitors[j] = rateData[j].memRate.toString();
-                  }
-                  break;
-                case 1:
-                  for (var j = 0; j < rateData.length; j++) {
-                    monitors[j] = rateData[j].cpuRate.toString();
-                  }
-                  break;
-                case 2:
-                  for (var j = 0; j < rateData.length; j++) {
-                    monitors[j] = rateData[j].diskRate.toString();
-                  }
-                  break;
-                default:
-                  break;
-              }
-              rows.push(monitors);
-            }
             scope.nodeName = _.map(rateData, 'nodeName');
 
             // var rows = [{
@@ -692,12 +677,48 @@
               });
             }
 
-            var z_data = []
-            for (var i = 0; i < 9; i++) {
-              z_data.push(unpack(rows, i));
+            function groupData(response) {
+              var rateData = response.data.body;
+              scope.memRateList = _.map(rateData, 'memRate');
+              scope.cpuRateList = _.map(rateData, 'cpuRate');
+              scope.diskRateList = _.map(rateData, 'diskRate');
+              var rows = [];
+              for (var i = 0; i < 3; i++) {
+                var monitors = {};
+                monitors[""] = i.toString();
+                switch (i) {
+                  case 0:
+                    for (var j = 0; j < rateData.length; j++) {
+                      monitors[j] = rateData[j].memRate.toString();
+                    }
+                    break;
+                  case 1:
+                    for (var j = 0; j < rateData.length; j++) {
+                      monitors[j] = rateData[j].cpuRate.toString();
+                    }
+                    break;
+                  case 2:
+                    for (var j = 0; j < rateData.length; j++) {
+                      monitors[j] = rateData[j].diskRate.toString();
+                    }
+                    break;
+                  default:
+                    break;
+                }
+                rows.push(monitors);
+              }
+
+              var z_data = []
+              for (var i = 0; i < 9; i++) {
+                z_data.push(unpack(rows, i));
+              }
+
+              return z_data;
             }
+
+
             var data = [{
-              z: z_data,
+              z: groupData(response),
               type: 'surface',
               "colorbar": {
                 "tickcolor": "#e4e4e4",
@@ -823,6 +844,20 @@
             Plotly.newPlot('idcUse', data, layout, {
               displayModeBar: false
             });
+
+
+            setInterval(function() {
+              var container = document.getElementById('idcUse');
+              if(container) {
+                dashboardService.getIdcUse().then(function(resTime) {
+                  if(response.data != resTime.data && resTime.data.body) {
+                    container.data[0].z = groupData(resTime);
+                    Plotly.redraw(container);
+                  }
+                });
+              }
+
+            },4000)
           })
 
         }
@@ -1062,7 +1097,6 @@
           //chartInstance.setOption(option);
 
           setTimeout(function() {
-            console.log('width:' + element.find('#chartBigData')[0].clientWidth);
             var box_width = element.find('#chartBigData')[0].clientWidth;
             $('#chartBigData').css({
               'width': box_width
@@ -1143,10 +1177,7 @@
         var screen_width = screen.width;
         var screen_height = screen.height;
         var path = location.path();
-        console.log(path);
-        console.log(path.indexOf('main'));
         if (path.indexOf('main') > -1) {
-          console.log($('.section'));
           $('.section').css({
             'height': screen_height / 2 + 'px'
           });

@@ -5,5 +5,9 @@ Router.route('/serverMonitor/detail')
   .get(function(request, response) {
     response.json(Util.json('/serverMonitor/json/detail.json'));
 });
+Router.route('/serverMonitor/detailTime')
+  .get(function(request, response) {
+    response.json(Util.json('/serverMonitor/json/detailTime.json'));
+});
 /** Module export */
 module.exports = Router;
