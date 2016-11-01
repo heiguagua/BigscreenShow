@@ -555,6 +555,12 @@
                   }],
                   yAxis: [{
                     type: 'value',
+                    name: '数据集',
+                    nameTextStyle:{
+                      color: '#FFF',
+                      fontSize: 18
+                    },
+                    nameGap:24,
                     axisTick: {
                       show: true
                     },
@@ -576,6 +582,12 @@
                     }
                   }, {
                     type: 'value',
+                    name: '数据项',
+                    nameTextStyle:{
+                      color: '#FFF',
+                      fontSize: 18
+                    },
+                    nameGap:24,
                     axisTick: {
                       show: true
                     },
