@@ -21,14 +21,13 @@
         dashboardService.getStatus().then(function(result) {
           var data = result.data;
           var newValue = "";
-          if(data == 1) {
+          if (data == 1) {
             newValue = "";
-          }
-          else{
+          } else {
             newValue = 1;
           }
           console.log(newValue);
-          dashboardService.setStatus(newValue).then(function(){
+          dashboardService.setStatus(newValue).then(function() {
 
           })
         })
@@ -96,9 +95,10 @@
           URL + '/serverMonitor/detailTime'
         )
       }
+
       function setStatus(data) {
         return $http.put(
-          URL + '/status/set?value='+data
+          URL + '/status/set?value=' + data
         )
       }
     }
@@ -574,6 +574,27 @@
                         color: ['rgba(204, 204, 204, 0.5)']
                       }
                     }
+                  }, {
+                    type: 'value',
+                    axisTick: {
+                      show: true
+                    },
+                    axisLine: {
+                      lineStyle: {
+                        color: 'rgba(204, 204, 204, 0.9)'
+                      }
+                    },
+                    axisLabel: {
+                      textStyle: {
+                        color: '#FFF',
+                        fontSize: 18
+                      }
+                    },
+                    splitLine: {
+                      lineStyle: {
+                        color: ['rgba(204, 204, 204, 0.5)']
+                      }
+                    }
                   }],
                   series: [{
                     name: '数据集',
@@ -593,6 +614,7 @@
                     smooth: false,
                     symbol: 'circle',
                     symbolSize: 12,
+                    yAxisIndex: 1,
                     itemStyle: {
                       normal: {
                         color: 'rgb(234,255,0)',
@@ -608,6 +630,15 @@
                 var chartInstance = echarts.init((element.find('#deptData'))[0]);
                 //chartInstance.setOption(option);
 
+                // setTimeout(function(){
+                //   var box_width = element.find('#deptData')[0].clientWidth;
+                //   $('#deptData').css({
+                //     'width': box_width
+                //   });
+                //   chartInstance.clear();
+                //   chartInstance.resize();
+                //   chartInstance.setOption(option);
+                // },1500)
 
                 setInterval(function() {
                   var box_width = element.find('#deptData')[0].clientWidth;
@@ -617,7 +648,7 @@
                   chartInstance.clear();
                   chartInstance.resize();
                   chartInstance.setOption(option);
-                }, 2000);
+                }, 3000);
 
               })
             })
