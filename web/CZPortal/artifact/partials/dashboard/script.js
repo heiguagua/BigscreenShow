@@ -453,18 +453,20 @@
             charDataset.setOption(option);
           }, 2000);
 
-          var i = 0;
-          setInterval(function() {
-            if (i == 9) {
-              i = 0;
-            }
-            charDataset.dispatchAction({
-              type: 'showTip',
-              seriesIndex: 1,
-              dataIndex: i
-            });
-            i++;
-          }, 2500);
+
+          // 定时器：动态滑过效果
+          // var i = 0;
+          // setInterval(function() {
+          //   if (i == 9) {
+          //     i = 0;
+          //   }
+          //   charDataset.dispatchAction({
+          //     type: 'showTip',
+          //     seriesIndex: 1,
+          //     dataIndex: i
+          //   });
+          //   i++;
+          // }, 2500);
 
 
 
