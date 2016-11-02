@@ -556,11 +556,11 @@
                   yAxis: [{
                     type: 'value',
                     name: '数据集',
-                    nameTextStyle:{
+                    nameTextStyle: {
                       color: '#FFF',
                       fontSize: 18
                     },
-                    nameGap:24,
+                    nameGap: 24,
                     axisTick: {
                       show: true
                     },
@@ -583,11 +583,11 @@
                   }, {
                     type: 'value',
                     name: '数据项',
-                    nameTextStyle:{
+                    nameTextStyle: {
                       color: '#FFF',
                       fontSize: 18
                     },
-                    nameGap:24,
+                    nameGap: 24,
                     axisTick: {
                       show: true
                     },
@@ -1254,6 +1254,35 @@
     };
   }]);
 
+  dashboard.directive('wiservImagePlay', ['$location', function(location) {
+    return {
+      restrict: 'A',
+      templateUrl: "partials/support/sub.html",
+      replace: true,
+      link: function(scope, element, attrs) {
+        element.slick({
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 3000,
+        });
+      }
+    }
+  }]);
 
-
+  dashboard.directive('wiservImagePlaydown', ['$location', function(location) {
+    return {
+      restrict: 'A',
+      templateUrl: "partials/support/subdown.html",
+      replace: true,
+      link: function(scope, element, attrs) {
+        element.slick({
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 3000,
+        });
+      }
+    }
+  }]);
 })();
