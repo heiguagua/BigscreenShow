@@ -96,7 +96,7 @@
     background-size: 100% 100%;
   }
   &.bigdata {
-    background: url("../assets/images/bg_7.png") center no-repeat;
+    background: url("../assets/images/bg_bigdata.jpg") center no-repeat;
     background-size: 100% 100%;
   }
   h1 {
@@ -116,27 +116,68 @@
     &.app-support {
       background: url("../assets/images/bg_app_support.png") center no-repeat;
       background-size: 100% 100%;
-      .support-wrap{
-        padding:1rem 0 3rem 1rem;;
+      .support-wrap {
+        padding: 1rem 0 3rem 1rem;
       }
       .tab-menu {
         padding: 30px;
         overflow: hidden;
-        padding: 4rem 1rem;
-        img {
-          width: 100%;
+        padding: 3rem 1rem;
+        position: relative;
+        .center-bg {
+          img{}
         }
+        .desc-left {
+          position: absolute;
+          left: 11%;
+          top: 24%;
+          width: 6rem;
+          padding: 1rem 0;
+        }
+        .desc-right {
+          position: absolute;
+          right: 10%;
+          top: 24%;
+          width: 8rem;
+          padding: 1rem 0;
+        }
+        img {}
         a {
           display: block;
-          color: rgba(255,255,255,0.9);
+          color: rgba(0,216,255,1);
           line-height: 1.5rem;
-          font-size: 1rem;
+          font-size: 0.8rem;
           font-family: '微软雅黑';
-          padding-top: 1rem;
+          padding-top: 0.8rem;
+        }
+        &.tab-down {
+          .desc-left {
+            padding: 0.5rem 0;
+            a {
+              line-height: 1.5rem;
+              padding-top: 0.5rem;
+            }
+          }
         }
       }
       .govbanner {
         padding: 4rem 1rem;
+        .slick-prev{
+          width:40px;
+          height:48px;
+          background:url(../assets/images/arrow-prev.png) center no-repeat;
+          &:before{
+            content:'';
+          }
+        }
+        .slick-next{
+          width:40px;
+          height:48px;
+          background:url(../assets/images/arrow-next.png) center no-repeat;
+          &:before{
+            content:'';
+          }
+        }
       }
       .slick-slide {
         a {
@@ -144,7 +185,6 @@
           text-align: center;
           img {
             display: inline !important;
-            width: 100%;
           }
         }
       }
