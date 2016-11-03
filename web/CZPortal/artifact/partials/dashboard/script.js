@@ -682,8 +682,8 @@
         restrict: 'ACE',
         template: "<div id='idcUse' style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          var screen_width = screen.width;
-          var screen_height = screen.height;
+          var screen_width = window.screen.width;
+          var screen_height = window.screen.height;
           var path = location.path();
           var plotly_width = 500;
           var plotly_height = 300;
