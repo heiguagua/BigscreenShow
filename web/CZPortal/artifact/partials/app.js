@@ -102,6 +102,7 @@
               }
               if(path.indexOf('dept') > -1 || path.indexOf('standard') > -1 || path.indexOf('support') > -1 || path.indexOf('datamap') > -1  || path.indexOf('idcuse') > -1  || path.indexOf('bigdata') > -1 ) {
                 $('.section').css({'height':screen_height+'px','width':screen_width+'px'});
+                $('body').css({'overflow':'hidden'});
               }
               if(path.indexOf('dashboard') > -1) {
                 $('html').css({'font-size':'16px'});
