@@ -682,19 +682,9 @@
         restrict: 'ACE',
         template: "<div id='idcUse' style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          var screen_width = window.screen.width;
-          var screen_height = window.screen.height;
           var path = location.path();
           var plotly_width = 500;
           var plotly_height = 300;
-          if (path.indexOf('main') > -1) {
-            plotly_width = (screen_width / 2) * 0.8;
-            plotly_height = (screen_height / 2) * 0.6;
-          }
-          if (path.indexOf('dept') > -1 || path.indexOf('standard') > -1 || path.indexOf('support') > -1 || path.indexOf('datamap') > -1 || path.indexOf('idcuse') > -1 || path.indexOf('bigdata') > -1) {
-            plotly_width = screen_width * 0.8;
-            plotly_height = screen_height * 0.6;
-          }
 
           dashboardService.getIdcUse().then(function(response) {
             var rateData = response.data.body;
@@ -820,111 +810,119 @@
 
             }];
 
-            var layout = {
-              title: '',
-              plot_bgcolor: 'transparent',
-              "font": {
-                "family": "\"Open sans\", verdana, arial, sans-serif",
-                "size": 16,
-              },
-              scene: {
-                domain: {
-                  x: [0.00, 1],
-                  y: [0, 1]
+
+
+
+            setTimeout(function() {
+              console.log(element.find('#idcUse')[0].clientWidth);
+              console.log(element.find('#idcUse')[0].clientHeight);
+              plotly_width = (element.find('#idcUse')[0].clientWidth ) * 0.8;
+              plotly_height = (element.find('#idcUse')[0].clientHeight ) ;
+              var layout = {
+                title: '',
+                plot_bgcolor: 'transparent',
+                "font": {
+                  "family": "\"Open sans\", verdana, arial, sans-serif",
+                  "size": 16,
                 },
-                camera: {
-                  center: {
-                    x: -1.1,
-                    y: 0,
-                    z: -1
+                scene: {
+                  domain: {
+                    x: [0.00, 1],
+                    y: [0, 1]
                   },
-                  eye: {
-                    x: 5.4,
-                    y: 4.6,
-                    z: 0.4
+                  camera: {
+                    center: {
+                      x: -1.1,
+                      y: 0,
+                      z: -0.4
+                    },
+                    eye: {
+                      x: 5.4,
+                      y: 4.6,
+                      z: 0.4
+                    },
+                    up: {
+                      x: 0,
+                      y: 0,
+                      z: 1
+                    }
                   },
-                  up: {
-                    x: 0,
-                    y: 0,
-                    z: 1
+                  aspectmode: "manuel",
+                  aspectratio: {
+                    x: 1.8,
+                    y: 9,
+                    z: 3.6
+                  },
+                  autosize: false,
+                  xaxis: {
+                    title: '',
+                    backgroundcolor: "transparent",
+                    gridcolor: "#e4e4e4",
+                    showbackground: true,
+                    zerolinecolor: "#e4e4e4",
+
+                    tickfont: {
+                      "family": "微软雅黑",
+                      size: 13,
+                      color: '#e4e4e4'
+                    },
+                    ticktext: ['内存使用率', 'CPU使用率', '硬盘使用率'],
+                    tickvals: [0, 1, 2]
+                  },
+                  yaxis: {
+                    title: '',
+                    backgroundcolor: "transparent",
+                    gridcolor: "#e4e4e4",
+                    showbackground: true,
+                    zerolinecolor: "#e4e4e4",
+                    tickfont: {
+                      "family": "微软雅黑",
+                      size: 13,
+                      color: '#e4e4e4'
+                    },
+                    ticktext: scope.nodeName,
+                    tickvals: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                  },
+                  zaxis: {
+                    title: '',
+                    backgroundcolor: "transparent",
+                    gridcolor: "#e4e4e4",
+                    showbackground: true,
+                    zerolinecolor: "#e4e4e4",
+                    tickfont: {
+                      size: 13,
+                      color: '#e4e4e4'
+                    },
+                    ticksuffix: '%'
                   }
-                },
-                aspectmode: "manuel",
-                aspectratio: {
-                  x: 1.8,
-                  y: 9,
-                  z: 3.6
                 },
                 autosize: false,
-                xaxis: {
-                  title: '',
-                  backgroundcolor: "transparent",
-                  gridcolor: "#e4e4e4",
-                  showbackground: true,
-                  zerolinecolor: "#e4e4e4",
-
-                  tickfont: {
-                    "family": "微软雅黑",
-                    size: 13,
-                    color: '#e4e4e4'
-                  },
-                  ticktext: ['内存使用率', 'CPU使用率', '硬盘使用率'],
-                  tickvals: [0, 1, 2]
-                },
-                yaxis: {
-                  title: '',
-                  backgroundcolor: "transparent",
-                  gridcolor: "#e4e4e4",
-                  showbackground: true,
-                  zerolinecolor: "#e4e4e4",
-                  tickfont: {
-                    "family": "微软雅黑",
-                    size: 13,
-                    color: '#e4e4e4'
-                  },
-                  ticktext: scope.nodeName,
-                  tickvals: [0, 1, 2, 3, 4, 5, 6, 7, 8]
-                },
-                zaxis: {
-                  title: '',
-                  backgroundcolor: "transparent",
-                  gridcolor: "#e4e4e4",
-                  showbackground: true,
-                  zerolinecolor: "#e4e4e4",
-                  tickfont: {
-                    size: 13,
-                    color: '#e4e4e4'
-                  },
-                  ticksuffix: '%'
+                width: plotly_width,
+                height: plotly_height,
+                margin: {
+                  l: 0,
+                  r: 10,
+                  b: 5,
+                  t: 10,
                 }
-              },
-              autosize: false,
-              width: plotly_width,
-              height: plotly_height,
-              margin: {
-                l: 0,
-                r: 10,
-                b: 5,
-                t: 10,
-              }
-            };
-            Plotly.newPlot('idcUse', data, layout, {
-              displayModeBar: false
-            });
+              };
+              Plotly.newPlot('idcUse', data, layout, {
+                displayModeBar: false
+              });
+            }, 2000);
 
-
-            setInterval(function() {
-              var container = document.getElementById('idcUse');
-              if (container) {
-                dashboardService.getIdcUse().then(function(resTime) {
-                  if (response.data != resTime.data && resTime.data.body) {
-                    container.data[0].z = groupData(resTime);
-                    Plotly.redraw(container);
-                  }
-                });
-              }
-
-            }, 4000)
+            // setInterval(function() {
+            //   var container = document.getElementById('idcUse');
+            //   if (container) {
+            //     dashboardService.getIdcUse().then(function(resTime) {
+            //       if (response.data != resTime.data && resTime.data.body) {
+            //         container.data[0].z = groupData(resTime);
+            //         Plotly.redraw(container);
+            //       }
+            //     });
+            //   }
+            //
+            // }, 4000)
           })
 
         }
