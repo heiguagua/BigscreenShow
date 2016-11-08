@@ -3,7 +3,7 @@
   var module = angular.module('common.http', []);
 
   module.constant('URL',
-    // 'http://localhost:6008'
+    //'http://localhost:6008'
     //'http://172.16.1.55:8080/data'
     location.protocol + '//' + location.host + '/BigScreenShow/data'
   );

@@ -816,7 +816,7 @@
             setTimeout(function() {
               console.log(element.find('#idcUse')[0].clientWidth);
               console.log(element.find('#idcUse')[0].clientHeight);
-              plotly_width = (element.find('#idcUse')[0].clientWidth ) * 0.8;
+              plotly_width = (element.find('#idcUse')[0].clientWidth ) * 0.95;
               plotly_height = (element.find('#idcUse')[0].clientHeight ) ;
               var layout = {
                 title: '',
@@ -832,9 +832,9 @@
                   },
                   camera: {
                     center: {
-                      x: -1.1,
-                      y: 0,
-                      z: -0.4
+                      x: -1,
+                      y: 1.2,
+                      z: -0.5
                     },
                     eye: {
                       x: 5.4,
@@ -849,8 +849,8 @@
                   },
                   aspectmode: "manuel",
                   aspectratio: {
-                    x: 1.8,
-                    y: 9,
+                    x: 2.8,
+                    y: 11.2,
                     z: 3.6
                   },
                   autosize: false,
