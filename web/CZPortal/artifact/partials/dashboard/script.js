@@ -642,7 +642,7 @@
                 };
 
                 var chartInstance = echarts.init((element.find('#deptData'))[0]);
-                //chartInstance.setOption(option);
+                chartInstance.setOption(option);
 
                 // setTimeout(function(){
                 //   var box_width = element.find('#deptData')[0].clientWidth;
@@ -656,9 +656,9 @@
 
                 setInterval(function() {
                   var box_width = element.find('#deptData')[0].clientWidth;
-                  $('#deptData').css({
-                    'width': box_width
-                  });
+                  // $('#deptData').css({
+                  //   'width': box_width
+                  // });
                   chartInstance.clear();
                   chartInstance.resize();
                   chartInstance.setOption(option);
