@@ -693,41 +693,6 @@
             scope.diskRateList = _.map(rateData, 'diskRate');
             scope.nodeName = _.map(rateData, 'nodeName');
 
-            // var rows = [{
-            //   "": "0",
-            //   0: "70.15",
-            //   1: '76.77',
-            //   2: "61.39",
-            //   3: '59.32',
-            //   4: '62.58',
-            //   5: '28.89',
-            //   6: '58.43',
-            //   7: '32.54',
-            //   8: '35.42'
-            // }, {
-            //   "": "1",
-            //   0: "0",
-            //   1: "0",
-            //   2: '48.32',
-            //   3: '12.56',
-            //   4: '19.68',
-            //   5: '9.15',
-            //   6: '2.7',
-            //   7: '35.13',
-            //   8: '12.43'
-            // }, {
-            //   "": "2",
-            //   0: "0",
-            //   1: "0",
-            //   2: '3.48',
-            //   3: '2.61',
-            //   4: '2.47',
-            //   5: '1.24',
-            //   6: '3.41',
-            //   7: '5.76',
-            //   8: '6.87'
-            // }];
-
             function unpack(rows, key) {
               return rows.map(function(row) {
                 return row[key];
@@ -772,10 +737,23 @@
 
               return z_data;
             }
-
-
+            var z_group_data = groupData(response);
+            // var text = z_group_data.map((row, i) => row.map((item, j) => {
+            //   return scope.nodeName[i] + '<br>硬盘使用率: ' + z_group_data[i][2] + '%<br>CPU使用率: ' + z_group_data[i][1] + '%<br>内存使用率: ' + z_group_data[i][0] + '%'
+            // }));
+            var text = [];
+            for(var i=0; i<z_group_data.length;i++) {
+              var obj = [];
+              for(var j=0; j<z_group_data[i].length; j++) {
+                var data =  scope.nodeName[i] + '<br>硬盘使用率: ' + z_group_data[i][2] + '%<br>CPU使用率: ' + z_group_data[i][1] + '%<br>内存使用率: ' + z_group_data[i][0] + '%';
+                obj.push(data);
+              }
+              text.push(obj);
+            }
             var data = [{
               z: groupData(response),
+              text: text,
+              hoverinfo: 'text',
               type: 'surface',
               "colorbar": {
                 "tickcolor": "#e4e4e4",
@@ -814,12 +792,12 @@
 
 
             setTimeout(function() {
-              console.log(element.find('#idcUse')[0].clientWidth);
-              console.log(element.find('#idcUse')[0].clientHeight);
-              plotly_width = (element.find('#idcUse')[0].clientWidth ) * 0.95;
-              plotly_height = (element.find('#idcUse')[0].clientHeight ) ;
+              plotly_width = (element.find('#idcUse')[0].clientWidth) * 0.95;
+              plotly_height = (element.find('#idcUse')[0].clientHeight);
+
               var layout = {
                 title: '',
+                hovermode: "closest",
                 plot_bgcolor: 'transparent',
                 "font": {
                   "family": "\"Open sans\", verdana, arial, sans-serif",
@@ -909,6 +887,7 @@
               Plotly.newPlot('idcUse', data, layout, {
                 displayModeBar: false
               });
+
             }, 2000);
 
             // setInterval(function() {
