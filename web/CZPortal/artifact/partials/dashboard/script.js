@@ -69,7 +69,8 @@
         getStatus: getStatus,
         getIdcUse: getIdcUse,
         getIdcUseTime: getIdcUseTime,
-        setStatus: setStatus
+        setStatus: setStatus,
+        getDataInfoNum: getDataInfoNum
       }
 
       function getDeptDataQuantity() {
@@ -99,6 +100,11 @@
       function setStatus(data) {
         return $http.put(
           URL + '/status/set?value=' + data
+        )
+      }
+      function getDataInfoNum() {
+        return $http.get(
+          URL + '/depDataInfo/dataInfoNum'
         )
       }
     }
@@ -705,7 +711,7 @@
               scope.cpuRateList = _.map(rateData, 'cpuRate');
               scope.diskRateList = _.map(rateData, 'diskRate');
               var rows = [];
-              for (var i = 0; i < 3; i++) {
+              for (var i = 0; i < 2; i++) {
                 var monitors = {};
                 monitors[""] = i.toString();
                 switch (i) {
@@ -719,11 +725,11 @@
                       monitors[j] = rateData[j].cpuRate.toString();
                     }
                     break;
-                  case 2:
-                    for (var j = 0; j < rateData.length; j++) {
-                      monitors[j] = rateData[j].diskRate.toString();
-                    }
-                    break;
+                  // case 2:
+                  //   for (var j = 0; j < rateData.length; j++) {
+                  //     monitors[j] = rateData[j].diskRate.toString();
+                  //   }
+                  //   break;
                   default:
                     break;
                 }
@@ -738,14 +744,12 @@
               return z_data;
             }
             var z_group_data = groupData(response);
-            // var text = z_group_data.map((row, i) => row.map((item, j) => {
-            //   return scope.nodeName[i] + '<br>硬盘使用率: ' + z_group_data[i][2] + '%<br>CPU使用率: ' + z_group_data[i][1] + '%<br>内存使用率: ' + z_group_data[i][0] + '%'
-            // }));
             var text = [];
             for(var i=0; i<z_group_data.length;i++) {
               var obj = [];
               for(var j=0; j<z_group_data[i].length; j++) {
-                var data =  scope.nodeName[i] + '<br>硬盘使用率: ' + z_group_data[i][2] + '%<br>CPU使用率: ' + z_group_data[i][1] + '%<br>内存使用率: ' + z_group_data[i][0] + '%';
+                // var data =  scope.nodeName[i] + '<br>硬盘使用率: ' + z_group_data[i][2] + '%<br>CPU使用率: ' + z_group_data[i][1] + '%<br>内存使用率: ' + z_group_data[i][0] + '%';
+                var data =  scope.nodeName[i] + '<br>CPU使用率: ' + z_group_data[i][1] + '%<br>内存使用率: ' + z_group_data[i][0] + '%';
                 obj.push(data);
               }
               text.push(obj);
@@ -844,8 +848,8 @@
                       size: 13,
                       color: '#e4e4e4'
                     },
-                    ticktext: ['内存使用率', 'CPU使用率', '硬盘使用率'],
-                    tickvals: [0, 1, 2]
+                    ticktext: ['内存使用率', 'CPU使用率'],
+                    tickvals: [0, 0.9]
                   },
                   yaxis: {
                     title: '',
@@ -909,69 +913,250 @@
     }
   ]);
 
+dashboard.directive('wiservMapText', ['dashboardService',
+  function(dashboardService) {
+    return {
+      restrict: 'ACE',
+      template: '<canvas id="myCanvas" ></canvas>',
+      link: function(scope, element, attrs) {
+        function drawTextAlongArc(context, str, centerX, centerY, radius, angle) {
+        var len = str.length, s;
+        context.save();
+        context.translate(centerX, centerY);
+        context.rotate(-1 * angle / 2);
+        context.rotate(-10 * (angle / len));// 调整文字的起始偏移
+        for(var n = 0; n < len; n++) {
+          context.rotate(angle / len);
+          context.save();
+          context.translate(0, -1 * radius);
+          s = str[n];
+          context.fillText(s, 0, 0);
+          context.restore();
+        }
+        context.restore();
+      }
+
+      // dashboardService.getDataInfoNum().then(function(res) {
+      setTimeout(function() {
+        var map_chart_clientheight = element.parent()[0].clientHeight;
+        var map_chart_height = element.parent()[0].offsetHeight;
+        $(element.find('canvas')).attr('width',map_chart_height);
+        $(element.find('canvas')).attr('height',map_chart_height);
+
+        var word_spacing = 3;
+        if(map_chart_clientheight>700) {
+          word_spacing = 5;
+        }
+
+        var canvas = document.getElementById('myCanvas'),
+          context = canvas.getContext('2d'),
+          centerX = canvas.width / 2+20,
+          centerY = canvas.height/2+20,
+          angle = Math.PI/word_spacing ,//调整文字间距
+          radius = map_chart_height/2;
+
+        context.font = '26px Calibri';
+        context.textAlign = 'center';
+        context.fillStyle = '#FFF';
+        context.strokeStyle = 'transparent';
+        context.lineWidth =0;
+
+        // var dataInfoNum = res.body[0].dataInfoNum;
+        drawTextAlongArc(context, '社会化数据共216类', centerX, centerY, radius, angle);
+
+        // draw circle underneath text
+        context.arc(centerX, centerY, radius - 10, 0, 2 * Math.PI, false);
+        context.stroke();
+      // })
+      },600)
+
+
+
+      }
+    }
+  }])
+
+  dashboard.directive('wiservMapTextDown', ['dashboardService',
+    function(dashboardService) {
+      return {
+        restrict: 'ACE',
+        template: '<canvas id="downCanvas" ></canvas>',
+        link: function(scope, element, attrs) {
+          function drawTextAlongArc(context, str, centerX, centerY, radius, angle,rotate_base) {
+          var len = str.length, s;
+          context.save();
+          context.translate(centerX, centerY);
+          context.rotate(-1 * angle / 2);
+          context.rotate(rotate_base * (angle / len));// 调整文字的起始偏移
+          for(var n = 0; n < len; n++) {
+            context.rotate(angle / len);
+            context.save();
+            context.translate(0, -1 * radius);
+            s = str[n];
+            context.fillText(s, 0, 0);
+            context.restore();
+          }
+          context.restore();
+        }
+
+        dashboardService.getDataInfoNum().then(function(res) {
+          setTimeout(function() {
+            var map_chart_clientheight = element.parent()[0].clientHeight;
+            var map_chart_height = element.parent()[0].offsetHeight;
+            $(element.find('canvas')).attr('width',map_chart_height);
+            $(element.find('canvas')).attr('height',map_chart_height);
+
+            var word_spacing = 4;
+            var rotate_base = 14;
+            if(map_chart_clientheight>700) {
+              word_spacing = 6;
+              rotate_base = 19;
+            }
+
+          var canvas = document.getElementById('downCanvas'),
+            context = canvas.getContext('2d'),
+            centerX = canvas.width / 2-20,
+            centerY = canvas.height/2-20,
+            angle = Math.PI/word_spacing ,//调整文字间距
+            radius = map_chart_height/2;
+
+          context.font = '26px Calibri';
+          context.textAlign = 'center';
+          context.fillStyle = '#FFF';
+          context.strokeStyle = 'transparent';
+          context.lineWidth =0;
+
+          var dataInfoNum = '';
+          if(res.data && res.data.body[0] && res.data.body[0].dataInfoNum) {
+            dataInfoNum = res.data.body[0].dataInfoNum;
+          }
+          drawTextAlongArc(context, '政务数据共'+dataInfoNum+'类', centerX, centerY, radius, angle,rotate_base);
+
+          // draw circle underneath text
+          context.arc(centerX, centerY, radius - 10, 0, 2 * Math.PI, false);
+          context.stroke();
+        },600)
+
+      })
+        }
+      }
+    }])
+
   dashboard.directive('wiservMapChart', [
     function() {
       return {
         restrict: 'ACE',
-        template: '<svg width="730" height="730" ></svg>',
+        template: '<svg ></svg>',
         link: function(scope, element, attrs) {
-          var svg = d3.select(element.find('svg')[0]),
-            width = +svg.attr("width"),
-            height = +svg.attr("height"),
-            g = svg.append("g").attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")");
+          setTimeout(function() {
+            var map_chart_clientheight = element.parent()[0].clientHeight;
+            var map_chart_height = element.parent()[0].offsetHeight;
+            $(element.parent()[0]).css('width',(map_chart_height)+'px');
+            $(element.parent()[0]).css('height',(map_chart_height)+'px');
+            $(element.find('svg')[0]).attr('width',map_chart_clientheight);
+            $(element.find('svg')[0]).attr('height',map_chart_clientheight);
 
-          var stratify = d3.stratify()
-            .parentId(function(d) {
-              return d.id.substring(0, d.id.lastIndexOf("."));
+            var svg = d3.select(element.find('svg')[0]),
+              width = +svg.attr("width"),
+              height = +svg.attr("height"),
+              g = svg.append("g").attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")");
+
+            var stratify = d3.stratify()
+              .parentId(function(d) {
+                return d.id.substring(0, d.id.lastIndexOf("."));
+              });
+
+            var tree_size = [285, 150];
+            if(map_chart_clientheight>700) {
+              tree_size = [285, 230];
+            }
+            var tree = d3.tree()
+              .size(tree_size)
+              .separation(function(a, b) {
+                return (a.parent == b.parent ? 1 : 2) / a.depth;
+              });
+
+            d3.csv("assets/file/flare.csv", function(error, data) {
+              console.log(data);
+              // var data = [{
+              //   id:'data',
+              //   value:''
+              // },{
+              //   id:'data.social',
+              //   value:''
+              // },{
+              //   id:'data.gov',
+              //   value:''
+              // },{
+              //   id:'data.social.交通及通讯',
+              //   value:''
+              // },{
+              //   id:'data.social.交通及通讯1',
+              //   value:''
+              // },{
+              //   id:'data.social.交通及通讯2',
+              //   value:''
+              // },{
+              //   id:'data.social.交通及通讯3',
+              //   value:''
+              // },{
+              //   id:'data.gov.交通及通讯',
+              //   value:''
+              // },{
+              //   id:'data.gov.交通及通讯1',
+              //   value:''
+              // },{
+              //   id:'data.gov.交通及通讯2',
+              //   value:''
+              // },{
+              //   id:'data.gov.交通及通讯3',
+              //   value:''
+              // }];
+              if (error) throw error;
+
+              var root = tree(stratify(data));
+
+              var link = g.selectAll(".link")
+                .data(root.descendants().slice(1))
+                .enter().append("path")
+                .attr("class", "link")
+                .attr("d", function(d) {
+                  return "M" + project(d.x, d.y) + "C" + project(d.x, (d.y + d.parent.y) / 1.8) + " " + project(d.parent.x, (d.y + d.parent.y) / 3) + " " + project(d.parent.x, d.parent.y/1.1);
+                });
+
+              var node = g.selectAll(".node")
+                .data(root.descendants())
+                .enter().append("g")
+                .attr("class", function(d) {
+                  return "node" + (d.children ? " node--internal" : " node--leaf");
+                })
+                .attr("transform", function(d) {
+                  if(d.children) {
+                    return "translate(" + project(d.x, d.y/1.1) + ")";
+                  }
+                  return "translate(" + project(d.x, d.y) + ")";
+                });
+
+              node.append("circle")
+                .attr("r", 9.5);
+
+              node.append("text")
+                .attr("dy", ".31em")
+                .attr("x", function(d) {
+                  return d.x < 180 === !d.children ? -12 : 12;
+                })
+                .style("text-anchor", function(d) {
+                  return d.x < 180 === !d.children ? "end" : "start";
+                })
+                .attr("transform", function(d) {
+                  return "rotate(" + (d.x < 180 ? d.x - 90 : d.x + 90) + ")";
+                })
+                .text(function(d) {
+                  return d.id.substring(d.id.lastIndexOf(".") + 1);
+                });
             });
 
-          var tree = d3.tree()
-            .size([230, 230])
-            .separation(function(a, b) {
-              return (a.parent == b.parent ? 1 : 2) / a.depth;
-            });
-
-          d3.csv("assets/file/flare.csv", function(error, data) {
-            if (error) throw error;
-
-            var root = tree(stratify(data));
-
-            var link = g.selectAll(".link")
-              .data(root.descendants().slice(1))
-              .enter().append("path")
-              .attr("class", "link")
-              .attr("d", function(d) {
-                return "M" + project(d.x, d.y) + "C" + project(d.x, (d.y + d.parent.y) / 2) + " " + project(d.parent.x, (d.y + d.parent.y) / 2) + " " + project(d.parent.x, d.parent.y);
-              });
-
-            var node = g.selectAll(".node")
-              .data(root.descendants())
-              .enter().append("g")
-              .attr("class", function(d) {
-                return "node" + (d.children ? " node--internal" : " node--leaf");
-              })
-              .attr("transform", function(d) {
-                return "translate(" + project(d.x, d.y) + ")";
-              });
-
-            node.append("circle")
-              .attr("r", 9.5);
-
-            node.append("text")
-              .attr("dy", ".31em")
-              .attr("x", function(d) {
-                return d.x < 180 === !d.children ? -12 : 12;
-              })
-              .style("text-anchor", function(d) {
-                return d.x < 180 === !d.children ? "end" : "start";
-              })
-              .attr("transform", function(d) {
-                return "rotate(" + (d.x < 180 ? d.x - 90 : d.x + 90) + ")";
-              })
-              .text(function(d) {
-                return d.id.substring(d.id.lastIndexOf(".") + 1);
-              });
-          });
+          },600)
 
           function project(x, y) {
             var angle = (x - 90) / 180 * Math.PI,
