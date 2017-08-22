@@ -2,62 +2,22 @@
   width: 7680px;
   height: 2160px;
   overflow: hidden;
-  // background:url(../assets/images/bg.png) no-repeat;
+  position:relative;
 }
 .section-center {
   width: 3840px;
   height: 1080px;
   float: left;
-  background-size: 100% 100%;
   overflow: hidden;
   background: url("../assets/images/bg_2.png") center no-repeat;
+  background-size: 100% 100%;
   .title {
     width: 100%;
     height: 27.41%;
-    background: url("../assets/images/bg_title.png") center no-repeat;
-    background-size: 100% 100%;
   }
   .content-center {
     position: relative;
     height: 72.5%;
-    // top:-58px;
-    background: url("../assets/images/timeline.png") center no-repeat;
-    background-size: 100% 100%;
-    .light {
-      width: 100%;
-      height: 100%;
-      background: url("../assets/images/timeline_light.png") center no-repeat;
-      background-size: 100% 100%;
-      -webkit-animation-name: slideInLeftLight;
-      -moz-animation-name: slideInLeftLight;
-      -ms-animation-name: slideInLeftLight;
-      animation-name: slideInLeftLight;
-      // -webkit-animation-delay:2.4s;
-      // -moz-animation-delay:2.4s;
-      // -ms-animation-delay:2.4s;
-      // animation-delay:2.4s;
-      -webkit-animation-duration: 4s;
-      -moz-animation-duration: 4s;
-      -o-animation-duration: 4s;
-      animation-duration: 4s;
-      -webkit-animation-delay: 6.4s;
-      -moz-animation-delay: 6.4s;
-      -ms-animation-delay: 6.4s;
-      animation-delay: 6.4s;
-      -webkit-animation-fill-mode: both;
-      -moz-animation-fill-mode: both;
-      -o-animtaion-fill-mode: both;
-      animation-fill-mode: both;
-      -webkit-animation-timing-function: linear;
-      -moz-animation-timing-function: linear;
-      -o-animation-timing-function: linear;
-      animation-timing-function: linear;
-      -ms-animation-duration: 1.4s;
-      -ms-animation-fill-mode: both;
-      -ms-animation-timing-function: linear;
-      animation-iteration-count: infinite;
-      -webkit-animation-iteration-count: infinite;
-    }
   }
 }
 .section-main {
@@ -75,8 +35,6 @@
     background: url("../assets/images/bg_5.png") center no-repeat;
     background-size: 100% 100%;
     .content {
-      background: url("../assets/images/bg_datamap2.png") center no-repeat;
-      background-size: 100% 100%;
       .flex-row;
     }
   }
@@ -108,17 +66,14 @@
     margin: 0.5rem 0 0.5rem 0.5rem;
     line-height: 4.1rem;
     height: 7%;
+    padding-left: 1.5rem;
   }
   .content {
     position: relative;
-    // border: 1px solid rgba(0,225,227,1);
     height: 87%;
-    // box-shadow: 0 0 0 1px rgba(0,153,234,1);
     &.app-support {
-      background: url("../assets/images/bg_app_support.png") center no-repeat;
-      background-size: 100% 100%;
       .support-wrap {
-        padding: 1rem 0 3rem 1rem;
+        padding: 2rem 0 3rem 2rem;
       }
       .tab-menu {
         padding: 30px;
@@ -204,12 +159,9 @@
       }
     }
     &.standard-made {
-      background: url("../assets/images/bg_standard_made.png") center no-repeat;
-      background-size: 100% 100%;
+      padding: 50px 80px 0 80px;
     }
     &.idc-use {
-      background: url("../assets/images/bg_IDC.png") center no-repeat;
-      background-size: 100% 100%;
       overflow: hidden;
       .exchange {
         position: absolute;
@@ -219,12 +171,8 @@
       }
     }
     &.dept-data {
-      background: url("../assets/images/bg_dept_data.png") center no-repeat;
-      background-size: 100% 100%;
     }
     &.big-data-indicate {
-      background: url("../assets/images/bg_big_data.png") center no-repeat;
-      background-size: 100% 100%;
       .bg-all {
         width: 100%;
         height: 100%;

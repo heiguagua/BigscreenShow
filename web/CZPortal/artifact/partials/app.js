@@ -109,10 +109,10 @@
                 $('#dashboard').css({'height':screen_height +'px','width':screen_width+'px'});
                 $('.section').css({'height':screen_height/2 +'px','width':screen_width/4+'px'});
                 $('.section-center').css({'height':screen_height/2 +'px','width':screen_width/2+'px'});
-                $('.section.support').css({'position':'absolute','top':screen_height/2 +'px','left':0});
                 $('.section.city-datamap').css({'position':'absolute','top':screen_height/2 +'px','left':screen_width/4+'px'});
                 $('.section.idcuse').css({'position':'absolute','top':screen_height/2 +'px','right':screen_width/4+'px'});
-                $('.section.bigdata').css({'position':'absolute','top':screen_height/2 +'px','right':0});
+                $('.section.bigdata').css({'position':'absolute','top':screen_height/2 +'px','left':0});
+                $('.section.standard').css({'position':'absolute','top':screen_height/2 +'px','right':0});
               }
             },500)
             return config;
