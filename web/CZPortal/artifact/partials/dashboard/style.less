@@ -2,7 +2,7 @@
   width: 7680px;
   height: 2160px;
   overflow: hidden;
-  position:relative;
+  position: relative;
 }
 .section-center {
   width: 3840px;
@@ -11,6 +11,7 @@
   overflow: hidden;
   background: url("../assets/images/bg_2.png") center no-repeat;
   background-size: 100% 100%;
+
   .title {
     width: 100%;
     height: 27.41%;
@@ -18,6 +19,98 @@
   .content-center {
     position: relative;
     height: 72.5%;
+
+    .system-menus {
+      height: 100%;
+    }
+    .system-profile {
+      height: 100%;
+
+      .tab-content {
+        height: 100%;
+      }
+      .tab-pane {
+        height: 100%;
+
+        >div {
+          height: 100%;
+        }
+        .update-time{
+          color:rgb(9,87,117);
+          font-size:30px;
+          padding-right:3rem;
+          span{
+            color:rgb(65,177,195)
+          }
+        }
+      }
+      .car-info-wrap {
+        height: 100%;
+        max-height: 730px;
+        padding: 6rem 1rem 4rem 3.2rem;
+        overflow: hidden;
+        border-bottom: 0;
+
+        .item {
+          padding: 2rem 0;
+          color: rgba(9, 87, 119, 1);
+
+          .media-body {
+            vertical-align: bottom;
+            padding-left: 1rem;
+          }
+          h4 {
+            font-size: 30px;
+          }
+          .item-num {
+            color: rgb(61, 191, 245);
+            font-size: 30px;
+
+            span {
+              font-size: 45px;
+              position: relative;
+              top: 4px;
+            }
+          }
+        }
+      }
+      .chart-car{
+        height:84%;
+        max-height: 730px;
+        overflow:hidden;
+        padding:4rem 2rem 2rem 3.2rem;
+      }
+    }
+    .menu-wrap {
+      height: 100%;
+      max-height: 730px;
+      padding: 2rem 1rem 2rem 3.2rem;
+      overflow: hidden;
+      border-bottom: 0;
+
+      .menu-item {
+        text-align: center;
+        overflow: hidden;
+        margin: .6rem 0;
+        background: rgba(0, 216, 255, .12);
+        border: 1px solid transparent;
+
+        a {
+          display: inline-block;
+          padding: 1.1rem;
+          color: rgb(100, 154, 155);
+          font-size: 30px;
+          text-decoration: none;
+        }
+        &.current {
+          border: 1px solid rgb(4, 219, 224);
+
+          a {
+            color: rgb(4, 219, 224)
+          }
+        }
+      }
+    }
   }
 }
 .section-main {
@@ -31,9 +124,11 @@
   padding: 0;
   float: left;
   overflow: hidden;
+
   &.city-datamap {
     background: url("../assets/images/bg_5.png") center no-repeat;
     background-size: 100% 100%;
+
     .content {
       .flex-row;
     }
@@ -71,6 +166,7 @@
   .content {
     position: relative;
     height: 87%;
+
     &.app-support {
       .support-wrap {
         padding: 2rem 0 3rem 2rem;
@@ -80,8 +176,10 @@
         overflow: hidden;
         padding: 1rem;
         position: relative;
+
         .center-bg {
-          img {}
+          img {
+          }
         }
         .desc-left {
           position: absolute;
@@ -97,10 +195,11 @@
           width: 8rem;
           padding: 1rem 0;
         }
-        img {}
+        img {
+        }
         a {
           display: block;
-          color: rgba(0,216,255,1);
+          color: rgba(0, 216, 255, 1);
           line-height: 1.5rem;
           font-size: 0.8rem;
           font-family: '微软雅黑';
@@ -116,6 +215,7 @@
         &.tab-down {
           .desc-left {
             padding: 0.5rem 0;
+
             a {
               line-height: 0.9rem;
             }
@@ -129,10 +229,12 @@
       }
       .govbanner {
         padding: 4rem 1rem;
+
         .slick-prev {
           width: 40px;
           height: 48px;
           background: url("../assets/images/arrow-prev.png") center no-repeat;
+
           &:before {
             content: '';
           }
@@ -141,6 +243,7 @@
           width: 40px;
           height: 48px;
           background: url("../assets/images/arrow-next.png") center no-repeat;
+
           &:before {
             content: '';
           }
@@ -148,9 +251,11 @@
       }
       .slick-slide {
         padding: 0;
+
         a {
           display: block;
           text-align: center;
+
           img {
             display: inline !important;
             width: 100%;
@@ -163,6 +268,7 @@
     }
     &.idc-use {
       overflow: hidden;
+
       .exchange {
         position: absolute;
         bottom: 10px;
@@ -184,6 +290,7 @@
       width: 46%;
       float: left;
       height: 80%;
+
       #dockProgress {
         width: 100%;
         height: 100%;
@@ -191,25 +298,38 @@
       }
     }
     .chart-full {
-      width: 86%;
+      width: 100%;
       float: left;
       height: 100%;
+
+      .dept-access-data {
+        height: 100%;
+
+        .access-title {
+          height: 20%;
+          padding: 4rem 0 1rem 2rem;
+          color: #FFF;
+        }
+        .access-chart {
+          height: 80%;
+        }
+      }
       #deptData {
         width: 100%;
         height: 100%;
-        padding: 30px 20px;
+        padding: 10px 10px 0 10px;
       }
     }
     .chart-idc-use {
       width: 86%;
       float: left;
       height: 76%;
+
       .svg-container {
         margin: 0 auto;
       }
     }
-    .deptdata-desc,
-    .idcuse-desc {
+    .deptdata-desc, .idcuse-desc {
       width: 14%;
       float: left;
       position: relative;
@@ -219,8 +339,9 @@
       padding: 0.8rem 0.5rem;
       border: 1px solid rgb(0, 216, 255);
       border-radius: 10px;
-      box-shadow: 0 0 7px 6px rgb(12,58,103);
-      background: rgba(0,216,255,.2);
+      box-shadow: 0 0 7px 6px rgb(12, 58, 103);
+      background: rgba(0, 216, 255, .2);
+
       p {
         color: #FFF;
         font-size: 1.1rem;
@@ -228,8 +349,9 @@
         font-weight: normal;
         text-indent: 24px;
         line-height: inherit;
+
         strong {
-          color: rgb(0,255,255);
+          color: rgb(0, 255, 255);
           font-size: 1.2rem;
           font-weight: normal;
         }
@@ -239,6 +361,7 @@
       width: 54%;
       float: left;
       height: 80%;
+
       #dockDataset {
         width: 100%;
         height: 100%;
@@ -250,6 +373,7 @@
       width: 87%;
       margin: 0 auto;
       padding: 2rem 2rem 0 0;
+
       table {
         color: #e4e4e4;
         border: 1px solid #00bcde;
@@ -257,13 +381,13 @@
         font-size: 14px;
         font-family: '微软雅黑';
         table-layout: fixed;
+
         tbody {
           tr:nth-of-type(odd) {
             background: rgba(3, 113, 156, 0.32);
           }
         }
-        th,
-        td {
+        th, td {
           border: 1px solid #00bcde;
           text-align: center;
           font-weight: normal;
@@ -278,6 +402,7 @@
       float: left;
       padding-left: 4rem;
       .flex-column;
+
       .data-chart {
         .flex-num(1);
         .flex-column;
@@ -287,10 +412,12 @@
         background: url("../assets/images/bg_cat.png") top no-repeat;
         background-size: auto 100%;
         margin-bottom: 45px;
+
         .gov-data {
           .flex-num(1);
           .flex-row;
           padding-bottom: 10px;
+
           .empty-row {
             .flex-num(1.5);
           }
@@ -301,6 +428,7 @@
             font-family: '微软雅黑';
             .flex-column;
             .flex-justify(center);
+
             h4 {
               padding: 2rem 0 1.5rem;
               color: #E18B16;
@@ -321,6 +449,7 @@
             font-family: '微软雅黑';
             .flex-column;
             .flex-justify(center);
+
             h3 {
               padding: 1rem 0 0;
               color: #EEFF00;
@@ -331,6 +460,7 @@
         .social-data {
           .flex-num(1);
           .flex-row;
+
           .empty-row {
             .flex-num(1);
           }
@@ -340,6 +470,7 @@
             text-align: center;
             font-family: '微软雅黑';
             padding-left: 14px;
+
             h4 {
               padding: 2rem 0 1.5rem;
               color: #1595A0;
@@ -358,6 +489,7 @@
             color: #FFF;
             font-size: 16px;
             font-family: '微软雅黑';
+
             h3 {
               padding: 1rem 0 0;
               color: #EEFF00;
@@ -379,6 +511,7 @@
       width: 44%;
       float: left;
       .flex-column;
+
       h2 {
         color: #0ff;
         text-align: center;
@@ -393,17 +526,18 @@
         // height: 802px;
         .flex-num(1);
         border: 36px solid rgba(10, 62, 108, 0.5);
-        border-left-color: rgba(21,149,160,0.6);
+        border-left-color: rgba(21, 149, 160, 0.6);
         border-right-color: rgba(113, 62, 38, 0.7);
-        border-top-color: rgba(21,149,160,0.6);
+        border-top-color: rgba(21, 149, 160, 0.6);
         margin: 0 auto;
         border-radius: 50%;
         background: url("../assets/images/map_bg.png") center no-repeat;
         background-size: 100%;
         margin-bottom: 25px;
+
         .node {
           circle {
-            fill: rgba(123,80,71,.8);
+            fill: rgba(123, 80, 71, .8);
           }
           text {
             font: 1rem sans-serif;
@@ -412,12 +546,12 @@
         }
         .node--internal {
           // display: none;
-          &[transform="translate(0, 0)"],
-          &[transform="translate(0,0)"] {
+
+          &[transform="translate(0, 0)"], &[transform="translate(0,0)"] {
             display: none !important;
           }
           circle {
-            fill: rgba(123,80,71,.8);
+            fill: rgba(123, 80, 71, .8);
           }
           text {
             display: none;
@@ -429,8 +563,8 @@
           stroke: rgb(185, 104, 87);
           stroke-opacity: 0.4;
           stroke-width: 3.5px;
-          &:nth-child(1),
-          &:nth-child(2) {
+
+          &:nth-child(1), &:nth-child(2) {
             display: none;
           }
         }
@@ -443,6 +577,7 @@
       overflow: hidden;
       background: url("../assets/images/standard_made_content.png") center no-repeat;
       background-size: 100%;
+
       .inner-wrap {
         width: 100%;
         height: 100%;
@@ -459,6 +594,7 @@
         font-size: 20px;
         text-decoration: none;
         float: left;
+
         s {
           width: 0;
           height: 0;
@@ -482,13 +618,18 @@
           left: 78px;
           border-bottom: 70px dotted transparent;
         }
-        &.a0 {}
-        &.a1 {}
-        &.a2 {}
-        &.a3 {}
+        &.a0 {
+        }
+        &.a1 {
+        }
+        &.a2 {
+        }
+        &.a3 {
+        }
         &:hover {
           background: #8CBF26;
           color: #333333;
+
           s {
             border-right-color: #8CBF26;
           }
@@ -501,7 +642,7 @@
   }
 }
 .main-svg {
-  background: rgba(255,255,255,0) !important;
+  background: rgba(255, 255, 255, 0) !important;
 }
 .plotly {
   width: 100%;

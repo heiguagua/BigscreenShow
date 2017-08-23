@@ -16,6 +16,12 @@
         }
       })
 
+      // 中间系统切换事件
+      $scope.current_tab = 1;
+      $scope.toggle = function(num) {
+        $scope.current_tab = num;
+      }
+
 
       $scope.changeRoute = function() {
         dashboardService.getStatus().then(function(result) {
@@ -102,6 +108,7 @@
           URL + '/status/set?value=' + data
         )
       }
+
       function getDataInfoNum() {
         return $http.get(
           URL + '/depDataInfo/dataInfoNum'
@@ -485,202 +492,521 @@
   ]);
 
 
-  dashboard.directive('wiservDeptData', ['dashboard.chartDeptDataTable', 'dashboard.chartDeptDataColumn',
-    function(deptDataTable, deptDataColumn) {
+  dashboard.directive('wiservChartMigrate', [
+    function() {
       return {
         restrict: 'ACE',
         template: "<div id='deptData' style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          deptDataTable.then(function(response) {
-              return response.data.body;
-            }).then(function(tableData) {
-              var table = tableData;
-              deptDataColumn.then(function(rescolumn) {
-                var column = rescolumn.data.body;
-                _.forEach(table, function(tobj) {
-                  _.forEach(column, function(cobj) {
-                    if (tobj.depName == cobj.depName) {
-                      tobj.columnNum = parseInt(cobj.columnNum);
+          var chartInstance = echarts.init((element.find('#deptData'))[0]);
+          var geoCoordMap = {
+            '长春': [129.8154, 50.2584],
+            '长沙': [135.0823, 25.2568],
+            '崇州政务大数据平台': [108.6992, 32.7682],
+            '西安': [134.1162, 34.2004],
+            '深圳': [124.5435, 22.5439],
+            '济南': [127.1582, 36.8701],
+            '海口': [110.3893, 16.8516],
+            '沈阳': [142.1238, 22.1216],
+            '武汉': [134.3896, 30.6628],
+            '昆明': [102.9199, 18.4663],
+            '杭州': [139.5313, 29.8773],
+            '成都市政府部门': [89.9526, 54.7617],
+            '成都市政务中心': [74.1526, 55.7617],
+            '成都市气象局': [74.1526, 54.5617],
+            '成都市工商局': [74.1526, 53.3617],
+            '拉萨': [81.1865, 30.1465],
+            '天津': [117.4219, 49.4189],
+            '合肥': [137.29, 32.0581],
+            '呼和浩特': [107.4124, 50.4901],
+            '哈尔滨': [129.9688, 40.368],
+            '北京': [110.4551, 54.2539],
+            '南京': [134.8062, 41.9208],
+            '南宁': [96.479, 18.1152],
+            '南昌': [116.0046, 19.6633],
+            '乌鲁木齐': [87.9236, 46.5883],
+            '上海': [135.4648, 31.2891]
+          };
+
+          var data = [{
+            name: '长春'
+          }, {
+            name: '长沙'
+          }, {
+            name: '崇州政务大数据平台'
+          }, {
+            name: '西安'
+          }, {
+            name: '深圳'
+          }, {
+            name: '济南'
+          }, {
+            name: '海口'
+          }, {
+            name: '沈阳'
+          }, {
+            name: '武汉'
+          }, {
+            name: '昆明'
+          }, {
+            name: '杭州'
+          }, {
+            name: '成都市政府部门'
+          }, {
+            name: '成都市政务中心'
+          }, {
+            name: '成都市气象局'
+          }, {
+            name: '成都市工商局'
+          }, {
+            name: '拉萨'
+          }, {
+            name: '天津'
+          }, {
+            name: '合肥'
+          }, {
+            name: '呼和浩特'
+          }, {
+            name: '哈尔滨'
+          }, {
+            name: '北京'
+          }, {
+            name: '南京'
+          }, {
+            name: '南宁'
+          }, {
+            name: '南昌'
+          }, {
+            name: '乌鲁木齐'
+          }, {
+            name: '上海'
+          }];
+
+          function formtGCData(geoData, data, srcNam, dest) {
+            var tGeoDt = [];
+            if (dest) {
+              for (var i = 0, len = data.length; i < len; i++) {
+                if (srcNam != data[i].name) {
+                  tGeoDt.push({
+                    coords: [geoData[srcNam], geoData[data[i].name]]
+                  });
+                }
+              }
+            } else {
+              for (var i = 0, len = data.length; i < len; i++) {
+                if (srcNam != data[i].name) {
+                  if (data[i].name == "成都市政务中心" || data[i].name == "成都市气象局" || data[i].name == "成都市工商局") {
+
+                  } else if (data[i].name == '成都市政府部门') {
+                    tGeoDt.push({
+                      coords: [geoData[data[i].name], geoData[srcNam]],
+                      lineStyle: {
+                        normal: {
+                          color: 'rgb(103,254,0)'
+                        }
+                      }
+                    });
+                  } else {
+                    tGeoDt.push({
+                      coords: [geoData[data[i].name], geoData[srcNam]]
+                    });
+                  }
+
+                }
+              }
+            }
+            return tGeoDt;
+          }
+
+          function formtVData(geoData, data, srcNam) {
+            var tGeoDt = [];
+            for (var i = 0, len = data.length; i < len; i++) {
+              var tNam = data[i].name
+              if (srcNam != tNam) {
+                if (tNam == "成都市政府部门") {
+                  tGeoDt.push({
+                    name: tNam,
+                    value: geoData[tNam],
+                    symbolSize: 16,
+                    itemStyle: {
+                      normal: {
+                        color: 'rgb(103,254,0)'
+                      }
+                    },
+                    label: {
+                      normal: {
+                        //position:'top',
+                        position: [-150, -60],
+                        textStyle: {
+                          color: '#FFF',
+                          fontSize: 24,
+                          fontWeight: 100
+                        }
+                      }
                     }
                   });
-                });
-                var option = {
-                  legend: {
-                    data: [{
-                      name: '数据集',
-                      icon: 'rect'
-                    }, {
-                      name: '数据项',
-                      icon: 'rect'
-                    }],
-                    itemWidth: 90,
-                    itemHeight: 30,
-                    padding: 10,
-                    align: 'left',
-                    textStyle: {
-                      color: 'rgb(220,220,220)',
-                      fontSize: 24
-                    },
-                    itemGap: 50,
-                    top: 34,
-                    left: '44%'
-                  },
-                  color: ['#3398DB'],
-                  tooltip: {
-                    trigger: 'axis',
-                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                      type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                    }
-                  },
-                  grid: {
-                    top: '18%',
-                    left: '3%',
-                    right: '4%',
-                    bottom: '6%',
-                    containLabel: true
-                  },
-                  xAxis: [{
-                    type: 'category',
-                    data: _.map(table, 'depName'),
-                    boundaryGap: true,
-                    axisTick: {
-                      alignWithLabel: false,
-                      length: 12
-                    },
-                    axisLabel: {
-                      interval: 0,
-                      margin: 24,
-                      textStyle: {
-                        color: 'rgb(220,220,220)',
-                        fontSize: 18
-                      }
-                    },
-                    axisLine: {
-                      lineStyle: {
-                        color: 'rgba(204, 204, 204, 0.9)'
-                      }
-                    }
-                  }],
-                  yAxis: [{
-                    type: 'value',
-                    name: '数据集',
-                    nameTextStyle: {
-                      color: '#FFF',
-                      fontSize: 18
-                    },
-                    nameGap: 24,
-                    axisTick: {
-                      show: true
-                    },
-                    axisLine: {
-                      lineStyle: {
-                        color: 'rgba(204, 204, 204, 0.9)'
-                      }
-                    },
-                    axisLabel: {
-                      textStyle: {
-                        color: '#FFF',
-                        fontSize: 18
-                      }
-                    },
-                    splitLine: {
-                      lineStyle: {
-                        color: ['rgba(204, 204, 204, 0.5)']
-                      }
-                    }
-                  }, {
-                    type: 'value',
-                    name: '数据项',
-                    nameTextStyle: {
-                      color: '#FFF',
-                      fontSize: 18
-                    },
-                    nameGap: 24,
-                    axisTick: {
-                      show: true
-                    },
-                    axisLine: {
-                      lineStyle: {
-                        color: 'rgba(204, 204, 204, 0.9)'
-                      }
-                    },
-                    axisLabel: {
-                      textStyle: {
-                        color: '#FFF',
-                        fontSize: 18
-                      }
-                    },
-                    splitLine: {
-                      lineStyle: {
-                        color: ['rgba(204, 204, 204, 0.5)']
-                      }
-                    }
-                  }],
-                  series: [{
-                    name: '数据集',
-                    type: 'bar',
-                    barWidth: '32%',
-                    itemStyle: {
+                } else if (tNam == "成都市政务中心" || tNam == "成都市气象局" || tNam == "成都市工商局") {
+                  tGeoDt.push({
+                    name: tNam,
+                    value: geoData[tNam],
+                    symbolSize: 0.001,
+                    label: {
                       normal: {
-                        color: 'rgb(0,203,254)',
-                        shadowColor: 'rgb(0, 230, 255)',
-                        shadowBlur: 12
+                        position: [60, -5]
                       }
-                    },
-                    data: _.map(table, 'tableNum')
-                  }, {
-                    name: '数据项',
-                    type: 'line',
-                    smooth: false,
-                    symbol: 'circle',
-                    symbolSize: 12,
-                    yAxisIndex: 1,
-                    itemStyle: {
-                      normal: {
-                        color: 'rgb(234,255,0)',
-                        shadowColor: 'rgb(234,255,200)',
-                        shadowBlur: 10
-                      }
-                    },
-                    data: _.map(table, 'columnNum')
-                  }],
-                  animationDelay: 500
-                };
+                    }
+                  });
+                } else {
+                  tGeoDt.push({
+                    name: tNam,
+                    value: geoData[tNam],
+                    symbolSize: 6
+                  });
+                }
 
-                var chartInstance = echarts.init((element.find('#deptData'))[0]);
-                chartInstance.setOption(option);
+              }
 
-                // setTimeout(function(){
-                //   var box_width = element.find('#deptData')[0].clientWidth;
-                //   $('#deptData').css({
-                //     'width': box_width
-                //   });
-                //   chartInstance.clear();
-                //   chartInstance.resize();
-                //   chartInstance.setOption(option);
-                // },1500)
+            }
+            tGeoDt.push({
+              name: srcNam,
+              value: geoData[srcNam],
+              symbolSize: 16,
+              label: {
+                normal: {
+                  position: [-100, -60],
+                  textStyle: {
+                    color: '#FFF',
+                    fontSize: 24,
+                    fontWeight: 100
+                  }
+                }
+              },
+              itemStyle: {
+                normal: {
+                  color: 'rgb(255,234,1)'
+                }
+              }
+            });
+            return tGeoDt;
+          }
 
-                setInterval(function() {
-                  var box_width = element.find('#deptData')[0].clientWidth;
-                  // $('#deptData').css({
-                  //   'width': box_width
-                  // });
-                  chartInstance.clear();
-                  chartInstance.resize();
-                  chartInstance.setOption(option);
-                }, 3000);
+          var planePath = 'circle';
 
-              })
-            })
-            //var data = response.data.body[0];restore
+          var option = {
+            backgroundColor: 'transparent',
+            title: {
+              text: '',
+              left: '5',
+              top: '10px',
+              itemStyle: {
+                normal: {
+                  borderColor: 'rgba(100,149,237,1)',
+                  borderWidth: 0.5,
+                  areaStyle: {
+                    color: '#1b1b1b'
+                  }
+                }
+              }
+            },
+            tooltip: {
+              trigger: 'item',
+            },
+            geo: {
+              map: 'china',
+              show: false,
+              // center:[106.6992, 26.7682],
+              left: '2%',
+              label: {
+                emphasis: {
+                  show: false
+                }
+              },
+              roam: true,
+              silent: true,
+              itemStyle: {
+                normal: {
+                  areaColor: 'transparent',
+                  borderColor: '#000'
+                },
+                emphasis: {
+                  areaColor: '#2a333d'
+                }
+              }
+            },
+            series: [{
 
+              type: 'lines',
+              zlevel: 2,
+              silent:true,
+              effect: {
+                show: true,
+                period: 6,
+                trailLength: 0.1,
+                color: 'rgb(176,228,2)',
+                symbol: planePath,
+                symbolSize: 6
+              },
+              lineStyle: {
+                normal: {
+                  color: '#a6c84c',
+                  width: 1,
+                  opacity: 0.4,
+                  curveness: 0.2,
+                  shadowColor: 'rgba(255,255,255, 0.5)',
+                  shadowBlur: 5
+                }
+              },
+              data: formtGCData(geoCoordMap, data, '崇州政务大数据平台', false)
+            }, {
 
-          //})
+              type: 'effectScatter',
+              coordinateSystem: 'geo',
+              zlevel: 2,
+              silent: true,
+              rippleEffect: {
+                period: 4,
+                scale: 7,
+                brushType: 'stroke'
+              },
+              label: {
+                normal: {
+                  show: true,
+                  position: [24, -5],
+                  formatter: '{b}',
+                  textStyle: {
+                    color: 'rgb(100,154,155)',
+                    fontSize: 15,
+                    fontFamily: 'yahei',
+                    fontWeight: 100
+                  }
+                }
+              },
+              symbolSize: 6,
+              itemStyle: {
+                normal: {
+                  color: 'rgb(0,184,190)'
+                }
+              },
+
+              data: formtVData(geoCoordMap, data, '崇州政务大数据平台')
+            }]
+          };
+
+          chartInstance.setOption(option);
 
         }
       }
     }
   ]);
+
+  // 部门已接入数据总量
+  dashboard.directive('wiservChartAccessData', ['dashboardService', function(dashboardService) {
+    return {
+      restrict: 'ACE',
+      template: "<div id='accessData' style='width:100%;height:100%'></div>",
+      link: function(scope, element, attrs) {
+        var chartInstance = echarts.init((element.find('#accessData'))[0]);
+        var option = {
+
+          grid: {
+            top: '1%',
+            left: '3%',
+            right: '15%',
+            bottom: '20%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'value',
+            boundaryGap: [0, 0],
+            axisLine: {
+              show: false
+            },
+            axisLabel: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+            splitLine: {
+              show: false
+            }
+          },
+          yAxis: {
+            type: 'category',
+            data: ['市气象局', '市交通局', '巴西', '印尼', '美国', '印度', '中国', '世界人口(万)'],
+            axisLine: {
+              show: false
+            },
+            axisLabel: {
+              margin: 19,
+              textStyle: {
+                color: 'rgb(100,154,155)',
+                fontSize: 15
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            splitLine: {
+              show: false
+            }
+          },
+          series: [{ // For shadow
+            type: 'bar',
+            barWidth: '50%',
+            itemStyle: {
+              normal: {
+                color: 'rgba(31,54,74,1)'
+              }
+            },
+            barGap: '-80%',
+            barCategoryGap: '100%',
+            data: [500, 500, 500, 500, 500, 500, 500, 500],
+            animation: false
+          }, {
+            name: '2011年',
+            barWidth: '30%',
+            type: 'bar',
+            zlevel: 1,
+            data: [110, 160, 230, 294, 319, 374, 390, 413],
+            label: {
+              normal: {
+                show: true,
+                position: 'right',
+                textStyle: {
+                  color: 'rgb(100,154,155)',
+                  fontSize: 15
+                }
+              }
+            },
+            itemStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(
+                  0, 0, 1, 1, [{
+                    offset: 0,
+                    color: '#188df0'
+                  }, {
+                    offset: 0.5,
+                    color: '#188df0'
+                  }, {
+                    offset: 1,
+                    color: '#83bff6'
+                  }]
+                )
+              },
+              emphasis: {
+                color: new echarts.graphic.LinearGradient(
+                  0, 0, 1, 1, [{
+                    offset: 0,
+                    color: '#1e83d8'
+                  }, {
+                    offset: 0.5,
+                    color: '#188df0'
+                  }, {
+                    offset: 1,
+                    color: '#83bff6'
+                  }]
+                )
+              }
+            },
+          }]
+        };
+        chartInstance.setOption(option);
+      }
+    }
+  }])
+
+  // 前一天消费趋势图
+  dashboard.directive('wiservChartCar', [
+    function() {
+      return {
+        restrict: 'ACE',
+        template: "<div id='carData' style='width:100%;height:100%'></div>",
+        link: function(scope, element, attrs) {
+          var chartInstance = echarts.init((element.find('#carData'))[0]);
+          var option = {
+            title: {
+              text: '前一天消费趋势图（笔）',
+              left: '3%',
+              textStyle: {
+                fontSize:30,
+                fontWeight:'normal',
+                color: 'rgb(237,252,2)'
+              }
+            },
+            tooltip: {
+              trigger: 'axis'
+            },
+
+            grid: {
+              top:'20%',
+              left: '3%',
+              right: '4%',
+              bottom: '3%',
+              containLabel: true
+            },
+
+            xAxis: {
+              type: 'category',
+              boundaryGap: false,
+              axisTick: {
+                show: false
+              },
+              axisLine: {
+                lineStyle: {
+                  color: 'rgb(8,88,123)'
+                }
+              },
+              axisLabel: {
+                textStyle: {
+                  color: 'rgba(255,255,255,.6)',
+                  fontSize: 22
+                }
+              },
+              data: ['1', '2', '3', '4', '5', '6', '7']
+            },
+            yAxis: {
+              type: 'value',
+              boundaryGap: false,
+              axisLabel: {
+                margin:15,
+                textStyle: {
+                  color: 'rgba(255,255,255,.6)',
+                  fontSize: 22
+                }
+              },
+              axisLine: {
+                lineStyle: {
+                  color: 'rgb(8,88,123)'
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  width:2,
+                  color: 'rgb(8,88,123)'
+                }
+              }
+            },
+            series: [{
+              name: '邮件营销',
+              type: 'line',
+              stack: '总量',
+              data: [120, 132, 101, 134, 90, 230, 210],
+              symbolSize: 0,
+              lineStyle: {
+                normal: {
+                  width:3,
+                  color: 'rgb(0,255,255)'
+                }
+              }
+            }]
+          };
+          chartInstance.setOption(option);
+
+        }
+      }
+    }
+  ])
 
   dashboard.directive('wiservIdcUse', ['dashboardService', '$location',
     function(dashboardService, location) {
@@ -725,11 +1051,11 @@
                       monitors[j] = rateData[j].cpuRate.toString();
                     }
                     break;
-                  // case 2:
-                  //   for (var j = 0; j < rateData.length; j++) {
-                  //     monitors[j] = rateData[j].diskRate.toString();
-                  //   }
-                  //   break;
+                    // case 2:
+                    //   for (var j = 0; j < rateData.length; j++) {
+                    //     monitors[j] = rateData[j].diskRate.toString();
+                    //   }
+                    //   break;
                   default:
                     break;
                 }
@@ -745,11 +1071,11 @@
             }
             var z_group_data = groupData(response);
             var text = [];
-            for(var i=0; i<z_group_data.length;i++) {
+            for (var i = 0; i < z_group_data.length; i++) {
               var obj = [];
-              for(var j=0; j<z_group_data[i].length; j++) {
+              for (var j = 0; j < z_group_data[i].length; j++) {
                 // var data =  scope.nodeName[i] + '<br>硬盘使用率: ' + z_group_data[i][2] + '%<br>CPU使用率: ' + z_group_data[i][1] + '%<br>内存使用率: ' + z_group_data[i][0] + '%';
-                var data =  scope.nodeName[i] + '<br>CPU使用率: ' + z_group_data[i][1] + '%<br>内存使用率: ' + z_group_data[i][0] + '%';
+                var data = scope.nodeName[i] + '<br>CPU使用率: ' + z_group_data[i][1] + '%<br>内存使用率: ' + z_group_data[i][0] + '%';
                 obj.push(data);
               }
               text.push(obj);
@@ -791,7 +1117,6 @@
               ],
 
             }];
-
 
 
 
@@ -913,68 +1238,70 @@
     }
   ]);
 
-dashboard.directive('wiservMapText', ['dashboardService',
-  function(dashboardService) {
-    return {
-      restrict: 'ACE',
-      template: '<canvas id="myCanvas" ></canvas>',
-      link: function(scope, element, attrs) {
-        function drawTextAlongArc(context, str, centerX, centerY, radius, angle) {
-        var len = str.length, s;
-        context.save();
-        context.translate(centerX, centerY);
-        context.rotate(-1 * angle / 2);
-        context.rotate(-10 * (angle / len));// 调整文字的起始偏移
-        for(var n = 0; n < len; n++) {
-          context.rotate(angle / len);
-          context.save();
-          context.translate(0, -1 * radius);
-          s = str[n];
-          context.fillText(s, 0, 0);
-          context.restore();
+  dashboard.directive('wiservMapText', ['dashboardService',
+    function(dashboardService) {
+      return {
+        restrict: 'ACE',
+        template: '<canvas id="myCanvas" ></canvas>',
+        link: function(scope, element, attrs) {
+          function drawTextAlongArc(context, str, centerX, centerY, radius, angle) {
+            var len = str.length,
+              s;
+            context.save();
+            context.translate(centerX, centerY);
+            context.rotate(-1 * angle / 2);
+            context.rotate(-10 * (angle / len)); // 调整文字的起始偏移
+            for (var n = 0; n < len; n++) {
+              context.rotate(angle / len);
+              context.save();
+              context.translate(0, -1 * radius);
+              s = str[n];
+              context.fillText(s, 0, 0);
+              context.restore();
+            }
+            context.restore();
+          }
+
+          // dashboardService.getDataInfoNum().then(function(res) {
+          setTimeout(function() {
+            var map_chart_clientheight = element.parent()[0].clientHeight;
+            var map_chart_height = element.parent()[0].offsetHeight;
+            $(element.find('canvas')).attr('width', map_chart_height);
+            $(element.find('canvas')).attr('height', map_chart_height);
+
+            var word_spacing = 3;
+            if (map_chart_clientheight > 700) {
+              word_spacing = 5;
+            }
+
+            var canvas = document.getElementById('myCanvas'),
+              context = canvas.getContext('2d'),
+              centerX = canvas.width / 2 + 20,
+              centerY = canvas.height / 2 + 20,
+              angle = Math.PI / word_spacing, //调整文字间距
+              radius = map_chart_height / 2;
+
+            context.font = '26px Calibri';
+            context.textAlign = 'center';
+            context.fillStyle = '#FFF';
+            context.strokeStyle = 'transparent';
+            context.lineWidth = 0;
+
+            // var dataInfoNum = res.body[0].dataInfoNum;
+            drawTextAlongArc(context, '社会化数据共216类', centerX, centerY, radius, angle);
+
+            // draw circle underneath text
+            context.arc(centerX, centerY, radius - 10, 0, 2 * Math.PI, false);
+            context.stroke();
+            // })
+          }, 600)
+
+
+
         }
-        context.restore();
-      }
-
-      // dashboardService.getDataInfoNum().then(function(res) {
-      setTimeout(function() {
-        var map_chart_clientheight = element.parent()[0].clientHeight;
-        var map_chart_height = element.parent()[0].offsetHeight;
-        $(element.find('canvas')).attr('width',map_chart_height);
-        $(element.find('canvas')).attr('height',map_chart_height);
-
-        var word_spacing = 3;
-        if(map_chart_clientheight>700) {
-          word_spacing = 5;
-        }
-
-        var canvas = document.getElementById('myCanvas'),
-          context = canvas.getContext('2d'),
-          centerX = canvas.width / 2+20,
-          centerY = canvas.height/2+20,
-          angle = Math.PI/word_spacing ,//调整文字间距
-          radius = map_chart_height/2;
-
-        context.font = '26px Calibri';
-        context.textAlign = 'center';
-        context.fillStyle = '#FFF';
-        context.strokeStyle = 'transparent';
-        context.lineWidth =0;
-
-        // var dataInfoNum = res.body[0].dataInfoNum;
-        drawTextAlongArc(context, '社会化数据共216类', centerX, centerY, radius, angle);
-
-        // draw circle underneath text
-        context.arc(centerX, centerY, radius - 10, 0, 2 * Math.PI, false);
-        context.stroke();
-      // })
-      },600)
-
-
-
       }
     }
-  }])
+  ])
 
   dashboard.directive('wiservMapTextDown', ['dashboardService',
     function(dashboardService) {
@@ -982,65 +1309,67 @@ dashboard.directive('wiservMapText', ['dashboardService',
         restrict: 'ACE',
         template: '<canvas id="downCanvas" ></canvas>',
         link: function(scope, element, attrs) {
-          function drawTextAlongArc(context, str, centerX, centerY, radius, angle,rotate_base) {
-          var len = str.length, s;
-          context.save();
-          context.translate(centerX, centerY);
-          context.rotate(-1 * angle / 2);
-          context.rotate(rotate_base * (angle / len));// 调整文字的起始偏移
-          for(var n = 0; n < len; n++) {
-            context.rotate(angle / len);
+          function drawTextAlongArc(context, str, centerX, centerY, radius, angle, rotate_base) {
+            var len = str.length,
+              s;
             context.save();
-            context.translate(0, -1 * radius);
-            s = str[n];
-            context.fillText(s, 0, 0);
+            context.translate(centerX, centerY);
+            context.rotate(-1 * angle / 2);
+            context.rotate(rotate_base * (angle / len)); // 调整文字的起始偏移
+            for (var n = 0; n < len; n++) {
+              context.rotate(angle / len);
+              context.save();
+              context.translate(0, -1 * radius);
+              s = str[n];
+              context.fillText(s, 0, 0);
+              context.restore();
+            }
             context.restore();
           }
-          context.restore();
-        }
 
-        dashboardService.getDataInfoNum().then(function(res) {
-          setTimeout(function() {
-            var map_chart_clientheight = element.parent()[0].clientHeight;
-            var map_chart_height = element.parent()[0].offsetHeight;
-            $(element.find('canvas')).attr('width',map_chart_height);
-            $(element.find('canvas')).attr('height',map_chart_height);
+          dashboardService.getDataInfoNum().then(function(res) {
+            setTimeout(function() {
+              var map_chart_clientheight = element.parent()[0].clientHeight;
+              var map_chart_height = element.parent()[0].offsetHeight;
+              $(element.find('canvas')).attr('width', map_chart_height);
+              $(element.find('canvas')).attr('height', map_chart_height);
 
-            var word_spacing = 4;
-            var rotate_base = 14;
-            if(map_chart_clientheight>700) {
-              word_spacing = 6;
-              rotate_base = 19;
-            }
+              var word_spacing = 4;
+              var rotate_base = 14;
+              if (map_chart_clientheight > 700) {
+                word_spacing = 6;
+                rotate_base = 19;
+              }
 
-          var canvas = document.getElementById('downCanvas'),
-            context = canvas.getContext('2d'),
-            centerX = canvas.width / 2-20,
-            centerY = canvas.height/2-20,
-            angle = Math.PI/word_spacing ,//调整文字间距
-            radius = map_chart_height/2;
+              var canvas = document.getElementById('downCanvas'),
+                context = canvas.getContext('2d'),
+                centerX = canvas.width / 2 - 20,
+                centerY = canvas.height / 2 - 20,
+                angle = Math.PI / word_spacing, //调整文字间距
+                radius = map_chart_height / 2;
 
-          context.font = '26px Calibri';
-          context.textAlign = 'center';
-          context.fillStyle = '#FFF';
-          context.strokeStyle = 'transparent';
-          context.lineWidth =0;
+              context.font = '26px Calibri';
+              context.textAlign = 'center';
+              context.fillStyle = '#FFF';
+              context.strokeStyle = 'transparent';
+              context.lineWidth = 0;
 
-          var dataInfoNum = '';
-          if(res.data && res.data.body[0] && res.data.body[0].dataInfoNum) {
-            dataInfoNum = res.data.body[0].dataInfoNum;
-          }
-          drawTextAlongArc(context, '政务数据共'+dataInfoNum+'类', centerX, centerY, radius, angle,rotate_base);
+              var dataInfoNum = '';
+              if (res.data && res.data.body[0] && res.data.body[0].dataInfoNum) {
+                dataInfoNum = res.data.body[0].dataInfoNum;
+              }
+              drawTextAlongArc(context, '政务数据共' + dataInfoNum + '类', centerX, centerY, radius, angle, rotate_base);
 
-          // draw circle underneath text
-          context.arc(centerX, centerY, radius - 10, 0, 2 * Math.PI, false);
-          context.stroke();
-        },600)
+              // draw circle underneath text
+              context.arc(centerX, centerY, radius - 10, 0, 2 * Math.PI, false);
+              context.stroke();
+            }, 600)
 
-      })
+          })
         }
       }
-    }])
+    }
+  ])
 
   dashboard.directive('wiservMapChart', [
     function() {
@@ -1051,10 +1380,10 @@ dashboard.directive('wiservMapText', ['dashboardService',
           setTimeout(function() {
             var map_chart_clientheight = element.parent()[0].clientHeight;
             var map_chart_height = element.parent()[0].offsetHeight;
-            $(element.parent()[0]).css('width',(map_chart_height)+'px');
-            $(element.parent()[0]).css('height',(map_chart_height)+'px');
-            $(element.find('svg')[0]).attr('width',map_chart_clientheight);
-            $(element.find('svg')[0]).attr('height',map_chart_clientheight);
+            $(element.parent()[0]).css('width', (map_chart_height) + 'px');
+            $(element.parent()[0]).css('height', (map_chart_height) + 'px');
+            $(element.find('svg')[0]).attr('width', map_chart_clientheight);
+            $(element.find('svg')[0]).attr('height', map_chart_clientheight);
 
             var svg = d3.select(element.find('svg')[0]),
               width = +svg.attr("width"),
@@ -1067,7 +1396,7 @@ dashboard.directive('wiservMapText', ['dashboardService',
               });
 
             var tree_size = [285, 150];
-            if(map_chart_clientheight>700) {
+            if (map_chart_clientheight > 700) {
               tree_size = [285, 230];
             }
             var tree = d3.tree()
@@ -1121,7 +1450,7 @@ dashboard.directive('wiservMapText', ['dashboardService',
                 .enter().append("path")
                 .attr("class", "link")
                 .attr("d", function(d) {
-                  return "M" + project(d.x, d.y) + "C" + project(d.x, (d.y + d.parent.y) / 1.8) + " " + project(d.parent.x, (d.y + d.parent.y) / 3) + " " + project(d.parent.x, d.parent.y/1.1);
+                  return "M" + project(d.x, d.y) + "C" + project(d.x, (d.y + d.parent.y) / 1.8) + " " + project(d.parent.x, (d.y + d.parent.y) / 3) + " " + project(d.parent.x, d.parent.y / 1.1);
                 });
 
               var node = g.selectAll(".node")
@@ -1131,8 +1460,8 @@ dashboard.directive('wiservMapText', ['dashboardService',
                   return "node" + (d.children ? " node--internal" : " node--leaf");
                 })
                 .attr("transform", function(d) {
-                  if(d.children) {
-                    return "translate(" + project(d.x, d.y/1.1) + ")";
+                  if (d.children) {
+                    return "translate(" + project(d.x, d.y / 1.1) + ")";
                   }
                   return "translate(" + project(d.x, d.y) + ")";
                 });
@@ -1156,7 +1485,7 @@ dashboard.directive('wiservMapText', ['dashboardService',
                 });
             });
 
-          },600)
+          }, 600)
 
           function project(x, y) {
             var angle = (x - 90) / 180 * Math.PI,
