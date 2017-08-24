@@ -3,29 +3,30 @@
 	<div class='content-center'>
 		<div class='col-md-2 system-menus'>
 			<div class="menu-wrap nav nav-tabs" role="tablist">
-				<div class="menu-item active current" role="presentation" >
+				<div class="menu-item current " ng-class="{true:'in current',false:''}[current_tab == 1]" role="presentation" >
 					<a aria-controls="car" role="tab" data-toggle="tab" ng-click="toggle(1)">崇州车载前置管理系统</a>
 				</div>
-				<div class="menu-item">
+				<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 2]">
 					<a  aria-controls="servant" role="tab" data-toggle="tab" ng-click="toggle(2)">崇州市公务员考核系统</a>
 				</div>
-				<div class="menu-item">
+				<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 3]">
 					<a aria-controls="gov" role="tab" data-toggle="tab" ng-click="toggle(3)">成都•崇州市政务审批服务平台</a>
 				</div>
-				<div class="menu-item">
+				<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 4]">
 					<a  aria-controls="area" role="tab" data-toggle="tab" ng-click="toggle(4)">成都市区域自动站监测平台</a>
 				</div>
-				<div class="menu-item">
+				<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 5]">
 					<a  aria-controls="weather" role="tab" data-toggle="tab" ng-click="toggle(5)">成都市公共气象服务平台</a>
 				</div>
-				<div class="menu-item">
+				<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 6]">
 					<a  aria-controls="honor" role="tab" data-toggle="tab" ng-click="toggle(6)">成都•崇州市信用网</a>
 				</div>
 			</div>
 		</div>
 		<div class='col-md-10 system-profile'>
 			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane fade in active" id="car" ng-show='current_tab == 1'>
+				<!--崇州车载前置管理系统-->
+				<div role="tabpanel" class="tab-pane fade in active" ng-class="{true:'in active',false:'inactive'}[current_tab == 1]" id="car" ng-show='current_tab == 1'>
 					<div class='col-md-5'>
 						<div class="car-info-wrap" >
 							<div class="item col-md-6">
@@ -87,11 +88,326 @@
 						<div class="update-time text-right">数据更新时间：<span>2017-7-27 14:01:00</span></div>
 					</div>
 				</div>
-				<div role="tabpanel" class="tab-pane fade" id="servant" ng-show='current_tab == 2'>2</div>
-				<div role="tabpanel" class="tab-pane fade" id="gov" ng-show='current_tab == 3'>3</div>
-				<div role="tabpanel" class="tab-pane fade" id="area" ng-show='current_tab == 4'>4</div>
-				<div role="tabpanel" class="tab-pane fade" id="weather" ng-show='current_tab == 5'>5</div>
-				<div role="tabpanel" class="tab-pane fade" id="honor" ng-show='current_tab == 6'>6</div>
+
+				<!--崇州市公务员考核系统-->
+				<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 2]" id="servant" ng-show='current_tab == 2'>
+					<div class="col-md-2 car-info-wrap">
+						<div class="item text-center">
+							<img src="assets/images/serv_total.png" alt="全市公务员人数" />
+							<p class="text-center serv-title">全市公务员人数</p>
+							<div class="item-num"><span>30000</span> </div>
+						</div>
+						
+					</div>
+					<div class="col-md-10 ">
+						<div class="serv-right">
+							<div class="col-md-3 serv-item">
+								<div class="media">
+									<div class="media-left">
+										<a>
+											<img class="media-object" src="assets/images/serv_ico_1.png" alt="全市事业人员人数">
+										</a>
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">全市事业人员人数</h4>
+										<div class="item-num"><span>300</span> </div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3 serv-item">
+								<div class="media">
+									<div class="media-left">
+										<a>
+											<img class="media-object" src="assets/images/serv_ico_2.png" alt="前一天在岗人数">
+										</a>
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">前一天在岗人数</h4>
+										<div class="item-num"><span>200</span> </div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3 serv-item">
+								<div class="media">
+									<div class="media-left">
+										<a>
+											<img class="media-object" src="assets/images/serv_ico_3.png" alt="前一天迟到人数">
+										</a>
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">前一天迟到人数</h4>
+										<div class="item-num"><span>300</span> </div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3 serv-item">
+								<div class="media">
+									<div class="media-left">
+										<a>
+											<img class="media-object" src="assets/images/serv_ico_4.png" alt="前一天早退人数">
+										</a>
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">前一天早退人数</h4>
+										<div class="item-num"><span>153</span> </div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3 serv-item">
+								<div class="media">
+									<div class="media-left">
+										<a>
+											<img class="media-object" src="assets/images/serv_ico_5.png" alt="前一天提交的工作日志数量">
+										</a>
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">前一天提交的工作日志数量</h4>
+										<div class="item-num"><span>500</span> </div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3 serv-item">
+								<div class="media">
+									<div class="media-left">
+										<a>
+											<img class="media-object" src="assets/images/serv_ico_6.png" alt="最近一周提交工作周报数量">
+										</a>
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">最近一周提交工作周报数量</h4>
+										<div class="item-num"><span>1562</span> </div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-3 serv-item">
+								<div class="media">
+									<div class="media-left">
+										<a>
+											<img class="media-object" src="assets/images/serv_ico_7.png" alt="最近一季度考核成绩100分-80分人数">
+										</a>
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">最近一季度考核成绩100分-80分人数</h4>
+										<div class="item-num"><span>300</span> </div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3 serv-item">
+								<div class="media">
+									<div class="media-left">
+										
+									</div>
+									<div class="media-body" style="padding-left: 5rem;">
+										<img class="media-object" src="assets/images/serv_ico_8.png" alt="...">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="update-time text-right">数据更新时间：<span>2017-7-27 14:01:00</span></div>
+					</div>
+				</div>
+
+				<!--成都•崇州市政务审批服务平台-->
+				<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 3]" id="gov" ng-show='current_tab == 3'>
+					<div class="gov-wrap">
+						<div class="col-md-2 gov-item" style="padding:7.2rem 2rem">
+							<div class="media">
+								<div class="media-left">
+									<a>
+										<img class="media-object" src="assets/images/gov_ico_1.png" alt="全市累计办件数量">
+									</a>
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">全市累计办件数量</h4>
+									<div class="item-num"><span>3000</span> </div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 gov-item">
+							<div class="media">
+								<div class="media-left">
+									<a>
+										<img class="media-object" src="assets/images/gov_ico_2.png" alt="法人申请办件">
+									</a>
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">累计</h4>
+									<div class="item-num"><span>218</span> </div>
+									<h4 >个法人申请办件</h4>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 gov-item">
+							<div class="media">
+								<div class="media-left">
+									<a>
+										<img class="media-object" src="assets/images/gov_ico_3.png" alt="自然人申请办件">
+									</a>
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">累计</h4>
+									<div class="item-num"><span>325</span> </div>
+									<h4 >个自然人申请办件</h4>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 gov-item">
+							<div class="media">
+								<div class="media-left">
+									<a>
+										<img class="media-object" src="assets/images/gov_ico_4.png" alt="前一天新提交">
+									</a>
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">前一天新提交</h4>
+									<div class="item-num"><span>861</span> </div>
+									<h4 >个办件</h4>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 gov-item">
+							<div class="media">
+								<div class="media-left">
+									<a>
+										<img class="media-object" src="assets/images/gov_ico_5.png" alt="累计办结">
+									</a>
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">累计办结</h4>
+									<div class="item-num"><span>495</span> </div>
+									<h4 >个办件</h4>
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="col-md-2 gov-item">
+							<div class="media">
+								<div class="media-left">
+									<a>
+										<img class="media-object" src="assets/images/gov_ico_6.png" alt="截止前一天超时">
+									</a>
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">截止前一天超时</h4>
+									<div class="item-num"><span>27</span> </div>
+									<h4 >个办件</h4>
+								</div>
+							</div>
+						</div>
+						<div class="update-time text-right">数据更新时间：<span>2017-7-27 14:01:00</span></div>
+					</div>
+				</div>
+
+				<!--成都市区域自动站监测平台-->
+				<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 4]" id="area" ng-show='current_tab == 4'>
+					<div class="area-wrap">
+						<div class="col-md-4 area-item">
+							<img src="assets/images/area_1.png" alt="地图" />
+							<div class="watch-info">
+								<div class="media">
+									<div class="media-body">
+										<h4 class="media-heading">成都市监测站个数</h4>
+										<div class="item-num"><span>300</span> </div>
+									</div>
+								</div>
+								<div class="media">
+									<div class="media-body">
+										<h4 class="media-heading">崇州市监测站个数</h4>
+										<div class="item-num"><span>48</span> </div>
+									</div>
+								</div>
+								<div class="media">
+									<div class="media-body">
+										<h4 class="media-heading">前一天新增监测个数</h4>
+										<div class="item-num"><span>266</span> </div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-8 area-item">
+							<div class="col-md-4 area-detail">
+								<div class="media">
+									<div class="media-left">
+										<a>
+											<img class="media-object" src="assets/images/area_2.png" alt="最近一小时最高温">
+										</a>
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">最近一小时最高温</h4>
+										<div class="item-num"><span>37°C</span> </div>
+									</div>
+									<p class="info-label">监测站名：李家岩水库</p>
+									<p class="info-label">出现时间：2017-7-28 14:00:00</p>
+								</div>
+							</div>
+							<div class="col-md-4 area-detail">
+								<div class="media">
+									<div class="media-left">
+										<a>
+											<img class="media-object" src="assets/images/area_3.png" alt="最近一小时最低温度">
+										</a>
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">最近一小时最低温度</h4>
+										<div class="item-num"><span>18°C</span> </div>
+									</div>
+									<p class="info-label">监测站名：街子古镇</p>
+									<p class="info-label">出现时间：2017-7-28 14:00:00</p>
+								</div>
+							</div>
+							<div class="col-md-4 area-detail">
+								<div class="media">
+									<div class="media-left">
+										<a>
+											<img class="media-object" src="assets/images/area_4.png" alt="最近一小时最大降水">
+										</a>
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">最近一小时最大降水</h4>
+										<div class="item-num"><span>37°C</span> </div>
+									</div>
+									<p class="info-label">监测站名：塔子山公园</p>
+									<p class="info-label">出现时间：2017-7-28 14:38:00</p>
+								</div>
+							</div>
+						</div>
+						<div class="update-time text-right">数据更新时间：<span>2017-7-27 14:01:00</span></div>
+					</div>
+				</div>
+
+				<!--成都市公共气象服务平台-->
+				<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 5]" id="weather" ng-show='current_tab == 5'>
+					<div class="weather-wrap">
+						<div class="col-md-6 ">
+
+							<div class="weather-item">
+							<h3 class="weather-title">短时天气预报<a class="pull-right">更多</a></h3>	
+							<p>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</p>
+							</div>
+							
+							<div class="weather-time text-right">
+								<h3>崇州市气象台</h3>
+								<h4>2017年08月19日</h4>
+							</div>
+						</div>
+						<div class="col-md-6">
+							
+							<div class="weather-item">
+								<h3 class="weather-title">最新灾害性天气预警</h3>
+							<p><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>崇州市气象台08月19日07时00分解除08月19日02时30分发布的暴雨黄色预警信号。</p>
+							<p><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我<span>市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</span></p>
+							</div>
+							
+							<div class="weather-time text-right">
+								<h3>崇州市气象台</h3>
+								<h4>2017年08月19日</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 6]" id="honor" ng-show='current_tab == 6'>6</div>
 			</div>
 		</div>
 	</div>

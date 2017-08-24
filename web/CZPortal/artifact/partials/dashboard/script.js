@@ -938,13 +938,7 @@
               trigger: 'axis'
             },
 
-            grid: {
-              top:'20%',
-              left: '3%',
-              right: '4%',
-              bottom: '3%',
-              containLabel: true
-            },
+            
 
             xAxis: {
               type: 'category',
@@ -1001,8 +995,9 @@
               }
             }]
           };
+          console.log(chartInstance);
+          chartInstance.resize();
           chartInstance.setOption(option);
-
         }
       }
     }

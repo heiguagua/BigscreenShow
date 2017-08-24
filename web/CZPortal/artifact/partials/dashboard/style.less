@@ -35,12 +35,14 @@
         >div {
           height: 100%;
         }
-        .update-time{
-          color:rgb(9,87,117);
-          font-size:30px;
-          padding-right:3rem;
-          span{
-            color:rgb(65,177,195)
+        .update-time {
+          color: rgb(9, 87, 117);
+          font-size: 30px;
+          padding-right: 3rem;
+          clear: left;
+
+          span {
+            color: rgb(65, 177, 195)
           }
         }
       }
@@ -73,12 +75,193 @@
             }
           }
         }
+        .serv-title {
+          font-size: 30px;
+          color: rgb(63, 177, 192);
+          padding-top: 1rem;
+        }
       }
-      .chart-car{
-        height:84%;
+      .chart-car {
+        height: 84%;
         max-height: 730px;
-        overflow:hidden;
-        padding:4rem 2rem 2rem 3.2rem;
+        overflow: hidden;
+        padding: 4rem 2rem 2rem 3.2rem;
+      }
+      .serv-right {
+        height: 84%;
+        max-height: 730px;
+        overflow: hidden;
+        padding: 4rem 8rem 2rem 3.2rem;
+
+        .serv-item {
+          padding: 4rem 2rem;
+          text-align: center;
+          border: 4px;
+          color: rgba(12, 114, 152, 1);
+
+          .media-body {
+            padding-left: 1.2rem;
+          }
+          h4 {
+            font-size: 30px;
+            text-align: left;
+          }
+          .item-num {
+            color: rgb(65, 179, 195);
+            font-size: 30px;
+            text-align: left;
+
+            span {
+              font-size: 45px;
+              position: relative;
+              top: 4px;
+            }
+          }
+        }
+      }
+      .gov-wrap {
+        height: 84%;
+        max-height: 730px;
+        padding: 6rem 1rem 4rem 3.2rem;
+        overflow: hidden;
+        border-bottom: 0;
+
+        .gov-item {
+          padding: 6rem 2rem 8.8rem 2rem;
+          text-align: center;
+          border: 4px;
+          color: rgba(103, 154, 155, 1);
+
+          .media-left {
+            vertical-align: middle;
+          }
+          .media-body {
+            padding-left: 1.2rem;
+          }
+          h4 {
+            font-size: 30px;
+            text-align: left;
+          }
+          .item-num {
+            color: rgb(63, 189, 247);
+            font-size: 30px;
+            text-align: left;
+
+            span {
+              font-size: 45px;
+              position: relative;
+              top: 4px;
+            }
+          }
+        }
+      }
+      .area-wrap {
+        height: 84%;
+        max-height: 730px;
+        padding: 2rem 1rem 2rem 1rem;
+        overflow: hidden;
+        border-bottom: 0;
+
+        .area-item {
+          padding: 1rem 1rem 0 2rem;
+          text-align: center;
+          border: 4px;
+          color: rgba(103, 154, 155, 1);
+
+          .watch-info {
+            display: inline-block;
+            width: 40%;
+            vertical-align: middle;
+            padding-left: 2rem;
+          }
+          .area-detail {
+            padding: 5rem 4rem;
+          }
+          .media-left {
+            vertical-align: middle;
+          }
+          .media-body {
+            padding: 1.8rem 1rem 1.8rem 1.2rem
+          }
+          .info-label {
+            font-size: 30px;
+            text-align: left;
+          }
+          h4 {
+            font-size: 30px;
+            text-align: left;
+          }
+          .item-num {
+            color: rgb(63, 189, 247);
+            font-size: 30px;
+            text-align: left;
+
+            span {
+              font-size: 48px;
+              position: relative;
+              top: 4px;
+            }
+          }
+        }
+      }
+      .weather-wrap {
+        height: 100%;
+        max-height: 730px;
+        padding: 2rem 1rem 2rem 1rem;
+        overflow: hidden;
+        border-bottom: 0;
+
+        >div {
+          height: 100%;
+        }
+        .weather-item {
+          height: 86%;
+          max-height: 730px;
+          padding: 2rem 4rem 4rem 4rem;
+          overflow: hidden;
+          border-bottom: 0;
+
+          h3.weather-title {
+            color: #edfc02;
+            font-size: 40px;
+
+            a {
+              font-size: 28px;
+              color: #41b3c3;
+            }
+          }
+          p {
+            font-size: 28px;
+            color: #33a1d2;
+            padding-top: 2rem;
+            padding-bottom: 4rem;
+            line-height: 2rem;
+            &:nth-child(3){
+                  -webkit-mask-image: -webkit-gradient(linear, 0 25%, 0 65%, from(#33a1d2), to(rgba(0, 0, 255, 0)));
+            }
+          }
+          .info-type {
+            font-size: 28px;
+            color: #edfc02;
+            font-weight: 100;
+            padding-right: 2rem;
+          }
+        }
+        .weather-time {
+          padding-right: 4rem;
+
+          h3 {
+            margin-top: 0;
+            color: rgb(65, 179, 195);
+            font-weight: 500;
+            font-size: 40px;
+          }
+          h4 {
+            color: rgb(50, 150, 167);
+            font-size: 30px;
+            padding-top: 10px;
+          }
+        }
       }
     }
     .menu-wrap {
@@ -96,7 +279,7 @@
         border: 1px solid transparent;
 
         a {
-          display: inline-block;
+          display: block;
           padding: 1.1rem;
           color: rgb(100, 154, 155);
           font-size: 30px;
