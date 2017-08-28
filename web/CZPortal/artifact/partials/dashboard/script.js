@@ -4,8 +4,8 @@
   dashboard.$inject = ['$location'];
   /** Controller */
   dashboard.controller('dashboardController', [
-    '$scope', 'dashboardService', '$rootScope',
-    function($scope, dashboardService, $rootScope) {
+    '$scope', 'dashboardService', '$rootScope','$interval',
+    function($scope, dashboardService, $rootScope,$interval) {
       var vm = this;
       $rootScope.change_flag = false; // 不切换
       // get deptartment data count
@@ -15,6 +15,27 @@
           vm.deptData = data;
         }
       })
+
+      // 信息资源目录和共享情况内容切换
+      $scope.toggleMap = true;
+      $interval(function(){
+        if($scope.toggleMap) {
+          $scope.toggleMap = false;
+        }
+        else{
+          $scope.toggleMap = true;
+        }
+      },5000)
+
+      // center 系统切换
+      $interval(function(){
+        if($scope.current_tab == 6) {
+          $scope.current_tab =  1;
+        }
+        else{
+          $scope.current_tab = $scope.current_tab+1;
+        }
+      },2000)
 
       // 中间系统切换事件
       $scope.current_tab = 1;

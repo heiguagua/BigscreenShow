@@ -3,6 +3,8 @@
 	<div class='content-center'>
 		<div class='col-md-2 system-menus'>
 			<div class="menu-wrap nav nav-tabs" role="tablist">
+				<div class="wrap-box">
+					<div class="wrap-border border_{{current_tab}}" ></div>
 				<div class="menu-item current " ng-class="{true:'in current',false:''}[current_tab == 1]" role="presentation" >
 					<a aria-controls="car" role="tab" data-toggle="tab" ng-click="toggle(1)">崇州车载前置管理系统</a>
 				</div>
@@ -21,6 +23,7 @@
 				<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 6]">
 					<a  aria-controls="honor" role="tab" data-toggle="tab" ng-click="toggle(6)">成都•崇州市信用网</a>
 				</div>
+			</div>
 			</div>
 		</div>
 		<div class='col-md-10 system-profile'>
