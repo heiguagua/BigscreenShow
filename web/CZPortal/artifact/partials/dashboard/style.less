@@ -250,7 +250,47 @@
         }
         .weather-time {
           padding-right: 4rem;
+          position: relative;
+          .refresh-bg {
+              position: absolute;
+              right: 12rem;
+            top: -2.5rem;
+              
+              width: 193px;
+              height: 193px;
+              background: url(../assets/images/loading_bg.png) no-repeat center;
+            }
+          .refresh {
+            position: absolute;
+            right: 0;
+              top: 0;
+            width: 193px;
+            height: 193px;
+            background: url(../assets/images/loading.png) no-repeat center;
+            animation: cir_run 2s infinite;
+            -webkit-animation: cir_run 2s infinite;
+            animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
 
+            @keyframes  cir_run {
+              from {
+                transform: rotate(0deg);
+              }
+              to {
+                transform: rotate(360deg);
+              }
+            }
+            @-webkit-keyframes cir_run {
+              from {
+                transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+              }
+              to {
+                transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+              }
+            }
+            
+          }
           h3 {
             margin-top: 0;
             color: rgb(65, 179, 195);
@@ -267,12 +307,13 @@
       .honor-wrap {
         height: 100%;
         max-height: 730px;
-        padding: 8rem 8rem 2rem 1rem;
+        padding: 8rem 0 2rem 1rem;
         overflow: hidden;
         border-bottom: 0;
 
         .honor-item {
-          padding: 3rem 1rem;
+          width: 20%;
+          padding: 0 1rem;
 
           &.corner {
             padding: 3px 4rem;
@@ -313,9 +354,11 @@
           }
           .media-left {
             vertical-align: middle;
+            padding-right: 0;
           }
           .media-body {
-            padding: 1.8rem 1rem 1.8rem 1.2rem
+            padding: 4rem 0 1.8rem 0;
+            vertical-align: middle;
           }
           .info-label {
             font-size: 30px;
@@ -355,30 +398,31 @@
           min-height: 2px;
           height: 4rem;
           border: 1px solid #04dbe0;
-          top:0;
+          top: 0;
+
           &.border_2 {
             -webkit-animation: run2 0.5s 1;
-            animation:run2 0.5s 1;
+            animation: run2 0.5s 1;
             top: 16.8%;
           }
           &.border_3 {
             -webkit-animation: run3 0.5s 1;
-            animation:run3 0.5s 1;
+            animation: run3 0.5s 1;
             top: 34.3%;
           }
           &.border_4 {
             -webkit-animation: run4 0.5s 1;
-            animation:run4 0.5s 1;
+            animation: run4 0.5s 1;
             top: 52%;
           }
           &.border_5 {
             -webkit-animation: run5 0.5s 1;
-            animation:run5 0.5s 1;
+            animation: run5 0.5s 1;
             top: 68.3%;
           }
           &.border_6 {
             -webkit-animation: run6 0.5s 1;
-            animation:run6 0.5s 1;
+            animation: run6 0.5s 1;
             top: 85.3%;
           }
           @-webkit-keyframes run2 {
@@ -980,6 +1024,7 @@
         border-left-color: rgba(21, 149, 160, 0.6);
         border-right-color: rgba(113, 62, 38, 0.7);
         border-top-color: rgba(21, 149, 160, 0.6);
+        border-bottom-color: rgba(113, 62, 38, 0.7);
         margin: 0 auto;
         border-radius: 50%;
         background: url("../assets/images/map_bg.png") center no-repeat;

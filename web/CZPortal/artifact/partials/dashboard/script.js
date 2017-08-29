@@ -4,8 +4,8 @@
   dashboard.$inject = ['$location'];
   /** Controller */
   dashboard.controller('dashboardController', [
-    '$scope', 'dashboardService', '$rootScope','$interval',
-    function($scope, dashboardService, $rootScope,$interval) {
+    '$scope', 'dashboardService', '$rootScope', '$interval',
+    function($scope, dashboardService, $rootScope, $interval) {
       var vm = this;
       $rootScope.change_flag = false; // 不切换
       // get deptartment data count
@@ -16,31 +16,49 @@
         }
       })
 
+      //获取数据图谱政务数据总类及已采集数据量
+      dashboardService.getDataCount().then(function(result) {
+        var data = result.data.body[0];
+        if (data) {
+          vm.deptDataCount = data;
+        }
+      })
+
+
+
+      // 获取信息资源目录和共享情况统计数
+      var getDataCountLast = function() {
+        dashboardService.getDataCountLast().then(function(result) {
+
+        })
+      }
+
       // 信息资源目录和共享情况内容切换
       $scope.toggleMap = true;
-      $interval(function(){
-        if($scope.toggleMap) {
-          $scope.toggleMap = false;
-        }
-        else{
-          $scope.toggleMap = true;
-        }
-      },5000)
+      // $interval(function(){
+      //   if($scope.toggleMap) {
+      //     $scope.toggleMap = false;
+      //   }
+      //   else{
+      //     $scope.toggleMap = true;
+      //   }
+      //   getDataCountLast();
+      // },5000)
 
       // center 系统切换
-      $interval(function(){
-        if($scope.current_tab == 6) {
-          $scope.current_tab =  1;
+      var stop = $interval(function() {
+        if ($scope.current_tab == 6) {
+          $scope.current_tab = 1;
+        } else {
+          $scope.current_tab = $scope.current_tab + 1;
         }
-        else{
-          $scope.current_tab = $scope.current_tab+1;
-        }
-      },2000)
+      }, 2000)
 
       // 中间系统切换事件
       $scope.current_tab = 1;
       $scope.toggle = function(num) {
         $scope.current_tab = num;
+        $interval.cancel(stop);
       }
 
 
@@ -97,7 +115,11 @@
         getIdcUse: getIdcUse,
         getIdcUseTime: getIdcUseTime,
         setStatus: setStatus,
-        getDataInfoNum: getDataInfoNum
+        getDataInfoNum: getDataInfoNum,
+        getDataCountLast: getDataCountLast,
+        getDataCount: getDataCount,
+        getAccessDataNum: getAccessDataNum,
+        getDeptCoords: getDeptCoords
       }
 
       function getDeptDataQuantity() {
@@ -133,6 +155,34 @@
       function getDataInfoNum() {
         return $http.get(
           URL + '/depDataInfo/dataInfoNum'
+        )
+      }
+
+      // 政务信息资源目录和共享情况统计
+      function getDataCountLast() {
+        return $http.get(
+          URL + '/depDataInfo/dataCountLast'
+        )
+      }
+
+      // datamap -> 政务数据总类及已采集数据量
+      function getDataCount() {
+        return $http.get(
+          URL + '/depDataInfo/dataCount'
+        )
+      }
+
+      // dept -> 部门已接入数据总量top8
+      function getAccessDataNum() {
+        return $http.get(
+          URL + '/depDataInfo/accessDataNum'
+        )
+      }
+
+      // 获取部门坐标系
+      function getDeptCoords() {
+        return $http.get(
+          'assets/file/depts_coord.json'
         )
       }
     }
@@ -193,20 +243,7 @@
       }
     }
   ]);
-  //
-  // dashboard.service('dashboard.chartIdcUse', ['$http', 'URL',
-  //   function($http, URL) {
-  //     if (URL) {
-  //       return $http({
-  //         method: 'GET',
-  //         url: URL + '/serverMonitor/detail',
-  //         withCredentials: true
-  //       });
-  //     } else {
-  //       console.error('API Not Found in config.js');
-  //     }
-  //   }
-  // ]);
+
 
   /** Directive */
   dashboard.directive('wiservDockProgress', ['dashboard.chartDockProgress',
@@ -513,95 +550,18 @@
   ]);
 
 
-  dashboard.directive('wiservChartMigrate', [
-    function() {
+  dashboard.directive('wiservChartMigrate', ['dashboardService',
+    function(dashboardService) {
       return {
         restrict: 'ACE',
         template: "<div id='deptData' style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance = echarts.init((element.find('#deptData'))[0]);
-          var geoCoordMap = {
-            '长春': [129.8154, 50.2584],
-            '长沙': [135.0823, 25.2568],
-            '崇州政务大数据平台': [108.6992, 32.7682],
-            '西安': [134.1162, 34.2004],
-            '深圳': [124.5435, 22.5439],
-            '济南': [127.1582, 36.8701],
-            '海口': [110.3893, 16.8516],
-            '沈阳': [142.1238, 22.1216],
-            '武汉': [134.3896, 30.6628],
-            '昆明': [102.9199, 18.4663],
-            '杭州': [139.5313, 29.8773],
-            '成都市政府部门': [89.9526, 54.7617],
-            '成都市政务中心': [74.1526, 55.7617],
-            '成都市气象局': [74.1526, 54.5617],
-            '成都市工商局': [74.1526, 53.3617],
-            '拉萨': [81.1865, 30.1465],
-            '天津': [117.4219, 49.4189],
-            '合肥': [137.29, 32.0581],
-            '呼和浩特': [107.4124, 50.4901],
-            '哈尔滨': [129.9688, 40.368],
-            '北京': [110.4551, 54.2539],
-            '南京': [134.8062, 41.9208],
-            '南宁': [96.479, 18.1152],
-            '南昌': [116.0046, 19.6633],
-            '乌鲁木齐': [87.9236, 46.5883],
-            '上海': [135.4648, 31.2891]
-          };
-
-          var data = [{
-            name: '长春'
-          }, {
-            name: '长沙'
-          }, {
-            name: '崇州政务大数据平台'
-          }, {
-            name: '西安'
-          }, {
-            name: '深圳'
-          }, {
-            name: '济南'
-          }, {
-            name: '海口'
-          }, {
-            name: '沈阳'
-          }, {
-            name: '武汉'
-          }, {
-            name: '昆明'
-          }, {
-            name: '杭州'
-          }, {
-            name: '成都市政府部门'
-          }, {
-            name: '成都市政务中心'
-          }, {
-            name: '成都市气象局'
-          }, {
-            name: '成都市工商局'
-          }, {
-            name: '拉萨'
-          }, {
-            name: '天津'
-          }, {
-            name: '合肥'
-          }, {
-            name: '呼和浩特'
-          }, {
-            name: '哈尔滨'
-          }, {
-            name: '北京'
-          }, {
-            name: '南京'
-          }, {
-            name: '南宁'
-          }, {
-            name: '南昌'
-          }, {
-            name: '乌鲁木齐'
-          }, {
-            name: '上海'
-          }];
+          dashboardService.getDeptCoords().then(function(result){
+            console.log(result);
+            var geoCoordMap = result.data.coords;
+            var data = result.data.data;
+            
 
           function formtGCData(geoData, data, srcNam, dest) {
             var tGeoDt = [];
@@ -678,11 +638,39 @@
                     }
                   });
                 } else {
-                  tGeoDt.push({
-                    name: tNam,
-                    value: geoData[tNam],
-                    symbolSize: 6
-                  });
+                  console.log(geoData[tNam][0]);
+                  if(geoData[tNam][0]>91 && geoData[tNam][0]<119 && geoData[tNam][1]<21) {
+                    tGeoDt.push({
+                      name: tNam,
+                      value: geoData[tNam],
+                      symbolSize: 6,
+                      label: {
+                      normal: {
+                        position: [-30, 22]
+                      }
+                    }
+                    });
+                  }
+                  else if(geoData[tNam][0]<=91 ) {
+                    tGeoDt.push({
+                      name: tNam,
+                      value: geoData[tNam],
+                      symbolSize: 6,
+                      label: {
+                      normal: {
+                        position: [-80, -5]
+                      }
+                    }
+                    });
+                  }
+                  else{
+                    tGeoDt.push({
+                      name: tNam,
+                      value: geoData[tNam],
+                      symbolSize: 6
+
+                    });
+                  }
                 }
 
               }
@@ -758,7 +746,7 @@
 
               type: 'lines',
               zlevel: 2,
-              silent:true,
+              silent: true,
               effect: {
                 show: true,
                 period: 6,
@@ -814,6 +802,37 @@
           };
 
           chartInstance.setOption(option);
+          })
+          // var geoCoordMap = {
+          //   '长春': [129.8154, 50.2584],
+          //   '长沙': [135.0823, 25.2568],
+          //   '崇州政务大数据平台': [108.6992, 32.7682],
+          //   '西安': [134.1162, 34.2004],
+          //   '深圳': [124.5435, 22.5439],
+          //   '济南': [127.1582, 36.8701],
+          //   '海口': [110.3893, 16.8516],
+          //   '沈阳': [142.1238, 22.1216],
+          //   '武汉': [134.3896, 30.6628],
+          //   '昆明': [102.9199, 18.4663],
+          //   '杭州': [139.5313, 29.8773],
+          //   '成都市政府部门': [89.9526, 54.7617],
+          //   '成都市政务中心': [74.1526, 55.7617],
+          //   '成都市气象局': [74.1526, 54.5617],
+          //   '成都市工商局': [74.1526, 53.3617],
+          //   '拉萨': [81.1865, 30.1465],
+          //   '天津': [117.4219, 49.4189],
+          //   '合肥': [137.29, 32.0581],
+          //   '呼和浩特': [107.4124, 50.4901],
+          //   '哈尔滨': [129.9688, 40.368],
+          //   '北京': [110.4551, 54.2539],
+          //   '南京': [134.8062, 41.9208],
+          //   '南宁': [96.479, 18.1152],
+          //   '南昌': [116.0046, 19.6633],
+          //   '乌鲁木齐': [87.9236, 46.5883],
+          //   '上海': [135.4648, 31.2891]
+          // };
+
+          
 
         }
       }
@@ -827,112 +846,127 @@
       template: "<div id='accessData' style='width:100%;height:100%'></div>",
       link: function(scope, element, attrs) {
         var chartInstance = echarts.init((element.find('#accessData'))[0]);
-        var option = {
-
-          grid: {
-            top: '1%',
-            left: '3%',
-            right: '15%',
-            bottom: '20%',
-            containLabel: true
-          },
-          xAxis: {
-            type: 'value',
-            boundaryGap: [0, 0],
-            axisLine: {
-              show: false
-            },
-            axisLabel: {
-              show: false
-            },
-            axisTick: {
-              show: false
-            },
-            splitLine: {
-              show: false
+        // 获取部门已接入数据总量Top8
+        dashboardService.getAccessDataNum().then(function(result) {
+          var data = result.data.body;
+          console.log(data);
+          if (data) {
+            var deptAccessDataTop8 = data;
+            var depts = _.map(deptAccessDataTop8,'DEP_NAME');
+            var values = _.map(deptAccessDataTop8,'dataNum');
+            var max = _.max(values) + 30;
+            var max_datas = [];
+            for(var i=0; i<values.length; i++) {
+              max_datas.push(max);
             }
-          },
-          yAxis: {
-            type: 'category',
-            data: ['市气象局', '市交通局', '巴西', '印尼', '美国', '印度', '中国', '世界人口(万)'],
-            axisLine: {
-              show: false
-            },
-            axisLabel: {
-              margin: 19,
-              textStyle: {
-                color: 'rgb(100,154,155)',
-                fontSize: 15
-              }
-            },
-            axisTick: {
-              show: false
-            },
-            splitLine: {
-              show: false
-            }
-          },
-          series: [{ // For shadow
-            type: 'bar',
-            barWidth: '50%',
-            itemStyle: {
-              normal: {
-                color: 'rgba(31,54,74,1)'
-              }
-            },
-            barGap: '-80%',
-            barCategoryGap: '100%',
-            data: [500, 500, 500, 500, 500, 500, 500, 500],
-            animation: false
-          }, {
-            name: '2011年',
-            barWidth: '30%',
-            type: 'bar',
-            zlevel: 1,
-            data: [110, 160, 230, 294, 319, 374, 390, 413],
-            label: {
-              normal: {
-                show: true,
-                position: 'right',
-                textStyle: {
-                  color: 'rgb(100,154,155)',
-                  fontSize: 15
-                }
-              }
-            },
-            itemStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(
-                  0, 0, 1, 1, [{
-                    offset: 0,
-                    color: '#188df0'
-                  }, {
-                    offset: 0.5,
-                    color: '#188df0'
-                  }, {
-                    offset: 1,
-                    color: '#83bff6'
-                  }]
-                )
+            var option = {
+              grid: {
+                top: '1%',
+                left: '3%',
+                right: '15%',
+                bottom: '20%',
+                containLabel: true
               },
-              emphasis: {
-                color: new echarts.graphic.LinearGradient(
-                  0, 0, 1, 1, [{
-                    offset: 0,
-                    color: '#1e83d8'
-                  }, {
-                    offset: 0.5,
-                    color: '#188df0'
-                  }, {
-                    offset: 1,
-                    color: '#83bff6'
-                  }]
-                )
-              }
-            },
-          }]
-        };
-        chartInstance.setOption(option);
+              xAxis: {
+                type: 'value',
+                boundaryGap: [0, 0],
+                axisLine: {
+                  show: false
+                },
+                axisLabel: {
+                  show: false
+                },
+                axisTick: {
+                  show: false
+                },
+                splitLine: {
+                  show: false
+                }
+              },
+              yAxis: {
+                type: 'category',
+                data: depts,
+                axisLine: {
+                  show: false
+                },
+                axisLabel: {
+                  margin: 19,
+                  textStyle: {
+                    color: 'rgb(100,154,155)',
+                    fontSize: 15
+                  }
+                },
+                axisTick: {
+                  show: false
+                },
+                splitLine: {
+                  show: false
+                }
+              },
+              series: [{ // For shadow
+                type: 'bar',
+                barWidth: '50%',
+                itemStyle: {
+                  normal: {
+                    color: 'rgba(31,54,74,1)'
+                  }
+                },
+                barGap: '-80%',
+                barCategoryGap: '100%',
+                data: max_datas,
+                animation: false
+              }, {
+                name: '部门接入数据量',
+                barWidth: '30%',
+                type: 'bar',
+                zlevel: 1,
+                data: values,
+                label: {
+                  normal: {
+                    show: true,
+                    position: 'right',
+                    textStyle: {
+                      color: 'rgb(100,154,155)',
+                      fontSize: 15
+                    }
+                  }
+                },
+                itemStyle: {
+                  normal: {
+                    color: new echarts.graphic.LinearGradient(
+                      0, 0, 1, 1, [{
+                        offset: 0,
+                        color: '#1e83d8'
+                      }, {
+                        offset: 0.5,
+                        color: 'rgb(26,137,183)'
+                      }, {
+                        offset: 1,
+                        color: 'rgb(14,181,217)'
+                      }]
+                    )
+                  },
+                  emphasis: {
+                    color: new echarts.graphic.LinearGradient(
+                      0, 0, 1, 1, [{
+                        offset: 0,
+                        color: '#188df0'
+                      }, {
+                        offset: 0.5,
+                        color: 'rgb(26,137,183)'
+                      }, {
+                        offset: 1,
+                        color: 'rgb(14,181,217)'
+                      }]
+                    )
+                  }
+                },
+              }]
+            };
+            chartInstance.setOption(option);
+          }
+        })
+
       }
     }
   }])
@@ -950,8 +984,8 @@
               text: '前一天消费趋势图（笔）',
               left: '3%',
               textStyle: {
-                fontSize:30,
-                fontWeight:'normal',
+                fontSize: 30,
+                fontWeight: 'normal',
                 color: 'rgb(237,252,2)'
               }
             },
@@ -959,7 +993,7 @@
               trigger: 'axis'
             },
 
-            
+
 
             xAxis: {
               type: 'category',
@@ -984,7 +1018,7 @@
               type: 'value',
               boundaryGap: false,
               axisLabel: {
-                margin:15,
+                margin: 15,
                 textStyle: {
                   color: 'rgba(255,255,255,.6)',
                   fontSize: 22
@@ -997,7 +1031,7 @@
               },
               splitLine: {
                 lineStyle: {
-                  width:2,
+                  width: 2,
                   color: 'rgb(8,88,123)'
                 }
               }
@@ -1010,7 +1044,7 @@
               symbolSize: 0,
               lineStyle: {
                 normal: {
-                  width:3,
+                  width: 3,
                   color: 'rgb(0,255,255)'
                 }
               }
@@ -1304,7 +1338,7 @@
             context.lineWidth = 0;
 
             // var dataInfoNum = res.body[0].dataInfoNum;
-            drawTextAlongArc(context, '社会化数据共216类', centerX, centerY, radius, angle);
+            drawTextAlongArc(context, '社会化数据', centerX, centerY, radius, angle);
 
             // draw circle underneath text
             context.arc(centerX, centerY, radius - 10, 0, 2 * Math.PI, false);
@@ -1330,7 +1364,7 @@
               s;
             context.save();
             context.translate(centerX, centerY);
-            context.rotate(-1 * angle / 2);
+            context.rotate(-1 * angle / 1.5);
             context.rotate(rotate_base * (angle / len)); // 调整文字的起始偏移
             for (var n = 0; n < len; n++) {
               context.rotate(angle / len);
@@ -1343,45 +1377,41 @@
             context.restore();
           }
 
-          dashboardService.getDataInfoNum().then(function(res) {
-            setTimeout(function() {
-              var map_chart_clientheight = element.parent()[0].clientHeight;
-              var map_chart_height = element.parent()[0].offsetHeight;
-              $(element.find('canvas')).attr('width', map_chart_height);
-              $(element.find('canvas')).attr('height', map_chart_height);
+          //dashboardService.getDataInfoNum().then(function(res) {
+          setTimeout(function() {
+            var map_chart_clientheight = element.parent()[0].clientHeight;
+            var map_chart_height = element.parent()[0].offsetHeight;
+            $(element.find('canvas')).attr('width', map_chart_height);
+            $(element.find('canvas')).attr('height', map_chart_height);
 
-              var word_spacing = 4;
-              var rotate_base = 14;
-              if (map_chart_clientheight > 700) {
-                word_spacing = 6;
-                rotate_base = 19;
-              }
+            var word_spacing = 4;
+            var rotate_base = 12;
+            if (map_chart_clientheight > 700) {
+              word_spacing = 6;
+              rotate_base = 19;
+            }
 
-              var canvas = document.getElementById('downCanvas'),
-                context = canvas.getContext('2d'),
-                centerX = canvas.width / 2 - 20,
-                centerY = canvas.height / 2 - 20,
-                angle = Math.PI / word_spacing, //调整文字间距
-                radius = map_chart_height / 2;
+            var canvas = document.getElementById('downCanvas'),
+              context = canvas.getContext('2d'),
+              centerX = canvas.width / 2 - 20,
+              centerY = canvas.height / 2 - 30,
+              angle = Math.PI / word_spacing, //调整文字间距
+              radius = map_chart_height / 2;
 
-              context.font = '26px Calibri';
-              context.textAlign = 'center';
-              context.fillStyle = '#FFF';
-              context.strokeStyle = 'transparent';
-              context.lineWidth = 0;
+            context.font = '26px Calibri';
+            context.textAlign = 'center';
+            context.fillStyle = '#FFF';
+            context.strokeStyle = 'transparent';
+            context.lineWidth = 0;
 
-              var dataInfoNum = '';
-              if (res.data && res.data.body[0] && res.data.body[0].dataInfoNum) {
-                dataInfoNum = res.data.body[0].dataInfoNum;
-              }
-              drawTextAlongArc(context, '政务数据共' + dataInfoNum + '类', centerX, centerY, radius, angle, rotate_base);
+            drawTextAlongArc(context, '政务数据', centerX, centerY, radius, angle, rotate_base);
 
-              // draw circle underneath text
-              context.arc(centerX, centerY, radius - 10, 0, 2 * Math.PI, false);
-              context.stroke();
-            }, 600)
+            // draw circle underneath text
+            context.arc(centerX, centerY, radius - 10, 0, 2 * Math.PI, false);
+            context.stroke();
+          }, 600)
 
-          })
+          //})
         }
       }
     }
@@ -1418,7 +1448,7 @@
             var tree = d3.tree()
               .size(tree_size)
               .separation(function(a, b) {
-                return (a.parent == b.parent ? 1 : 2) / a.depth;
+                return (a.parent == b.parent ? 1 : 1) / a.depth;
               });
 
             d3.csv("assets/file/flare.csv", function(error, data) {
