@@ -214,31 +214,33 @@
         >div {
           height: 100%;
         }
+
         .weather-item {
           height: 86%;
           max-height: 730px;
           padding: 2rem 4rem 4rem 4rem;
           overflow: hidden;
           border-bottom: 0;
-
           h3.weather-title {
             color: #edfc02;
             font-size: 40px;
-
+            margin-bottom: 2rem;
             a {
               font-size: 28px;
               color: #41b3c3;
             }
           }
-          p {
+          
+          .weather-info{
             font-size: 28px;
             color: #33a1d2;
             padding-top: 2rem;
             padding-bottom: 4rem;
             line-height: 2rem;
+            min-height:2rem;
 
             &:nth-child(3) {
-              -webkit-mask-image: -webkit-gradient(linear, 0 25%, 0 65%, from(#33a1d2), to(rgba(0, 0, 255, 0)));
+              
             }
           }
           .info-type {
@@ -248,22 +250,28 @@
             padding-right: 2rem;
           }
         }
+        
+        .weather-scroll {
+          overflow: hidden;
+          -webkit-mask-image: -webkit-gradient(linear, 0 45%, 0 52%, from(#33a1d2), to(rgba(0, 0, 255, 0)));
+      
+        }
         .weather-time {
           padding-right: 4rem;
           position: relative;
+
           .refresh-bg {
-              position: absolute;
-              right: 12rem;
+            position: absolute;
+            right: 12rem;
             top: -2.5rem;
-              
-              width: 193px;
-              height: 193px;
-              background: url(../assets/images/loading_bg.png) no-repeat center;
-            }
+            width: 193px;
+            height: 193px;
+            background: url(../assets/images/loading_bg.png) no-repeat center;
+          }
           .refresh {
             position: absolute;
             right: 0;
-              top: 0;
+            top: 0;
             width: 193px;
             height: 193px;
             background: url(../assets/images/loading.png) no-repeat center;
@@ -289,7 +297,6 @@
                 -webkit-transform: rotate(360deg);
               }
             }
-            
           }
           h3 {
             margin-top: 0;
@@ -661,7 +668,24 @@
     &.idc-use {
       overflow: hidden;
       padding: 3rem 5rem;
-
+      .slick-prev{
+        top: 0;
+        left: 40%;
+        width: 40px;
+        height: 28px;
+      }
+      .slick-next{
+        width: 40px;
+        height: 28px;
+        top: 100%;
+        left: 40%;
+      }
+      .slick-next:before{
+        content:url(../assets/images/arrow_down.png);
+      }
+      .slick-prev:before{
+        content:url(../assets/images/arrow_up.png);
+      }
       .exchange {
         position: absolute;
         bottom: 10px;

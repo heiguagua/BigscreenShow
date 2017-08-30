@@ -61,6 +61,31 @@
         $interval.cancel(stop);
       }
 
+      // 成都市公共气象服务平台天气滚动播放
+      setTimeout(function(){
+        $(".weather-scroll").slick({
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          cssEase: 'linear',
+          autoplay: true,
+          centerMode:true,
+          autoplaySpeed: 0,
+          speed:10000,
+          vertical:true,
+          verticalSwiping:true
+        });
+        },1000)
+
+      // 崇州市大数据产业政策
+      $("#pro-list").slick({
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 3000,
+          vertical:true,
+          verticalSwiping:true
+        });
+
 
       $scope.changeRoute = function() {
         dashboardService.getStatus().then(function(result) {

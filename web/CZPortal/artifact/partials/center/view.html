@@ -5,25 +5,25 @@
 			<div class="menu-wrap nav nav-tabs" role="tablist">
 				<div class="wrap-box">
 					<div class="wrap-border border_{{current_tab}}" ></div>
-				<div class="menu-item current " ng-class="{true:'in current',false:''}[current_tab == 1]" role="presentation" >
-					<a aria-controls="car" role="tab" data-toggle="tab" ng-click="toggle(1)">崇州车载前置管理系统</a>
+					<div class="menu-item current " ng-class="{true:'in current',false:''}[current_tab == 1]" role="presentation" >
+						<a aria-controls="car" role="tab" data-toggle="tab" ng-click="toggle(1)">崇州车载前置管理系统</a>
+					</div>
+					<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 2]">
+						<a  aria-controls="servant" role="tab" data-toggle="tab" ng-click="toggle(2)">崇州市公务员考核系统</a>
+					</div>
+					<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 3]">
+						<a aria-controls="gov" role="tab" data-toggle="tab" ng-click="toggle(3)">成都•崇州市政务审批服务平台</a>
+					</div>
+					<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 4]">
+						<a  aria-controls="area" role="tab" data-toggle="tab" ng-click="toggle(4)">成都市区域自动站监测平台</a>
+					</div>
+					<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 5]">
+						<a  aria-controls="weather" role="tab" data-toggle="tab" ng-click="toggle(5)">成都市公共气象服务平台</a>
+					</div>
+					<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 6]">
+						<a  aria-controls="honor" role="tab" data-toggle="tab" ng-click="toggle(6)">成都•崇州市信用网</a>
+					</div>
 				</div>
-				<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 2]">
-					<a  aria-controls="servant" role="tab" data-toggle="tab" ng-click="toggle(2)">崇州市公务员考核系统</a>
-				</div>
-				<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 3]">
-					<a aria-controls="gov" role="tab" data-toggle="tab" ng-click="toggle(3)">成都•崇州市政务审批服务平台</a>
-				</div>
-				<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 4]">
-					<a  aria-controls="area" role="tab" data-toggle="tab" ng-click="toggle(4)">成都市区域自动站监测平台</a>
-				</div>
-				<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 5]">
-					<a  aria-controls="weather" role="tab" data-toggle="tab" ng-click="toggle(5)">成都市公共气象服务平台</a>
-				</div>
-				<div class="menu-item" ng-class="{true:'in current',false:''}[current_tab == 6]">
-					<a  aria-controls="honor" role="tab" data-toggle="tab" ng-click="toggle(6)">成都•崇州市信用网</a>
-				</div>
-			</div>
 			</div>
 		</div>
 		<div class='col-md-10 system-profile'>
@@ -91,7 +91,6 @@
 						<div class="update-time text-right">数据更新时间：<span>2017-7-27 14:01:00</span></div>
 					</div>
 				</div>
-
 				<!--崇州市公务员考核系统-->
 				<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 2]" id="servant" ng-show='current_tab == 2'>
 					<div class="col-md-2 car-info-wrap">
@@ -210,7 +209,6 @@
 						<div class="update-time text-right">数据更新时间：<span>2017-7-27 14:01:00</span></div>
 					</div>
 				</div>
-
 				<!--成都•崇州市政务审批服务平台-->
 				<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 3]" id="gov" ng-show='current_tab == 3'>
 					<div class="gov-wrap">
@@ -302,7 +300,6 @@
 						<div class="update-time text-right">数据更新时间：<span>2017-7-27 14:01:00</span></div>
 					</div>
 				</div>
-
 				<!--成都市区域自动站监测平台-->
 				<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 4]" id="area" ng-show='current_tab == 4'>
 					<div class="area-wrap">
@@ -379,15 +376,13 @@
 						<div class="update-time text-right">数据更新时间：<span>2017-7-27 14:01:00</span></div>
 					</div>
 				</div>
-
 				<!--成都市公共气象服务平台-->
 				<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 5]" id="weather" ng-show='current_tab == 5'>
 					<div class="weather-wrap">
 						<div class="col-md-6 ">
-
 							<div class="weather-item">
-							<h3 class="weather-title">短时天气预报<a class="pull-right">更多</a></h3>	
-							<p>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</p>
+								<h3 class="weather-title">短时天气预报<a class="pull-right">更多</a></h3>
+								<div class="weather-info">19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</div>
 							</div>
 							
 							<div class="weather-time text-right">
@@ -402,11 +397,17 @@
 							
 							<div class="weather-item">
 								<h3 class="weather-title">最新灾害性天气预警</h3>
-							<p><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>崇州市气象台08月19日07时00分解除08月19日02时30分发布的暴雨黄色预警信号。</p>
-							<p><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我<span>市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</span></p>
+								<div class="weather-scroll">
+									<div class="weather-info"><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>崇州市气象台08月19日07时00分解除08月19日02时30分发布的暴雨黄色预警信号。</div>
+									<div class="weather-info"><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我<span>市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</span></div>
+									<div class="weather-info"><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我<span>市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</span></div>
+								</div>
 							</div>
 							
 							<div class="weather-time text-right">
+								<div class="refresh-bg">
+									<div class="refresh"></div>
+								</div>
 								<h3>崇州市气象台</h3>
 								<h4>2017年08月19日</h4>
 							</div>
