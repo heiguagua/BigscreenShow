@@ -52,7 +52,7 @@
         } else {
           $scope.current_tab = $scope.current_tab + 1;
         }
-      }, 2000)
+      }, 5000)
 
       // 中间系统切换事件
       $scope.current_tab = 1;
@@ -658,7 +658,7 @@
                     symbolSize: 0.001,
                     label: {
                       normal: {
-                        position: [60, -5]
+                        position:cd_pos
                       }
                     }
                   });
@@ -726,6 +726,20 @@
 
           var planePath = 'circle';
 
+          var zoom = 0.8;
+          var layoutCenter = ['38%', '45%'];
+          var fontSize = 15;
+          var cd_pos = [60, -5]; // 成都市政府部门子集position
+          var screen_width = screen.width;
+          var screen_height = screen.height;
+
+          if(screen_width < 1600) {
+            zoom = 0.6;
+            layoutCenter = ['29%', '35%'];
+            fontSize = 14;
+            cd_pos = [15, -8];
+          }
+
           var option = {
             backgroundColor: 'transparent',
             title: {
@@ -748,7 +762,9 @@
             geo: {
               map: 'china',
               show: false,
-              // center:[106.6992, 26.7682],
+              zoom:zoom,
+              layoutCenter: layoutCenter,
+              layoutSize: '100%',
               left: '2%',
               label: {
                 emphasis: {
@@ -809,7 +825,7 @@
                   formatter: '{b}',
                   textStyle: {
                     color: 'rgb(100,154,155)',
-                    fontSize: 15,
+                    fontSize: fontSize,
                     fontFamily: 'yahei',
                     fontWeight: 100
                   }
@@ -884,12 +900,22 @@
             for(var i=0; i<values.length; i++) {
               max_datas.push(max);
             }
+
+            var grid_right = '15%';
+            var grid_bottom = '20%';
+            var screen_width = screen.width;
+            var screen_height = screen.height;
+
+            if(screen_width < 1600) {
+              grid_right = '30%';
+              grid_bottom = '40%';
+            }
             var option = {
               grid: {
                 top: '1%',
                 left: '3%',
-                right: '15%',
-                bottom: '20%',
+                right: grid_right,
+                bottom: grid_bottom,
                 containLabel: true
               },
               xAxis: {
@@ -1018,7 +1044,10 @@
               trigger: 'axis'
             },
 
-
+            grid:{
+              top: '20%',
+              bottom: '5%'
+            },
 
             xAxis: {
               type: 'category',
@@ -1062,7 +1091,7 @@
               }
             },
             series: [{
-              name: '邮件营销',
+              name: '前一天消费(笔)',
               type: 'line',
               stack: '总量',
               data: [120, 132, 101, 134, 90, 230, 210],
