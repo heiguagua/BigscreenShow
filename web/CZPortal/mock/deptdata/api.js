@@ -25,5 +25,9 @@ Router.route('/depDataInfo/dataCount')
   .get(function(request, response) {
     response.json(Util.json('/deptdata/json/accessDataNum.json'));
 });
+  Router.route('/combing/ResourceCombing')
+  .get(function(request, response) {
+    response.json(Util.json('/deptdata/json/ResourceCombing.json'));
+});
 /** Module export */
 module.exports = Router;

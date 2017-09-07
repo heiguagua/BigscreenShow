@@ -4,37 +4,49 @@
   dashboard.$inject = ['$location'];
   /** Controller */
   dashboard.controller('dashboardController', [
-    '$scope', 'dashboardService', '$rootScope', '$interval',
-    function($scope, dashboardService, $rootScope, $interval) {
+    '$scope', 'dashboardService', '$rootScope', '$interval', '$timeout',
+    function($scope, dashboardService, $rootScope, $interval,$timeout) {
       var vm = this;
       $rootScope.change_flag = false; // 不切换
-      // get deptartment data count
-      dashboardService.getDeptDataQuantity().then(function(result) {
-        var data = result.data.body[0];
-        if (data) {
-          vm.deptData = data;
-        }
-      })
-
-      //获取数据图谱政务数据总类及已采集数据量
-      dashboardService.getDataCount().then(function(result) {
-        var data = result.data.body[0];
-        if (data) {
-          vm.deptDataCount = data;
-        }
-      })
-
-
+      
 
       // 获取信息资源目录和共享情况统计数
-      var getDataCountLast = function() {
+      var getDataCount = function() {
+        // 获取已汇集数据量及最新一周新增
         dashboardService.getDataCountLast().then(function(result) {
+          $scope.dataCountLast = result.data.body;
+        })
 
+        // 获取其他数据
+        dashboardService.getResourceCombing().then(function(result) {
+          $scope.ResourceCombing = result.data.body[0];
         })
       }
 
+      var init = function(){
+        // get deptartment data count
+          dashboardService.getDeptDataQuantity().then(function(result) {
+            var data = result.data.body[0];
+            if (data) {
+              vm.deptData = data;
+            }
+          })
+
+          //获取数据图谱政务数据总类及已采集数据量
+          dashboardService.getDataCount().then(function(result) {
+            var data = result.data.body[0];
+            if (data) {
+              vm.deptDataCount = data;
+            }
+          })
+
+          getDataCount();
+      }
+
+      init();
+
       // 信息资源目录和共享情况内容切换
-      $scope.toggleMap = true;
+      $scope.toggleMap = false;
       // $interval(function(){
       //   if($scope.toggleMap) {
       //     $scope.toggleMap = false;
@@ -42,39 +54,59 @@
       //   else{
       //     $scope.toggleMap = true;
       //   }
-      //   getDataCountLast();
+      //   getDataCount();
       // },5000)
 
       // center 系统切换
       var stop = $interval(function() {
         if ($scope.current_tab == 6) {
           $scope.current_tab = 1;
+        }
+        else if($scope.current_tab == 4) {
+          $scope.current_tab = $scope.current_tab + 1;
+          // 成都市公共气象服务平台天气滚动播放
+          $timeout(function(){
+            $(".weather-scroll").slick({
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              cssEase: 'linear',
+              autoplay: true,
+              centerMode:true,
+              autoplaySpeed: 0,
+              speed:7000,
+              vertical:true,
+              verticalSwiping:true
+            });
+          },300)
         } else {
           $scope.current_tab = $scope.current_tab + 1;
         }
-      }, 5000)
+      }, 8000)
 
       // 中间系统切换事件
       $scope.current_tab = 1;
       $scope.toggle = function(num) {
         $scope.current_tab = num;
         $interval.cancel(stop);
+        if(num == 5) {
+          $timeout(function(){
+            $(".weather-scroll").slick({
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              cssEase: 'linear',
+              autoplay: true,
+              centerMode:true,
+              autoplaySpeed: 0,
+              speed:7000,
+              vertical:true,
+              verticalSwiping:true
+            });
+          },300)
+        }
+
       }
 
-      // 成都市公共气象服务平台天气滚动播放
-      setTimeout(function(){
-        $(".weather-scroll").slick({
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          cssEase: 'linear',
-          autoplay: true,
-          centerMode:true,
-          autoplaySpeed: 0,
-          speed:10000,
-          vertical:true,
-          verticalSwiping:true
-        });
-        },1000)
+      
 
       // 崇州市大数据产业政策
       $("#pro-list").slick({
@@ -96,7 +128,6 @@
           } else {
             newValue = 1;
           }
-          console.log(newValue);
           dashboardService.setStatus(newValue).then(function() {
 
           })
@@ -111,7 +142,6 @@
       var current_url = $location.path();
       dashboardService.getStatus().then(function(result) {
         var data = result.data;
-        console.log(data);
         if (data == 1) { // 切换
           if (current_url.indexOf('bigdata') > -1) {
             $location.path('/idcuse')
@@ -142,6 +172,7 @@
         setStatus: setStatus,
         getDataInfoNum: getDataInfoNum,
         getDataCountLast: getDataCountLast,
+        getResourceCombing: getResourceCombing,
         getDataCount: getDataCount,
         getAccessDataNum: getAccessDataNum,
         getDeptCoords: getDeptCoords
@@ -187,6 +218,12 @@
       function getDataCountLast() {
         return $http.get(
           URL + '/depDataInfo/dataCountLast'
+        )
+      }
+
+      function getResourceCombing(){
+        return $http.get(
+          URL + '/combing/ResourceCombing'
         )
       }
 
@@ -583,7 +620,6 @@
         link: function(scope, element, attrs) {
           var chartInstance = echarts.init((element.find('#deptData'))[0]);
           dashboardService.getDeptCoords().then(function(result){
-            console.log(result);
             var geoCoordMap = result.data.coords;
             var data = result.data.data;
             
@@ -663,7 +699,6 @@
                     }
                   });
                 } else {
-                  console.log(geoData[tNam][0]);
                   if(geoData[tNam][0]>91 && geoData[tNam][0]<119 && geoData[tNam][1]<21) {
                     tGeoDt.push({
                       name: tNam,
@@ -881,7 +916,7 @@
   ]);
 
   // 部门已接入数据总量
-  dashboard.directive('wiservChartAccessData', ['dashboardService', function(dashboardService) {
+  dashboard.directive('wiservChartAccessData', ['dashboardService','$interval', function(dashboardService,$interval) {
     return {
       restrict: 'ACE',
       template: "<div id='accessData' style='width:100%;height:100%'></div>",
@@ -890,12 +925,16 @@
         // 获取部门已接入数据总量Top8
         dashboardService.getAccessDataNum().then(function(result) {
           var data = result.data.body;
-          console.log(data);
           if (data) {
+            var full_data = angular.copy(data);
+            var other_data = _.remove(data, function(n,index) {
+              return index>7;
+            });
+
             var deptAccessDataTop8 = data;
             var depts = _.map(deptAccessDataTop8,'DEP_NAME');
             var values = _.map(deptAccessDataTop8,'dataNum');
-            var max = _.max(values) + 30;
+            var max = _.max(_.map(full_data,'dataNum')) + 30;
             var max_datas = [];
             for(var i=0; i<values.length; i++) {
               max_datas.push(max);
@@ -937,6 +976,7 @@
               yAxis: {
                 type: 'category',
                 data: depts,
+                inverse:true,
                 axisLine: {
                   show: false
                 },
@@ -1014,7 +1054,30 @@
                 },
               }]
             };
+            var  option_origin = angular.copy(option);
             chartInstance.setOption(option);
+
+            var current_index = 8;
+            $interval(function(){
+              if(current_index == 15) {
+                current_index = 8;
+                chartInstance.clear();
+                chartInstance.setOption(option_origin);
+                option = angular.copy(option_origin);
+              }
+              else{
+                option.series[1].data.shift();
+                option.series[1].data.push(full_data[current_index].dataNum);
+
+                option.yAxis.data.shift();
+                option.yAxis.data.push(full_data[current_index].DEP_NAME);
+                current_index++;
+                chartInstance.setOption(option);
+              }
+               
+            },2500)
+
+            
           }
         })
 
@@ -1104,7 +1167,6 @@
               }
             }]
           };
-          console.log(chartInstance);
           chartInstance.resize();
           chartInstance.setOption(option);
         }
@@ -1506,7 +1568,6 @@
               });
 
             d3.csv("assets/file/flare.csv", function(error, data) {
-              console.log(data);
               // var data = [{
               //   id:'data',
               //   value:''

@@ -29,7 +29,7 @@
           </div>
           <div class="media-body">
             <h4 class="media-heading">覆盖政府部门和公共企事业机构个数</h4>
-            <div class="item-num"><span>32</span></div>
+            <div class="item-num"><span>{{ResourceCombing.organ}}</span></div>
           </div>
         </div>
       </div>
@@ -42,7 +42,7 @@
           </div>
           <div class="media-body">
             <h4 class="media-heading">信息资源目录数</h4>
-            <div class="item-num"><span>1772</span></div>
+            <div class="item-num"><span>{{ResourceCombing.resource}}</span></div>
           </div>
         </div>
       </div>
@@ -55,7 +55,7 @@
           </div>
           <div class="media-body">
             <h4 class="media-heading">目录数据项个数</h4>
-            <div class="item-num"><span>18066</span></div>
+            <div class="item-num"><span>{{ResourceCombing.data}}</span></div>
           </div>
         </div>
       </div>
@@ -68,7 +68,7 @@
           </div>
           <div class="media-body">
             <h4 class="media-heading">信息化系统个数</h4>
-            <div class="item-num"><span>725</span></div>
+            <div class="item-num"><span>{{ResourceCombing.system}}</span></div>
           </div>
         </div>
       </div>
@@ -80,8 +80,8 @@
             </a>
           </div>
           <div class="media-body">
-            <h4 class="media-heading">已汇集数据量(万条)</h4>
-            <div class="item-num"><span>2793.81</span></div>
+            <h4 class="media-heading">已汇集数据量({{dataCountLast[0].dataCountUnit}}条)</h4>
+            <div class="item-num"><span>{{dataCountLast[0].dataCount}}</span></div>
           </div>
         </div>
       </div>
@@ -93,8 +93,8 @@
             </a>
           </div>
           <div class="media-body">
-            <h4 class="media-heading">最近一周新增(万条)</h4>
-            <div class="item-num"><span>54.6799</span></div>
+            <h4 class="media-heading">最近一周新增({{dataCountLast[1].dataCountUnit}}条)</h4>
+            <div class="item-num"><span>{{dataCountLast[1].dataCount}}</span></div>
           </div>
         </div>
       </div>
