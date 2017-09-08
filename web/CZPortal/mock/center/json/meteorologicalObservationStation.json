@@ -1,0 +1,9 @@
+{
+	"head": {
+		"status": 200,
+		"token": null,
+		"message": null,
+		"total": 0
+	},
+	"body":[{"chengdu":479,"chongzhou":27,"yesterday":18978}]
+}

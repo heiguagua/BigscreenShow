@@ -1,0 +1,9 @@
+{
+	"head": {
+		"status": 200,
+		"token": null,
+		"message": null,
+		"total": 0
+	},
+	"body":[{"all":82,"yesterday":310,"week":3574,"month":23948.5}]
+}

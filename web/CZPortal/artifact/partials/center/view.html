@@ -41,7 +41,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">累计交易天府通卡数量</h4>
-										<div class="item-num"><span>3000</span> 张</div>
+										<div class="item-num"><span>{{Vehicle.all}}</span> 张</div>
 									</div>
 								</div>
 							</div>
@@ -54,7 +54,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">前一天交易</h4>
-										<div class="item-num"><span>3000</span> 笔</div>
+										<div class="item-num"><span>{{Vehicle.yesterday}}</span> 笔</div>
 									</div>
 								</div>
 							</div>
@@ -67,7 +67,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">最近一周累计交易</h4>
-										<div class="item-num"><span>50000</span> 笔</div>
+										<div class="item-num"><span>{{Vehicle.week}}</span> 笔</div>
 									</div>
 								</div>
 							</div>
@@ -80,7 +80,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">最近一月累计交易金额</h4>
-										<div class="item-num"><span>500</span> 元</div>
+										<div class="item-num"><span>{{Vehicle.month}}</span> 元</div>
 									</div>
 								</div>
 							</div>
@@ -97,7 +97,7 @@
 						<div class="item text-center">
 							<img src="assets/images/serv_total.png" alt="全市公务员人数" />
 							<p class="text-center serv-title">全市公务员人数</p>
-							<div class="item-num"><span>30000</span> </div>
+							<div class="item-num"><span>{{CivilServant.all}}</span> </div>
 						</div>
 						
 					</div>
@@ -113,7 +113,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">全市事业人员人数</h4>
-										<div class="item-num"><span>300</span> </div>
+										<div class="item-num"><span>{{CivilServant.careerPersonnel}}</span> </div>
 									</div>
 								</div>
 							</div>
@@ -126,7 +126,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">前一天在岗人数</h4>
-										<div class="item-num"><span>200</span> </div>
+										<div class="item-num"><span>{{CivilServant.onTheJob}}</span> </div>
 									</div>
 								</div>
 							</div>
@@ -139,7 +139,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">前一天迟到人数</h4>
-										<div class="item-num"><span>300</span> </div>
+										<div class="item-num"><span>{{CivilServant.beLate}}</span> </div>
 									</div>
 								</div>
 							</div>
@@ -152,7 +152,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">前一天早退人数</h4>
-										<div class="item-num"><span>153</span> </div>
+										<div class="item-num"><span>{{CivilServant.leaveEarly}}</span> </div>
 									</div>
 								</div>
 							</div>
@@ -166,7 +166,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">前一天<br/>提交的工作日志数量</h4>
-										<div class="item-num"><span>500</span> </div>
+										<div class="item-num"><span>{{CivilServant.daily}}</span> </div>
 									</div>
 								</div>
 							</div>
@@ -179,7 +179,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">最近一周<br/>提交工作周报数量</h4>
-										<div class="item-num"><span>1562</span> </div>
+										<div class="item-num"><span>{{CivilServant.weekly}}</span> </div>
 									</div>
 								</div>
 							</div>
@@ -193,7 +193,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">最近一季度考核成绩<br/>100分-80分人数</h4>
-										<div class="item-num"><span>300</span> </div>
+										<div class="item-num"><span>{{CivilServant.quarter}}</span> </div>
 									</div>
 								</div>
 							</div>
@@ -223,7 +223,7 @@
 								</div>
 								<div class="media-body">
 									<h4 class="media-heading">全市累计办件数量</h4>
-									<div class="item-num"><span>3000</span> </div>
+									<div class="item-num"><span>{{GovernmentApprovalSystem.finishAll}}</span> </div>
 								</div>
 							</div>
 						</div>
@@ -236,7 +236,7 @@
 								</div>
 								<div class="media-body">
 									<h4 class="media-heading">累计</h4>
-									<div class="item-num"><span>218</span> </div>
+									<div class="item-num"><span>{{GovernmentApprovalSystem.legalPerson}}</span> </div>
 									<h4 >个法人申请办件</h4>
 								</div>
 							</div>
@@ -250,7 +250,7 @@
 								</div>
 								<div class="media-body">
 									<h4 class="media-heading">累计</h4>
-									<div class="item-num"><span>325</span> </div>
+									<div class="item-num"><span>{{GovernmentApprovalSystem.naturalPerson}}</span> </div>
 									<h4 >个自然人申请办件</h4>
 								</div>
 							</div>
@@ -264,7 +264,7 @@
 								</div>
 								<div class="media-body">
 									<h4 class="media-heading">前一天新提交</h4>
-									<div class="item-num"><span>861</span> </div>
+									<div class="item-num"><span>{{GovernmentApprovalSystem.finishYesterday}}</span> </div>
 									<h4 >个办件</h4>
 								</div>
 							</div>
@@ -277,8 +277,9 @@
 									</a>
 								</div>
 								<div class="media-body">
-									<h4 class="media-heading">累计办结</h4>
-									<div class="item-num"><span>495</span> </div>
+									<h4 class="media-heading">最近一个月非常满意</h4>
+									<div class="item-num">
+										<span>{{GovernmentApprovalSystem.satisfiedAppraise }}</span> </div>
 									<h4 >个办件</h4>
 								</div>
 							</div>
@@ -293,8 +294,9 @@
 									</a>
 								</div>
 								<div class="media-body">
-									<h4 class="media-heading">截止前一天超时</h4>
-									<div class="item-num"><span>27</span> </div>
+									<h4 class="media-heading">最近一个月未评价</h4>
+									<div class="item-num">
+										<span>{{GovernmentApprovalSystem.noAppraise}}</span> </div>
 									<h4 >个办件</h4>
 								</div>
 							</div>
@@ -311,19 +313,24 @@
 								<div class="media">
 									<div class="media-body">
 										<h4 class="media-heading">成都市监测站个数</h4>
-										<div class="item-num"><span>300</span> </div>
+										<div class="item-num">
+											<span>{{MeteorologicalObservationStation.chengdu}}</span> </div>
 									</div>
 								</div>
 								<div class="media">
 									<div class="media-body">
 										<h4 class="media-heading">崇州市监测站个数</h4>
-										<div class="item-num"><span>48</span> </div>
+										<div class="item-num">
+											<span>{{MeteorologicalObservationStation.chongzhou}}</span> 
+										</div>
 									</div>
 								</div>
 								<div class="media">
 									<div class="media-body">
 										<h4 class="media-heading">前一天新增监测个数</h4>
-										<div class="item-num"><span>266</span> </div>
+										<div class="item-num">
+											<span>{{MeteorologicalObservationStation.yesterday}}</span> 
+										</div>
 									</div>
 								</div>
 							</div>
@@ -338,10 +345,10 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">最近一小时最高温</h4>
-										<div class="item-num"><span>37°C</span> </div>
+										<div class="item-num"><span>{{Mos_maxTemperature.zgqw/10}}°C</span> </div>
 									</div>
-									<p class="info-label">监测站名：李家岩水库</p>
-									<p class="info-label">出现时间：2017-7-28 14:00:00</p>
+									<p class="info-label">监测站名：{{Mos_maxTemperature.zm}}</p>
+									<p class="info-label">出现时间：{{Mos_maxTemperature.rksj}}</p>
 								</div>
 							</div>
 							<div class="col-md-4 area-detail">
@@ -353,10 +360,10 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">最近一小时最低温度</h4>
-										<div class="item-num"><span>18°C</span> </div>
+										<div class="item-num"><span>{{Mos_minTemperature.zdqw/10}}°C</span> </div>
 									</div>
-									<p class="info-label">监测站名：街子古镇</p>
-									<p class="info-label">出现时间：2017-7-28 14:00:00</p>
+									<p class="info-label">监测站名：{{Mos_minTemperature.zm}}</p>
+									<p class="info-label">出现时间：{{Mos_minTemperature.rksj}}</p>
 								</div>
 							</div>
 							<div class="col-md-4 area-detail">
@@ -368,10 +375,10 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">最近一小时最大降水</h4>
-										<div class="item-num"><span>37°C</span> </div>
+										<div class="item-num"><span>{{Mos_maxRainfall.yxsyl}}mm</span> </div>
 									</div>
-									<p class="info-label">监测站名：塔子山公园</p>
-									<p class="info-label">出现时间：2017-7-28 14:38:00</p>
+									<p class="info-label">监测站名：{{Mos_maxRainfall.zm}}</p>
+									<p class="info-label">出现时间：{{Mos_maxRainfall.rksj}}</p>
 								</div>
 							</div>
 						</div>
@@ -384,15 +391,15 @@
 						<div class="col-md-6 bg-line">
 							<div class="weather-item">
 								<h3 class="weather-title">短时天气预报<a class="pull-right">更多</a></h3>
-								<div class="weather-info">19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</div>
+								<div class="weather-info">{{WeatherForecast.context}}</div>
 							</div>
 							
 							<div class="weather-time text-right">
 								<div class="refresh-bg">
 									<div class="refresh"></div>
 								</div>
-								<h3>崇州市气象台</h3>
-								<h4>2017年08月19日</h4>
+								<h3>{{WeatherForecast.department}}</h3>
+								<h4>{{WeatherForecast.publishTime}}</h4>
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -400,9 +407,9 @@
 							<div class="weather-item">
 								<h3 class="weather-title">最新灾害性天气预警</h3>
 								<div class="weather-scroll">
-									<div class="weather-info"><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>崇州市气象台08月19日07时00分解除08月19日02时30分发布的暴雨黄色预警信号。</div>
-									<div class="weather-info"><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我<span>市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</span></div>
-									<div class="weather-info"><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我<span>市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</span></div>
+									<div class="weather-info" ng-repeat="item in DisasterWarning"><label class="info-type">{{item.theam}}</label>{{item.warningContext}}</div>
+									<!-- <div class="weather-info"><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我<span>市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</span></div>
+									<div class="weather-info"><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我<span>市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</span></div> -->
 								</div>
 							</div>
 							
@@ -410,8 +417,8 @@
 								<div class="refresh-bg">
 									<div class="refresh"></div>
 								</div>
-								<h3>崇州市气象台</h3>
-								<h4>2017年08月19日</h4>
+								<h3>{{DisasterWarning[0].department}}</h3>
+								<h4>{{DisasterWarning[0].publishTime}}</h4>
 							</div>
 						</div>
 					</div>
@@ -427,32 +434,32 @@
 								</div>
 								<div class="media-body">
 									<h4 class="media-heading">全市市场主体个数</h4>
-									<div class="item-num"><span>4000</span> </div>
+									<div class="item-num"><span>{{CreditWebOne.marketSubject}}</span> </div>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-3 honor-item corner" style="width:20%">
 							<div class="item-inner">
-								<div class="item-detail">全市机关群团个数：<span class="item-number">301</span></div>
-								<div class="item-detail">全市事业单位个数：<span class="item-number">301</span></div>
-								<div class="item-detail">全市社会组织个数：<span class="item-number">301</span></div>
+								<div class="item-detail">全市机关群团个数：<span class="item-number">{{CreditWebOne.organs}}</span></div>
+								<div class="item-detail">全市事业单位个数：<span class="item-number">{{CreditWebOne.institution}}</span></div>
+								<div class="item-detail">全市社会组织个数：<span class="item-number">{{CreditWebOne.socialOrganization}}</span></div>
 							</div>
 						</div>
 						<div class="col-md-3 honor-item corner center" style="width: 25%;">
 							<div class="item-inner ">
-								<div class="item-detail ">最近一月新准入市场主体个数：<span class="item-number">300</span></div>
-								<div class="item-detail">最近一月主体市场退出个数：<span class="item-number">300</span></div>
-								<div class="item-detail">最近一月注销市场主体数：<span class="item-number">22</span></div>
-								<div class="item-detail">最近一月吊销市场主体数：<span class="item-number">301</span></div>
+								<div class="item-detail ">最近一月新准入市场主体个数：<span class="item-number">{{CreditWebTwo.admittance}}</span></div>
+								<div class="item-detail">最近一月主体市场退出个数：<span class="item-number">{{CreditWebTwo.leave}}</span></div>
+								<div class="item-detail">最近一月注销市场主体数：<span class="item-number">{{CreditWebTwo.cancel}}</span></div>
+								<div class="item-detail">最近一月吊销市场主体数：<span class="item-number">{{CreditWebTwo.revoke}}</span></div>
 							</div>
 						</div>
 						<div class="col-md-3 honor-item corner last" style="width:28%">
 							<div class="item-inner ">
-								<div class="item-detail ">全市缴纳公积金企业数：<span class="item-number">2000</span></div>
-								<div class="item-detail">全市受表彰市场主体个数：<span class="item-number">3000</span></div>
-								<div class="item-detail">全市获得专利企业数：<span class="item-number">2000</span></div>
-								<div class="item-detail">上年度全市纳税企业信用A级企业数：<span class="item-number">300</span></div>
-								<div class="item-detail">全市上年度拖欠水电费市场主体个数<span class="item-number">300</span></div>
+								<div class="item-detail ">全市缴纳公积金企业数：<span class="item-number">{{CreditWebThree.fund}}</span></div>
+								<div class="item-detail">全市受表彰市场主体个数：<span class="item-number">{{CreditWebThree.commendation}}</span></div>
+								<div class="item-detail">全市获得专利企业数：<span class="item-number">{{CreditWebThree.patent}}</span></div>
+								<div class="item-detail">全市受行政表彰市场主体个数：<span class="item-number">{{CreditWebThree.administrationCommend}}</span></div>
+								<div class="item-detail">全市上年度拖欠水电费市场主体个数：<span class="item-number">{{CreditWebThree.waterAndElectricity}}</span></div>
 							</div>
 						</div>
 						<div class="update-time text-right">数据更新时间：<span>2017-7-27 14:01:00</span></div>

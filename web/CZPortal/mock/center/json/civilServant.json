@@ -1,0 +1,10 @@
+{
+	"head": {
+		"status": 200,
+		"token": null,
+		"message": null,
+		"total": 0
+	},
+	"body":[{"all":448,"careerPersonnel":108,
+"onTheJob":11,"beLate":1,"leaveEarly":1,"daily":370,"weekly":463,"quarter":354}]
+}

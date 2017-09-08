@@ -29,5 +29,10 @@ Router.route('/depDataInfo/dataCount')
   .get(function(request, response) {
     response.json(Util.json('/deptdata/json/ResourceCombing.json'));
 });
+    Router.route('/depDataInfo/industrialPolicy')
+  .get(function(request, response) {
+    response.json(Util.json('/deptdata/json/industrialPolicy.json'));
+});
+  
 /** Module export */
 module.exports = Router;

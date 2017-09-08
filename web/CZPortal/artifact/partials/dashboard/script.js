@@ -23,6 +23,128 @@
         })
       }
 
+      // 中间系统车载前置
+      var getCarSystem = function(){
+        // 交易情况
+        dashboardService.getVehicle().then(function(result) {
+          $scope.Vehicle = result.data.body[0];
+        })
+      }
+
+      // 中间系统公务员考核系统
+      var getCivilServant = function() {
+        dashboardService.getCivilServant().then(function(result) {
+          $scope.CivilServant = result.data.body[0];
+        })
+      }
+
+      // 中间系统政务审批服务
+      var getGovernmentApprovalSystem = function() {
+        dashboardService.getGovernmentApprovalSystem().then(function(result) {
+          $scope.GovernmentApprovalSystem = result.data.body[0];
+        })
+      }
+
+      // 区域自动站监测平台
+      var getAreaObservation = function() {
+        // 监测站个数
+        dashboardService.getMeteorologicalObservationStation().then(function(result) {
+          $scope.MeteorologicalObservationStation = result.data.body[0];
+        })
+
+        // 最高温度
+        dashboardService.getMos_maxTemperature().then(function(result) {
+          $scope.Mos_maxTemperature = result.data.body[0];
+        })
+
+        // 最低温度
+        dashboardService.getMos_minTemperature().then(function(result) {
+          $scope.Mos_minTemperature = result.data.body[0];
+        })
+
+        // 最大降水
+        dashboardService.getMos_maxRainfall().then(function(result) {
+          $scope.Mos_maxRainfall = result.data.body[0];
+        })
+        
+        
+      }
+
+      // 公共气象服务平台
+      var weatherForecast = function(){
+        // 短时天气预报
+        dashboardService.getWeatherForecast().then(function(result) {
+          $scope.WeatherForecast = result.data.body[0];
+        })
+
+        // 最新灾害性天气预警
+        dashboardService.getDisasterWarning().then(function(result) {
+          $scope.DisasterWarning = result.data.body;
+          $timeout(function(){
+            $(".weather-scroll").slick({
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              cssEase: 'linear',
+              autoplay: true,
+              centerMode:true,
+              autoplaySpeed: 0,
+              speed:7000,
+              vertical:true,
+              verticalSwiping:true
+            });
+          },300)
+        })
+      }
+
+      // 崇州市信用网
+      var getCreditWeb= function(){
+        // 全市市场主体
+        dashboardService.getCreditWebOne().then(function(result) {
+          $scope.CreditWebOne = result.data.body[0];
+        })
+
+        // 最近一月
+        dashboardService.getCreditWebTwo().then(function(result) {
+          $scope.CreditWebTwo = result.data.body[0];
+        })
+
+        // 最后一项
+         dashboardService.getCreditWebThree().then(function(result) {
+          $scope.CreditWebThree = result.data.body[0];
+        })
+        
+      }
+
+      // 大数据产业政策
+      var getIndustrialPolicy = function(){
+        dashboardService.getIndustrialPolicy().then(function(result) {
+          $scope.IndustrialPolicy = result.data.body;
+          _.forEach($scope.IndustrialPolicy,function(item,index){
+            if(index%3 == 0) {
+              item.itemStyle = 'item-up';
+            }
+            else if(index%3 == 1){
+              item.itemStyle = 'item-center';
+            }
+            else{
+              item.itemStyle = 'item-down';
+            }
+          })
+          console.log($scope.IndustrialPolicy);
+          // 崇州市大数据产业政策
+          $timeout(function(){
+            $("#pro-list").slick({
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              autoplay: true,
+              autoplaySpeed: 3000,
+              vertical:true,
+              verticalSwiping:true
+            });
+          },500)
+        })
+      }
+
       var init = function(){
         // get deptartment data count
           dashboardService.getDeptDataQuantity().then(function(result) {
@@ -41,12 +163,19 @@
           })
 
           getDataCount();
+          getCarSystem();
+          getCivilServant();
+          getGovernmentApprovalSystem();
+          getAreaObservation();
+          weatherForecast();
+          getCreditWeb();
+          getIndustrialPolicy();
       }
 
       init();
 
       // 信息资源目录和共享情况内容切换
-      $scope.toggleMap = false;
+      $scope.toggleMap = true;
       // $interval(function(){
       //   if($scope.toggleMap) {
       //     $scope.toggleMap = false;
@@ -87,7 +216,7 @@
       $scope.current_tab = 1;
       $scope.toggle = function(num) {
         $scope.current_tab = num;
-        $interval.cancel(stop);
+        //$interval.cancel(stop);
         if(num == 5) {
           $timeout(function(){
             $(".weather-scroll").slick({
@@ -108,15 +237,7 @@
 
       
 
-      // 崇州市大数据产业政策
-      $("#pro-list").slick({
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          autoplay: true,
-          autoplaySpeed: 3000,
-          vertical:true,
-          verticalSwiping:true
-        });
+      
 
 
       $scope.changeRoute = function() {
@@ -175,7 +296,21 @@
         getResourceCombing: getResourceCombing,
         getDataCount: getDataCount,
         getAccessDataNum: getAccessDataNum,
-        getDeptCoords: getDeptCoords
+        getDeptCoords: getDeptCoords,
+        getVehicle: getVehicle,         // 车载前置系统数据
+        getVehicleView: getVehicleView, //  车载前置管理系统折线图
+        getCivilServant: getCivilServant, // 公务员考核系统
+        getGovernmentApprovalSystem: getGovernmentApprovalSystem, //政务审批服务平台
+        getMeteorologicalObservationStation: getMeteorologicalObservationStation, //区域自动监测平台监测站个数
+        getMos_maxTemperature: getMos_maxTemperature,// 监测站最高温度
+        getMos_minTemperature: getMos_minTemperature, //最低温度
+        getMos_maxRainfall: getMos_maxRainfall, //最大降水
+        getWeatherForecast: getWeatherForecast, // 短时天气预报
+        getDisasterWarning: getDisasterWarning, //灾害性天气预警  
+        getCreditWebOne: getCreditWebOne, // 崇州市信用网市场主体
+        getCreditWebTwo: getCreditWebTwo, //崇州市信用网最近一月
+        getCreditWebThree: getCreditWebThree, // 崇州市信用网最后一项
+        getIndustrialPolicy: getIndustrialPolicy //大数据产业政策
       }
 
       function getDeptDataQuantity() {
@@ -245,6 +380,91 @@
       function getDeptCoords() {
         return $http.get(
           'assets/file/depts_coord.json'
+        )
+      }
+
+      function getVehicle(){
+        return $http.get(
+          URL + '/sixApp/vehicle'
+        )
+      }
+
+      function getVehicleView(){
+        return $http.get(
+          URL + '/sixApp/vehicleView'
+        )
+      }
+
+      function getCivilServant() {
+        return $http.get(
+          URL + '/sixApp/civilServant'
+        )
+      }
+
+      function getGovernmentApprovalSystem() {
+        return $http.get(
+          URL + '/sixApp/governmentApprovalSystem'
+        )
+      }
+
+      function getMeteorologicalObservationStation(){
+        return $http.get(
+          URL + '/sixApp/meteorologicalObservationStation'
+        )
+      }
+
+      function getMos_maxTemperature(){
+        return $http.get(
+          URL + '/sixApp/mos_maxTemperature'
+        )
+      }
+
+      function getMos_minTemperature(){
+        return $http.get(
+          URL + '/sixApp/mos_minTemperature'
+        )
+      }
+
+        
+      function getMos_maxRainfall(){
+        return $http.get(
+          URL + '/sixApp/mos_maxRainfall'
+        )
+      }
+
+      function getWeatherForecast(){
+        return $http.get(
+          URL + '/sixApp/weatherForecast'
+        )
+      }
+
+      function getDisasterWarning() {
+        return $http.get(
+          URL + '/sixApp/disasterWarning'
+        )
+      }
+
+      function getCreditWebOne(){
+        return $http.get(
+          URL + '/sixApp/creditWebOne'
+        )
+      }
+
+      function getCreditWebTwo(){
+        return $http.get(
+          URL + '/sixApp/creditWebTwo'
+        )
+      }
+
+      function getCreditWebThree(){
+        return $http.get(
+          URL + '/sixApp/creditWebThree'
+        )
+      }
+
+      function getIndustrialPolicy(){
+        return $http.get(
+          URL + '/depDataInfo/industrialPolicy'
         )
       }
     }
@@ -826,10 +1046,10 @@
               effect: {
                 show: true,
                 period: 6,
-                trailLength: 0.1,
+                trailLength: 0.005,
                 color: 'rgb(176,228,2)',
                 symbol: planePath,
-                symbolSize: 6
+                symbolSize: 4
               },
               lineStyle: {
                 normal: {
@@ -838,7 +1058,7 @@
                   opacity: 0.4,
                   curveness: 0.2,
                   shadowColor: 'rgba(255,255,255, 0.5)',
-                  shadowBlur: 5
+                  shadowBlur: 8
                 }
               },
               data: formtGCData(geoCoordMap, data, '崇州政务大数据平台', false)
@@ -985,6 +1205,17 @@
                   textStyle: {
                     color: 'rgb(100,154,155)',
                     fontSize: 15
+                  },
+                  formatter:function(value,index){
+                    if(value.length>7) {
+                      value = value.substring(0,7);
+                    }
+                    var s_num = 7-value.length;
+                    var val_str = value;
+                    for(var i=0; i<s_num; i++) {
+                        val_str += "   ";
+                    }
+                    return val_str;
                   }
                 },
                 axisTick: {
@@ -1086,14 +1317,18 @@
   }])
 
   // 前一天消费趋势图
-  dashboard.directive('wiservChartCar', [
-    function() {
+  dashboard.directive('wiservChartCar', ['dashboardService',
+    function(dashboardService) {
       return {
         restrict: 'ACE',
         template: "<div id='carData' style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance = echarts.init((element.find('#carData'))[0]);
-          var option = {
+          dashboardService.getVehicleView().then(function(result){
+            var data = result.data.body;
+            var x_data = _.map(data,"_id");
+            var value_data = _.map(data,"count");
+            var option = {
             title: {
               text: '前一天消费趋势图（笔）',
               left: '3%',
@@ -1129,7 +1364,7 @@
                   fontSize: 22
                 }
               },
-              data: ['1', '2', '3', '4', '5', '6', '7']
+              data: x_data
             },
             yAxis: {
               type: 'value',
@@ -1157,7 +1392,7 @@
               name: '前一天消费(笔)',
               type: 'line',
               stack: '总量',
-              data: [120, 132, 101, 134, 90, 230, 210],
+              data: value_data,
               symbolSize: 0,
               lineStyle: {
                 normal: {
@@ -1169,6 +1404,8 @@
           };
           chartInstance.resize();
           chartInstance.setOption(option);
+          })
+          
         }
       }
     }
