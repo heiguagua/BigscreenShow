@@ -8,7 +8,7 @@
     function($scope, dashboardService, $rootScope, $interval,$timeout) {
       var vm = this;
       $rootScope.change_flag = false; // 不切换
-      
+      $scope.update_day_date = new Date();
 
       // 获取信息资源目录和共享情况统计数
       var getDataCount = function() {
@@ -176,15 +176,14 @@
 
       // 信息资源目录和共享情况内容切换
       $scope.toggleMap = true;
-      // $interval(function(){
-      //   if($scope.toggleMap) {
-      //     $scope.toggleMap = false;
-      //   }
-      //   else{
-      //     $scope.toggleMap = true;
-      //   }
-      //   getDataCount();
-      // },5000)
+      $interval(function(){
+        if($scope.toggleMap) {
+          $scope.toggleMap = false;
+        }
+        else{
+          $scope.toggleMap = true;
+        }
+      },10000)
 
       // center 系统切换
       var stop = $interval(function() {
@@ -235,10 +234,24 @@
 
       }
 
-      
+      //定时刷新数据
+      $interval(function(){  // 按天更新的数据
+        getCarSystem();// 车载
+        getCivilServant(); //公务员系统
+        getGovernmentApprovalSystem(); // 政务系统
+        getCreditWeb(); // 信用网
+        getDataCount(); // 信息资源目录和共享情况
+        getIndustrialPolicy(); //大数据产业政策
+        $scope.update_day_date = new Date();
+      },86400000);
 
+      $interval(function(){  // 按15分钟更新的数据
+        weatherForecast();// 气象
+      },900000);
       
-
+      $interval(function(){  // 按1小时更新的数据
+        getAreaObservation();// 区域检测
+      },3600000);
 
       $scope.changeRoute = function() {
         dashboardService.getStatus().then(function(result) {
@@ -928,7 +941,12 @@
                       normal: {
                         position: [-30, 22]
                       }
-                    }
+                    },
+                    itemStyle: {
+                        normal: {
+                          color: 'rgb(255,241,81)'
+                        }
+                      }
                     });
                   }
                   else if(geoData[tNam][0]<=91 ) {
@@ -940,7 +958,12 @@
                       normal: {
                         position: [-80, -5]
                       }
-                    }
+                    },
+                    itemStyle: {
+                        normal: {
+                          color: 'rgb(238,141,9)'
+                        }
+                      }
                     });
                   }
                   else{
@@ -1047,7 +1070,7 @@
                 show: true,
                 period: 6,
                 trailLength: 0.005,
-                color: 'rgb(176,228,2)',
+                color: 'rgba(255,255,255,.8)',
                 symbol: planePath,
                 symbolSize: 4
               },
@@ -1057,8 +1080,8 @@
                   width: 1,
                   opacity: 0.4,
                   curveness: 0.2,
-                  shadowColor: 'rgba(255,255,255, 0.5)',
-                  shadowBlur: 8
+                  shadowColor: 'rgb(255,241,81)',
+                  shadowBlur: 10
                 }
               },
               data: formtGCData(geoCoordMap, data, '崇州政务大数据平台', false)
@@ -1070,7 +1093,7 @@
               silent: true,
               rippleEffect: {
                 period: 4,
-                scale: 7,
+                scale: 3,
                 brushType: 'stroke'
               },
               label: {
@@ -1079,17 +1102,20 @@
                   position: [24, -5],
                   formatter: '{b}',
                   textStyle: {
-                    color: 'rgb(100,154,155)',
+                    //color: 'rgb(2,255,29)',
                     fontSize: fontSize,
                     fontFamily: 'yahei',
                     fontWeight: 100
                   }
                 }
               },
-              symbolSize: 6,
+              symbolSize: 4,
               itemStyle: {
                 normal: {
-                  color: 'rgb(0,184,190)'
+                  color: 'rgb(2,255,29)',
+                  shadowBlur:35,
+                  shadowColor:'rgba(2,255,29,1)',
+                  opacity:0.6
                 }
               },
 
@@ -1142,8 +1168,10 @@
       template: "<div id='accessData' style='width:100%;height:100%'></div>",
       link: function(scope, element, attrs) {
         var chartInstance = echarts.init((element.find('#accessData'))[0]);
+        var stop_roll = null; // 部门排行滚动
         // 获取部门已接入数据总量Top8
-        dashboardService.getAccessDataNum().then(function(result) {
+        function draw(){
+          dashboardService.getAccessDataNum().then(function(result) {
           var data = result.data.body;
           if (data) {
             var full_data = angular.copy(data);
@@ -1207,10 +1235,12 @@
                     fontSize: 15
                   },
                   formatter:function(value,index){
-                    if(value.length>7) {
+                    var s_num = 0;
+                    if(value && value.length>7) {
                       value = value.substring(0,7);
+                      s_num = 7-value.length;
                     }
-                    var s_num = 7-value.length;
+                    
                     var val_str = value;
                     for(var i=0; i<s_num; i++) {
                         val_str += "   ";
@@ -1286,10 +1316,11 @@
               }]
             };
             var  option_origin = angular.copy(option);
+            chartInstance.clear();
             chartInstance.setOption(option);
 
             var current_index = 8;
-            $interval(function(){
+            stop_roll = $interval(function(){
               if(current_index == 15) {
                 current_index = 8;
                 chartInstance.clear();
@@ -1311,20 +1342,31 @@
             
           }
         })
+        }
+        draw();
+
+        $interval(function(){
+          if(stop_roll) {
+            $interval.cancel(stop_roll);
+          }
+          draw();
+        },864000);
 
       }
     }
   }])
 
   // 前一天消费趋势图
-  dashboard.directive('wiservChartCar', ['dashboardService',
-    function(dashboardService) {
+  dashboard.directive('wiservChartCar', ['dashboardService','$interval',
+    function(dashboardService,$interval) {
       return {
         restrict: 'ACE',
         template: "<div id='carData' style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance = echarts.init((element.find('#carData'))[0]);
-          dashboardService.getVehicleView().then(function(result){
+
+          function draw(){
+            dashboardService.getVehicleView().then(function(result){
             var data = result.data.body;
             var x_data = _.map(data,"_id");
             var value_data = _.map(data,"count");
@@ -1402,10 +1444,16 @@
               }
             }]
           };
-          chartInstance.resize();
+          chartInstance.clear();
           chartInstance.setOption(option);
           })
-          
+          }
+
+          draw();
+
+          $interval(function(){// 每天刷新
+            draw()
+          },86400000);
         }
       }
     }
