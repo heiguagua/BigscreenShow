@@ -5,7 +5,7 @@
   /** Controller */
   dashboard.controller('dashboardController', [
     '$scope', 'dashboardService', '$rootScope', '$interval', '$timeout',
-    function($scope, dashboardService, $rootScope, $interval,$timeout) {
+    function($scope, dashboardService, $rootScope, $interval, $timeout) {
       var vm = this;
       $rootScope.change_flag = false; // 不切换
       $scope.update_day_date = new Date();
@@ -25,21 +25,23 @@
         // 部门已接入数据总量
         dashboardService.getAccessDataNum().then(function(result) {
           $scope.deptAccessData = result.data.body;
-          $timeout(function(){
-            $(".t-data-wrap").slick({
+          $scope.deptAccessMax = _.max(_.map($scope.deptAccessData, 'dataNum')) + 30;
+          $timeout(function() {
+            $(".dept-access-rank").slick({
               slidesToShow: 10,
               slidesToScroll: 1,
               autoplay: true,
               autoplaySpeed: 2500,
-              vertical:true,
-              verticalSwiping:true
+              vertical: true,
+              verticalSwiping: true
             });
-          },300)
+          }, 300)
+          
         })
       }
 
       // 中间系统车载前置
-      var getCarSystem = function(){
+      var getCarSystem = function() {
         // 交易情况
         dashboardService.getVehicle().then(function(result) {
           $scope.Vehicle = result.data.body[0];
@@ -81,12 +83,12 @@
         dashboardService.getMos_maxRainfall().then(function(result) {
           $scope.Mos_maxRainfall = result.data.body[0];
         })
-        
-        
+
+
       }
 
       // 公共气象服务平台
-      var weatherForecast = function(){
+      var weatherForecast = function() {
         // 短时天气预报
         dashboardService.getWeatherForecast().then(function(result) {
           $scope.WeatherForecast = result.data.body[0];
@@ -95,24 +97,24 @@
         // 最新灾害性天气预警
         dashboardService.getDisasterWarning().then(function(result) {
           $scope.DisasterWarning = result.data.body;
-          $timeout(function(){
+          $timeout(function() {
             $(".weather-scroll").slick({
               slidesToShow: 2,
               slidesToScroll: 1,
               cssEase: 'linear',
               autoplay: true,
-              centerMode:true,
+              centerMode: true,
               autoplaySpeed: 0,
-              speed:7000,
-              vertical:true,
-              verticalSwiping:true
+              speed: 7000,
+              vertical: true,
+              verticalSwiping: true
             });
-          },300)
+          }, 300)
         })
       }
 
       // 崇州市信用网
-      var getCreditWeb= function(){
+      var getCreditWeb = function() {
         // 全市市场主体
         dashboardService.getCreditWebOne().then(function(result) {
           $scope.CreditWebOne = result.data.body[0];
@@ -124,67 +126,65 @@
         })
 
         // 最后一项
-         dashboardService.getCreditWebThree().then(function(result) {
+        dashboardService.getCreditWebThree().then(function(result) {
           $scope.CreditWebThree = result.data.body[0];
         })
-        
+
       }
 
       // 大数据产业政策
-      var getIndustrialPolicy = function(){
+      var getIndustrialPolicy = function() {
         dashboardService.getIndustrialPolicy().then(function(result) {
           $scope.IndustrialPolicy = result.data.body;
-          _.forEach($scope.IndustrialPolicy,function(item,index){
-            if(index%3 == 0) {
+          _.forEach($scope.IndustrialPolicy, function(item, index) {
+            if (index % 3 == 0) {
               item.itemStyle = 'item-up';
-            }
-            else if(index%3 == 1){
+            } else if (index % 3 == 1) {
               item.itemStyle = 'item-center';
-            }
-            else{
+            } else {
               item.itemStyle = 'item-down';
             }
           })
           console.log($scope.IndustrialPolicy);
           // 崇州市大数据产业政策
-          $timeout(function(){
+          $timeout(function() {
             $("#pro-list").slick({
               slidesToShow: 3,
               slidesToScroll: 1,
               autoplay: true,
               autoplaySpeed: 3000,
-              vertical:true,
-              verticalSwiping:true
+              vertical: true,
+              verticalSwiping: true
             });
-          },500)
+          }, 500)
         })
       }
 
-      var init = function(){
+      var init = function() {
         // get deptartment data count
-          dashboardService.getDeptDataQuantity().then(function(result) {
-            var data = result.data.body[0];
-            if (data) {
-              vm.deptData = data;
-            }
-          })
+        dashboardService.getDeptDataQuantity().then(function(result) {
+          var data = result.data.body[0];
+          if (data) {
+            vm.deptData = data;
+          }
+        })
 
-          //获取数据图谱政务数据总类及已采集数据量
-          dashboardService.getDataCount().then(function(result) {
-            var data = result.data.body[0];
-            if (data) {
-              vm.deptDataCount = data;
-            }
-          })
+        //获取数据图谱政务数据总类及已采集数据量
+        dashboardService.getDataCount().then(function(result) {
+          var data = result.data.body[0];
+          if (data) {
+            vm.deptDataCount = data;
+          }
+        })
 
-          getDataCount();
-          getCarSystem();
-          getCivilServant();
-          getGovernmentApprovalSystem();
-          getAreaObservation();
-          weatherForecast();
-          getCreditWeb();
-          getIndustrialPolicy();
+        getDataCount();
+        getCarSystem();
+        getCivilServant();
+        getGovernmentApprovalSystem();
+        getAreaObservation();
+        weatherForecast();
+        getCreditWeb();
+        getIndustrialPolicy();
       }
 
       init();
@@ -204,23 +204,22 @@
       var stop = $interval(function() {
         if ($scope.current_tab == 6) {
           $scope.current_tab = 1;
-        }
-        else if($scope.current_tab == 4) {
+        } else if ($scope.current_tab == 4) {
           $scope.current_tab = $scope.current_tab + 1;
           // 成都市公共气象服务平台天气滚动播放
-          $timeout(function(){
+          $timeout(function() {
             $(".weather-scroll").slick({
               slidesToShow: 2,
               slidesToScroll: 1,
               cssEase: 'linear',
               autoplay: true,
-              centerMode:true,
+              centerMode: true,
               autoplaySpeed: 0,
-              speed:7000,
-              vertical:true,
-              verticalSwiping:true
+              speed: 7000,
+              vertical: true,
+              verticalSwiping: true
             });
-          },300)
+          }, 300)
         } else {
           $scope.current_tab = $scope.current_tab + 1;
         }
@@ -231,42 +230,42 @@
       $scope.toggle = function(num) {
         $scope.current_tab = num;
         //$interval.cancel(stop);
-        if(num == 5) {
-          $timeout(function(){
+        if (num == 5) {
+          $timeout(function() {
             $(".weather-scroll").slick({
               slidesToShow: 2,
               slidesToScroll: 1,
               cssEase: 'linear',
               autoplay: true,
-              centerMode:true,
+              centerMode: true,
               autoplaySpeed: 0,
-              speed:7000,
-              vertical:true,
-              verticalSwiping:true
+              speed: 7000,
+              vertical: true,
+              verticalSwiping: true
             });
-          },300)
+          }, 300)
         }
 
       }
 
       //定时刷新数据
-      $interval(function(){  // 按天更新的数据
-        getCarSystem();// 车载
+      $interval(function() { // 按天更新的数据
+        getCarSystem(); // 车载
         getCivilServant(); //公务员系统
         getGovernmentApprovalSystem(); // 政务系统
         getCreditWeb(); // 信用网
         getDataCount(); // 信息资源目录和共享情况
         getIndustrialPolicy(); //大数据产业政策
         $scope.update_day_date = new Date();
-      },86400000);
+      }, 86400000);
 
-      $interval(function(){  // 按15分钟更新的数据
-        weatherForecast();// 气象
-      },900000);
-      
-      $interval(function(){  // 按1小时更新的数据
-        getAreaObservation();// 区域检测
-      },3600000);
+      $interval(function() { // 按15分钟更新的数据
+        weatherForecast(); // 气象
+      }, 900000);
+
+      $interval(function() { // 按1小时更新的数据
+        getAreaObservation(); // 区域检测
+      }, 3600000);
 
       $scope.changeRoute = function() {
         dashboardService.getStatus().then(function(result) {
@@ -325,12 +324,12 @@
         getDataCount: getDataCount,
         getAccessDataNum: getAccessDataNum,
         getDeptCoords: getDeptCoords,
-        getVehicle: getVehicle,         // 车载前置系统数据
+        getVehicle: getVehicle, // 车载前置系统数据
         getVehicleView: getVehicleView, //  车载前置管理系统折线图
         getCivilServant: getCivilServant, // 公务员考核系统
         getGovernmentApprovalSystem: getGovernmentApprovalSystem, //政务审批服务平台
         getMeteorologicalObservationStation: getMeteorologicalObservationStation, //区域自动监测平台监测站个数
-        getMos_maxTemperature: getMos_maxTemperature,// 监测站最高温度
+        getMos_maxTemperature: getMos_maxTemperature, // 监测站最高温度
         getMos_minTemperature: getMos_minTemperature, //最低温度
         getMos_maxRainfall: getMos_maxRainfall, //最大降水
         getWeatherForecast: getWeatherForecast, // 短时天气预报
@@ -384,7 +383,7 @@
         )
       }
 
-      function getResourceCombing(){
+      function getResourceCombing() {
         return $http.get(
           URL + '/combing/ResourceCombing'
         )
@@ -411,13 +410,13 @@
         )
       }
 
-      function getVehicle(){
+      function getVehicle() {
         return $http.get(
           URL + '/sixApp/vehicle'
         )
       }
 
-      function getVehicleView(){
+      function getVehicleView() {
         return $http.get(
           URL + '/sixApp/vehicleView'
         )
@@ -435,32 +434,32 @@
         )
       }
 
-      function getMeteorologicalObservationStation(){
+      function getMeteorologicalObservationStation() {
         return $http.get(
           URL + '/sixApp/meteorologicalObservationStation'
         )
       }
 
-      function getMos_maxTemperature(){
+      function getMos_maxTemperature() {
         return $http.get(
           URL + '/sixApp/mos_maxTemperature'
         )
       }
 
-      function getMos_minTemperature(){
+      function getMos_minTemperature() {
         return $http.get(
           URL + '/sixApp/mos_minTemperature'
         )
       }
 
-        
-      function getMos_maxRainfall(){
+
+      function getMos_maxRainfall() {
         return $http.get(
           URL + '/sixApp/mos_maxRainfall'
         )
       }
 
-      function getWeatherForecast(){
+      function getWeatherForecast() {
         return $http.get(
           URL + '/sixApp/weatherForecast'
         )
@@ -472,25 +471,25 @@
         )
       }
 
-      function getCreditWebOne(){
+      function getCreditWebOne() {
         return $http.get(
           URL + '/sixApp/creditWebOne'
         )
       }
 
-      function getCreditWebTwo(){
+      function getCreditWebTwo() {
         return $http.get(
           URL + '/sixApp/creditWebTwo'
         )
       }
 
-      function getCreditWebThree(){
+      function getCreditWebThree() {
         return $http.get(
           URL + '/sixApp/creditWebThree'
         )
       }
 
-      function getIndustrialPolicy(){
+      function getIndustrialPolicy() {
         return $http.get(
           URL + '/depDataInfo/industrialPolicy'
         )
@@ -867,309 +866,307 @@
         template: "<div id='deptData' style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance = echarts.init((element.find('#deptData'))[0]);
-          dashboardService.getDeptCoords().then(function(result){
-            var geoCoordMap = result.data.coords;
-            var data = result.data.data;
-            
+          dashboardService.getDeptCoords().then(function(result) {
+              var geoCoordMap = result.data.coords;
+              var data = result.data.data;
 
-          function formtGCData(geoData, data, srcNam, dest) {
-            var tGeoDt = [];
-            if (dest) {
-              for (var i = 0, len = data.length; i < len; i++) {
-                if (srcNam != data[i].name) {
-                  tGeoDt.push({
-                    coords: [geoData[srcNam], geoData[data[i].name]]
-                  });
-                }
-              }
-            } else {
-              for (var i = 0, len = data.length; i < len; i++) {
-                if (srcNam != data[i].name) {
-                  if (data[i].name == "成都市政务中心" || data[i].name == "成都市气象局" || data[i].name == "成都市工商局") {
 
-                  } else if (data[i].name == '成都市政府部门') {
-                    tGeoDt.push({
-                      coords: [geoData[data[i].name], geoData[srcNam]],
-                      lineStyle: {
-                        normal: {
-                          color: 'rgb(103,254,0)'
-                        }
-                      }
-                    });
-                  } else {
-                    tGeoDt.push({
-                      coords: [geoData[data[i].name], geoData[srcNam]]
-                    });
+              function formtGCData(geoData, data, srcNam, dest) {
+                var tGeoDt = [];
+                if (dest) {
+                  for (var i = 0, len = data.length; i < len; i++) {
+                    if (srcNam != data[i].name) {
+                      tGeoDt.push({
+                        coords: [geoData[srcNam], geoData[data[i].name]]
+                      });
+                    }
                   }
-
-                }
-              }
-            }
-            return tGeoDt;
-          }
-
-          function formtVData(geoData, data, srcNam) {
-            var tGeoDt = [];
-            for (var i = 0, len = data.length; i < len; i++) {
-              var tNam = data[i].name
-              if (srcNam != tNam) {
-                if (tNam == "成都市政府部门") {
-                  tGeoDt.push({
-                    name: tNam,
-                    value: geoData[tNam],
-                    symbolSize: 16,
-                    itemStyle: {
-                      normal: {
-                        color: 'rgb(103,254,0)'
-                      }
-                    },
-                    label: {
-                      normal: {
-                        //position:'top',
-                        position: [-150, -60],
-                        textStyle: {
-                          color: '#FFF',
-                          fontSize: 24,
-                          fontWeight: 100
-                        }
-                      }
-                    }
-                  });
-                } else if (tNam == "成都市政务中心" || tNam == "成都市气象局" || tNam == "成都市工商局") {
-                  tGeoDt.push({
-                    name: tNam,
-                    value: geoData[tNam],
-                    symbolSize: 0.001,
-                    label: {
-                      normal: {
-                        position:cd_pos
-                      }
-                    }
-                  });
                 } else {
-                  if(geoData[tNam][0]>91 && geoData[tNam][0]<119 && geoData[tNam][1]<21) {
-                    tGeoDt.push({
-                      name: tNam,
-                      value: geoData[tNam],
-                      symbolSize: 6,
-                      label: {
-                      normal: {
-                        position: [-30, 22]
+                  for (var i = 0, len = data.length; i < len; i++) {
+                    if (srcNam != data[i].name) {
+                      if (data[i].name == "成都市政务中心" || data[i].name == "成都市气象局" || data[i].name == "成都市工商局") {
+
+                      } else if (data[i].name == '成都市政府部门') {
+                        tGeoDt.push({
+                          coords: [geoData[data[i].name], geoData[srcNam]],
+                          lineStyle: {
+                            normal: {
+                              color: 'rgb(103,254,0)'
+                            }
+                          }
+                        });
+                      } else {
+                        tGeoDt.push({
+                          coords: [geoData[data[i].name], geoData[srcNam]]
+                        });
                       }
-                    },
-                    itemStyle: {
-                        normal: {
-                          color: 'rgb(255,241,81)'
+
+                    }
+                  }
+                }
+                return tGeoDt;
+              }
+
+              function formtVData(geoData, data, srcNam) {
+                var tGeoDt = [];
+                for (var i = 0, len = data.length; i < len; i++) {
+                  var tNam = data[i].name
+                  if (srcNam != tNam) {
+                    if (tNam == "成都市政府部门") {
+                      tGeoDt.push({
+                        name: tNam,
+                        value: geoData[tNam],
+                        symbolSize: 16,
+                        itemStyle: {
+                          normal: {
+                            color: 'rgb(103,254,0)'
+                          }
+                        },
+                        label: {
+                          normal: {
+                            //position:'top',
+                            position: [-150, -60],
+                            textStyle: {
+                              color: '#FFF',
+                              fontSize: 24,
+                              fontWeight: 100
+                            }
+                          }
                         }
-                      }
-                    });
-                  }
-                  else if(geoData[tNam][0]<=91 ) {
-                    tGeoDt.push({
-                      name: tNam,
-                      value: geoData[tNam],
-                      symbolSize: 6,
-                      label: {
-                      normal: {
-                        position: [-80, -5]
-                      }
-                    },
-                    itemStyle: {
-                        normal: {
-                          color: 'rgb(238,141,9)'
+                      });
+                    } else if (tNam == "成都市政务中心" || tNam == "成都市气象局" || tNam == "成都市工商局") {
+                      tGeoDt.push({
+                        name: tNam,
+                        value: geoData[tNam],
+                        symbolSize: 0.001,
+                        label: {
+                          normal: {
+                            position: cd_pos
+                          }
                         }
+                      });
+                    } else {
+                      if (geoData[tNam][0] > 91 && geoData[tNam][0] < 119 && geoData[tNam][1] < 21) {
+                        tGeoDt.push({
+                          name: tNam,
+                          value: geoData[tNam],
+                          symbolSize: 6,
+                          label: {
+                            normal: {
+                              position: [-30, 22]
+                            }
+                          },
+                          itemStyle: {
+                            normal: {
+                              color: 'rgb(255,241,81)'
+                            }
+                          }
+                        });
+                      } else if (geoData[tNam][0] <= 91) {
+                        tGeoDt.push({
+                          name: tNam,
+                          value: geoData[tNam],
+                          symbolSize: 6,
+                          label: {
+                            normal: {
+                              position: [-80, -5]
+                            }
+                          },
+                          itemStyle: {
+                            normal: {
+                              color: 'rgb(238,141,9)'
+                            }
+                          }
+                        });
+                      } else {
+                        tGeoDt.push({
+                          name: tNam,
+                          value: geoData[tNam],
+                          symbolSize: 6
+
+                        });
                       }
-                    });
-                  }
-                  else{
-                    tGeoDt.push({
-                      name: tNam,
-                      value: geoData[tNam],
-                      symbolSize: 6
+                    }
 
-                    });
                   }
+
                 }
-
+                tGeoDt.push({
+                  name: srcNam,
+                  value: geoData[srcNam],
+                  symbolSize: 16,
+                  label: {
+                    normal: {
+                      position: [-100, -60],
+                      textStyle: {
+                        color: '#FFF',
+                        fontSize: 24,
+                        fontWeight: 100
+                      }
+                    }
+                  },
+                  itemStyle: {
+                    normal: {
+                      color: 'rgb(255,234,1)'
+                    }
+                  }
+                });
+                return tGeoDt;
               }
 
-            }
-            tGeoDt.push({
-              name: srcNam,
-              value: geoData[srcNam],
-              symbolSize: 16,
-              label: {
-                normal: {
-                  position: [-100, -60],
-                  textStyle: {
-                    color: '#FFF',
-                    fontSize: 24,
-                    fontWeight: 100
-                  }
-                }
-              },
-              itemStyle: {
-                normal: {
-                  color: 'rgb(255,234,1)'
-                }
+              var planePath = 'circle';
+
+              var zoom = 0.8;
+              var layoutCenter = ['38%', '45%'];
+              var fontSize = 15;
+              var cd_pos = [60, -5]; // 成都市政府部门子集position
+              var screen_width = screen.width;
+              var screen_height = screen.height;
+
+              if (screen_width < 1600) {
+                zoom = 0.6;
+                layoutCenter = ['29%', '35%'];
+                fontSize = 14;
+                cd_pos = [15, -8];
               }
-            });
-            return tGeoDt;
-          }
 
-          var planePath = 'circle';
-
-          var zoom = 0.8;
-          var layoutCenter = ['38%', '45%'];
-          var fontSize = 15;
-          var cd_pos = [60, -5]; // 成都市政府部门子集position
-          var screen_width = screen.width;
-          var screen_height = screen.height;
-
-          if(screen_width < 1600) {
-            zoom = 0.6;
-            layoutCenter = ['29%', '35%'];
-            fontSize = 14;
-            cd_pos = [15, -8];
-          }
-
-          var option = {
-            backgroundColor: 'transparent',
-            title: {
-              text: '',
-              left: '5',
-              top: '10px',
-              itemStyle: {
-                normal: {
-                  borderColor: 'rgba(100,149,237,1)',
-                  borderWidth: 0.5,
-                  areaStyle: {
-                    color: '#1b1b1b'
+              var option = {
+                backgroundColor: 'transparent',
+                title: {
+                  text: '',
+                  left: '5',
+                  top: '10px',
+                  itemStyle: {
+                    normal: {
+                      borderColor: 'rgba(100,149,237,1)',
+                      borderWidth: 0.5,
+                      areaStyle: {
+                        color: '#1b1b1b'
+                      }
+                    }
                   }
-                }
-              }
-            },
-            tooltip: {
-              trigger: 'item',
-            },
-            geo: {
-              map: 'china',
-              show: false,
-              zoom:zoom,
-              layoutCenter: layoutCenter,
-              layoutSize: '100%',
-              left: '2%',
-              label: {
-                emphasis: {
-                  show: false
-                }
-              },
-              roam: true,
-              silent: true,
-              itemStyle: {
-                normal: {
-                  areaColor: 'transparent',
-                  borderColor: '#000'
                 },
-                emphasis: {
-                  areaColor: '#2a333d'
-                }
-              }
-            },
-            series: [{
-
-              type: 'lines',
-              zlevel: 2,
-              silent: true,
-              effect: {
-                show: true,
-                period: 6,
-                trailLength: 0.005,
-                color: 'rgba(255,255,255,.8)',
-                symbol: planePath,
-                symbolSize: 4
-              },
-              lineStyle: {
-                normal: {
-                  color: '#a6c84c',
-                  width: 1,
-                  opacity: 0.4,
-                  curveness: 0.2,
-                  shadowColor: 'rgb(255,241,81)',
-                  shadowBlur: 10
-                }
-              },
-              data: formtGCData(geoCoordMap, data, '崇州政务大数据平台', false)
-            }, {
-
-              type: 'effectScatter',
-              coordinateSystem: 'geo',
-              zlevel: 2,
-              silent: true,
-              rippleEffect: {
-                period: 4,
-                scale: 3,
-                brushType: 'stroke'
-              },
-              label: {
-                normal: {
-                  show: true,
-                  position: [24, -5],
-                  formatter: '{b}',
-                  textStyle: {
-                    //color: 'rgb(2,255,29)',
-                    fontSize: fontSize,
-                    fontFamily: 'yahei',
-                    fontWeight: 100
+                tooltip: {
+                  trigger: 'item',
+                },
+                geo: {
+                  map: 'china',
+                  show: false,
+                  zoom: zoom,
+                  layoutCenter: layoutCenter,
+                  layoutSize: '100%',
+                  left: '2%',
+                  label: {
+                    emphasis: {
+                      show: false
+                    }
+                  },
+                  roam: true,
+                  silent: true,
+                  itemStyle: {
+                    normal: {
+                      areaColor: 'transparent',
+                      borderColor: '#000'
+                    },
+                    emphasis: {
+                      areaColor: '#2a333d'
+                    }
                   }
-                }
-              },
-              symbolSize: 4,
-              itemStyle: {
-                normal: {
-                  color: 'rgb(2,255,29)',
-                  shadowBlur:35,
-                  shadowColor:'rgba(2,255,29,1)',
-                  opacity:0.6
-                }
-              },
+                },
+                series: [{
 
-              data: formtVData(geoCoordMap, data, '崇州政务大数据平台')
-            }]
-          };
+                  type: 'lines',
+                  zlevel: 2,
+                  silent: true,
+                  effect: {
+                    show: true,
+                    period: 6,
+                    trailLength: 0.005,
+                    color: 'rgba(255,255,255,.8)',
+                    symbol: planePath,
+                    symbolSize: 4
+                  },
+                  lineStyle: {
+                    normal: {
+                      color: '#a6c84c',
+                      width: 1,
+                      opacity: 0.4,
+                      curveness: 0.2,
+                      shadowColor: 'rgb(255,241,81)',
+                      shadowBlur: 10
+                    }
+                  },
+                  data: formtGCData(geoCoordMap, data, '崇州政务大数据平台', false)
+                }, {
 
-          chartInstance.setOption(option);
-          })
-          // var geoCoordMap = {
-          //   '长春': [129.8154, 50.2584],
-          //   '长沙': [135.0823, 25.2568],
-          //   '崇州政务大数据平台': [108.6992, 32.7682],
-          //   '西安': [134.1162, 34.2004],
-          //   '深圳': [124.5435, 22.5439],
-          //   '济南': [127.1582, 36.8701],
-          //   '海口': [110.3893, 16.8516],
-          //   '沈阳': [142.1238, 22.1216],
-          //   '武汉': [134.3896, 30.6628],
-          //   '昆明': [102.9199, 18.4663],
-          //   '杭州': [139.5313, 29.8773],
-          //   '成都市政府部门': [89.9526, 54.7617],
-          //   '成都市政务中心': [74.1526, 55.7617],
-          //   '成都市气象局': [74.1526, 54.5617],
-          //   '成都市工商局': [74.1526, 53.3617],
-          //   '拉萨': [81.1865, 30.1465],
-          //   '天津': [117.4219, 49.4189],
-          //   '合肥': [137.29, 32.0581],
-          //   '呼和浩特': [107.4124, 50.4901],
-          //   '哈尔滨': [129.9688, 40.368],
-          //   '北京': [110.4551, 54.2539],
-          //   '南京': [134.8062, 41.9208],
-          //   '南宁': [96.479, 18.1152],
-          //   '南昌': [116.0046, 19.6633],
-          //   '乌鲁木齐': [87.9236, 46.5883],
-          //   '上海': [135.4648, 31.2891]
-          // };
+                  type: 'effectScatter',
+                  coordinateSystem: 'geo',
+                  zlevel: 2,
+                  silent: true,
+                  rippleEffect: {
+                    period: 4,
+                    scale: 3,
+                    brushType: 'stroke'
+                  },
+                  label: {
+                    normal: {
+                      show: true,
+                      position: [24, -5],
+                      formatter: '{b}',
+                      textStyle: {
+                        //color: 'rgb(2,255,29)',
+                        fontSize: fontSize,
+                        fontFamily: 'yahei',
+                        fontWeight: 100
+                      }
+                    }
+                  },
+                  symbolSize: 4,
+                  itemStyle: {
+                    normal: {
+                      color: 'rgb(2,255,29)',
+                      shadowBlur: 35,
+                      shadowColor: 'rgba(2,255,29,1)',
+                      opacity: 0.6
+                    }
+                  },
 
-          
+                  data: formtVData(geoCoordMap, data, '崇州政务大数据平台')
+                }]
+              };
+
+              chartInstance.setOption(option);
+            })
+            // var geoCoordMap = {
+            //   '长春': [129.8154, 50.2584],
+            //   '长沙': [135.0823, 25.2568],
+            //   '崇州政务大数据平台': [108.6992, 32.7682],
+            //   '西安': [134.1162, 34.2004],
+            //   '深圳': [124.5435, 22.5439],
+            //   '济南': [127.1582, 36.8701],
+            //   '海口': [110.3893, 16.8516],
+            //   '沈阳': [142.1238, 22.1216],
+            //   '武汉': [134.3896, 30.6628],
+            //   '昆明': [102.9199, 18.4663],
+            //   '杭州': [139.5313, 29.8773],
+            //   '成都市政府部门': [89.9526, 54.7617],
+            //   '成都市政务中心': [74.1526, 55.7617],
+            //   '成都市气象局': [74.1526, 54.5617],
+            //   '成都市工商局': [74.1526, 53.3617],
+            //   '拉萨': [81.1865, 30.1465],
+            //   '天津': [117.4219, 49.4189],
+            //   '合肥': [137.29, 32.0581],
+            //   '呼和浩特': [107.4124, 50.4901],
+            //   '哈尔滨': [129.9688, 40.368],
+            //   '北京': [110.4551, 54.2539],
+            //   '南京': [134.8062, 41.9208],
+            //   '南宁': [96.479, 18.1152],
+            //   '南昌': [116.0046, 19.6633],
+            //   '乌鲁木齐': [87.9236, 46.5883],
+            //   '上海': [135.4648, 31.2891]
+            // };
+
+
 
         }
       }
@@ -1255,7 +1252,7 @@
   //                     value = value.substring(0,7);
   //                     s_num = 7-value.length;
   //                   }
-                    
+
   //                   var val_str = value;
   //                   for(var i=0; i<s_num; i++) {
   //                       val_str += "   ";
@@ -1351,10 +1348,10 @@
   //               current_index++;
   //               chartInstance.setOption(option);
   //             }
-               
+
   //           },2500)
 
-            
+
   //         }
   //       })
   //       }
@@ -1372,103 +1369,103 @@
   // }])
 
   // 前一天消费趋势图
-  dashboard.directive('wiservChartCar', ['dashboardService','$interval',
-    function(dashboardService,$interval) {
+  dashboard.directive('wiservChartCar', ['dashboardService', '$interval',
+    function(dashboardService, $interval) {
       return {
         restrict: 'ACE',
         template: "<div id='carData' style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance = echarts.init((element.find('#carData'))[0]);
 
-          function draw(){
-            dashboardService.getVehicleView().then(function(result){
-            var data = result.data.body;
-            var x_data = _.map(data,"_id");
-            var value_data = _.map(data,"count");
-            var option = {
-            title: {
-              text: '前一天消费趋势图（笔）',
-              left: '3%',
-              textStyle: {
-                fontSize: 30,
-                fontWeight: 'normal',
-                color: 'rgb(237,252,2)'
-              }
-            },
-            tooltip: {
-              trigger: 'axis'
-            },
+          function draw() {
+            dashboardService.getVehicleView().then(function(result) {
+              var data = result.data.body;
+              var x_data = _.map(data, "_id");
+              var value_data = _.map(data, "count");
+              var option = {
+                title: {
+                  text: '前一天消费趋势图（笔）',
+                  left: '3%',
+                  textStyle: {
+                    fontSize: 30,
+                    fontWeight: 'normal',
+                    color: 'rgb(237,252,2)'
+                  }
+                },
+                tooltip: {
+                  trigger: 'axis'
+                },
 
-            grid:{
-              top: '20%',
-              bottom: '5%'
-            },
+                grid: {
+                  top: '20%',
+                  bottom: '5%'
+                },
 
-            xAxis: {
-              type: 'category',
-              boundaryGap: false,
-              axisTick: {
-                show: false
-              },
-              axisLine: {
-                lineStyle: {
-                  color: 'rgb(8,88,123)'
-                }
-              },
-              axisLabel: {
-                textStyle: {
-                  color: 'rgba(255,255,255,.6)',
-                  fontSize: 22
-                }
-              },
-              data: x_data
-            },
-            yAxis: {
-              type: 'value',
-              boundaryGap: false,
-              axisLabel: {
-                margin: 15,
-                textStyle: {
-                  color: 'rgba(255,255,255,.6)',
-                  fontSize: 22
-                }
-              },
-              axisLine: {
-                lineStyle: {
-                  color: 'rgb(8,88,123)'
-                }
-              },
-              splitLine: {
-                lineStyle: {
-                  width: 2,
-                  color: 'rgb(8,88,123)'
-                }
-              }
-            },
-            series: [{
-              name: '前一天消费(笔)',
-              type: 'line',
-              stack: '总量',
-              data: value_data,
-              symbolSize: 0,
-              lineStyle: {
-                normal: {
-                  width: 3,
-                  color: 'rgb(0,255,255)'
-                }
-              }
-            }]
-          };
-          chartInstance.clear();
-          chartInstance.setOption(option);
-          })
+                xAxis: {
+                  type: 'category',
+                  boundaryGap: false,
+                  axisTick: {
+                    show: false
+                  },
+                  axisLine: {
+                    lineStyle: {
+                      color: 'rgb(8,88,123)'
+                    }
+                  },
+                  axisLabel: {
+                    textStyle: {
+                      color: 'rgba(255,255,255,.6)',
+                      fontSize: 22
+                    }
+                  },
+                  data: x_data
+                },
+                yAxis: {
+                  type: 'value',
+                  boundaryGap: false,
+                  axisLabel: {
+                    margin: 15,
+                    textStyle: {
+                      color: 'rgba(255,255,255,.6)',
+                      fontSize: 22
+                    }
+                  },
+                  axisLine: {
+                    lineStyle: {
+                      color: 'rgb(8,88,123)'
+                    }
+                  },
+                  splitLine: {
+                    lineStyle: {
+                      width: 2,
+                      color: 'rgb(8,88,123)'
+                    }
+                  }
+                },
+                series: [{
+                  name: '前一天消费(笔)',
+                  type: 'line',
+                  stack: '总量',
+                  data: value_data,
+                  symbolSize: 0,
+                  lineStyle: {
+                    normal: {
+                      width: 3,
+                      color: 'rgb(0,255,255)'
+                    }
+                  }
+                }]
+              };
+              chartInstance.clear();
+              chartInstance.setOption(option);
+            })
           }
 
           draw();
 
-          $interval(function(){// 每天刷新
+          $interval(function() { // 每天刷新
             draw()
-          },86400000);
+          }, 86400000);
         }
       }
     }

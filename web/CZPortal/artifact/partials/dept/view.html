@@ -5,31 +5,23 @@
     <div class='content dept-data'>
       <div class='chart-full' >
         <div class='col-md-7' style="height:100%;">
-          <div wiserv-chart-migrate style="height:100%;"></div>
+          <div wiserv-chart-migrate style="height:100%;" id="migrate-wrap"></div>
         </div>
         <div class='col-md-5 dept-access-data'  >
           <h3 class="access-title">部门已接入数据总量Top15</h3>
           <!-- <div wiserv-chart-access-data class="access-chart"></div> -->
-          <div class='access-data-table'>
-            <!-- <table class="table table-striped"> -->
-              <!-- <thead> -->
-                <div class=' t-head-row'>
-                  <div class='t-head'>名次</div>
-                  <div class='t-head'>部门</div>
-                  <div class='t-head'>已接入数据总量</div>
-                </div>
-              <!-- </thead> -->
-              <!-- <tbody> -->
-                <div class='t-data-wrap'>
-                  <div ng-repeat='item in deptAccessData track by $index' class=' t-data-row'>
-                  <div class='t-cell'>{{$index+1}}</div>
-                  <div class='t-cell'>{{item.DEP_NAME}}</div>
-                  <div class='t-cell'>{{item.dataNum}}</div>
-                </div>
-                </div>
-              <!-- </tbody> -->
-            <!-- </table> -->
+          <div class="dept-access-rank">
+            <div class="progress-wrap rank_{{$index+1}}" ng-repeat='item in deptAccessData track by $index'>
+            <label class="dept-name" title={{item.DEP_NAME}}>{{item.DEP_NAME}}</label>
+            <div class="progress dept-rank" >
+              <div class="progress-bar " role="progressbar" aria-valuenow="{{item.dataNum}}" aria-valuemin="0" aria-valuemax="{{deptAccessMax}}" style="width: {{item.dataNum/deptAccessMax*100}}%">
+                <span class="sr-only">已接入数据量{{item.dataNum}}</span>
+              </div>
+            </div>
+            <span class="access-num">{{item.dataNum}}</span>
           </div>
+          </div>
+         
         </div>
       </div>
       
