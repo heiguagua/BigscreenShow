@@ -990,12 +990,55 @@
 padding-left: 2rem;
     background: url(../assets/images/bg-line-vertical.png) no-repeat left;
         .access-title {
-          height: 20%;
+          height: 17%;
           padding: 4rem 0 1rem 2rem;
           color: #FFF;
         }
         .access-chart {
           height: 80%;
+        }
+        .access-data-table{
+          padding-right: 3rem;
+          height: 72%;
+          overflow:hidden;
+          button{
+            display:none !important;
+          }
+        }
+        .t-cell{
+          width:32%;
+          display:inline-block;
+          border-top:0;
+              text-align: center;
+    padding: 18px 0;
+    font-size: 17px;
+        }
+        .t-head{
+          width:32%;
+          display:inline-block;
+          color:#00cdf3;
+          font-size:18px;
+          border-bottom:0;
+          text-align: center;
+              padding: 22px 0;
+        }
+        .t-head-row{
+              z-index: 99;
+    position: relative;
+    background: #062c46;
+        }
+        .t-data-wrap{
+                       z-index: 9;
+             position: relative;
+        }
+        .t-data-row{
+          
+           background: rgb(58,87,127);
+              color:#00cdf3;
+        }
+        .t-data-row:nth-of-type(odd){
+              background: rgb(32,52,77);
+              color:#00cdf3;
         }
       }
       #deptData {

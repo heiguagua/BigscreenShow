@@ -21,6 +21,21 @@
         dashboardService.getResourceCombing().then(function(result) {
           $scope.ResourceCombing = result.data.body[0];
         })
+
+        // 部门已接入数据总量
+        dashboardService.getAccessDataNum().then(function(result) {
+          $scope.deptAccessData = result.data.body;
+          $timeout(function(){
+            $(".t-data-wrap").slick({
+              slidesToShow: 10,
+              slidesToScroll: 1,
+              autoplay: true,
+              autoplaySpeed: 2500,
+              vertical:true,
+              verticalSwiping:true
+            });
+          },300)
+        })
       }
 
       // 中间系统车载前置
@@ -1162,199 +1177,199 @@
   ]);
 
   // 部门已接入数据总量
-  dashboard.directive('wiservChartAccessData', ['dashboardService','$interval', function(dashboardService,$interval) {
-    return {
-      restrict: 'ACE',
-      template: "<div id='accessData' style='width:100%;height:100%'></div>",
-      link: function(scope, element, attrs) {
-        var chartInstance = echarts.init((element.find('#accessData'))[0]);
-        var stop_roll = null; // 部门排行滚动
-        // 获取部门已接入数据总量Top8
-        function draw(){
-          dashboardService.getAccessDataNum().then(function(result) {
-          var data = result.data.body;
-          if (data) {
-            var full_data = angular.copy(data);
-            var other_data = _.remove(data, function(n,index) {
-              return index>7;
-            });
+  // dashboard.directive('wiservChartAccessData', ['dashboardService','$interval', function(dashboardService,$interval) {
+  //   return {
+  //     restrict: 'ACE',
+  //     template: "<div id='accessData' style='width:100%;height:100%'></div>",
+  //     link: function(scope, element, attrs) {
+  //       var chartInstance = echarts.init((element.find('#accessData'))[0]);
+  //       var stop_roll = null; // 部门排行滚动
+  //       // 获取部门已接入数据总量Top8
+  //       function draw(){
+  //         dashboardService.getAccessDataNum().then(function(result) {
+  //         var data = result.data.body;
+  //         if (data) {
+  //           var full_data = angular.copy(data);
+  //           var other_data = _.remove(data, function(n,index) {
+  //             return index>7;
+  //           });
 
-            var deptAccessDataTop8 = data;
-            var depts = _.map(deptAccessDataTop8,'DEP_NAME');
-            var values = _.map(deptAccessDataTop8,'dataNum');
-            var max = _.max(_.map(full_data,'dataNum')) + 30;
-            var max_datas = [];
-            for(var i=0; i<values.length; i++) {
-              max_datas.push(max);
-            }
+  //           var deptAccessDataTop8 = data;
+  //           var depts = _.map(deptAccessDataTop8,'DEP_NAME');
+  //           var values = _.map(deptAccessDataTop8,'dataNum');
+  //           var max = _.max(_.map(full_data,'dataNum')) + 30;
+  //           var max_datas = [];
+  //           for(var i=0; i<values.length; i++) {
+  //             max_datas.push(max);
+  //           }
 
-            var grid_right = '15%';
-            var grid_bottom = '20%';
-            var screen_width = screen.width;
-            var screen_height = screen.height;
+  //           var grid_right = '15%';
+  //           var grid_bottom = '20%';
+  //           var screen_width = screen.width;
+  //           var screen_height = screen.height;
 
-            if(screen_width < 1600) {
-              grid_right = '30%';
-              grid_bottom = '40%';
-            }
-            var option = {
-              grid: {
-                top: '1%',
-                left: '3%',
-                right: grid_right,
-                bottom: grid_bottom,
-                containLabel: true
-              },
-              xAxis: {
-                type: 'value',
-                boundaryGap: [0, 0],
-                axisLine: {
-                  show: false
-                },
-                axisLabel: {
-                  show: false
-                },
-                axisTick: {
-                  show: false
-                },
-                splitLine: {
-                  show: false
-                }
-              },
-              yAxis: {
-                type: 'category',
-                data: depts,
-                inverse:true,
-                axisLine: {
-                  show: false
-                },
-                axisLabel: {
-                  margin: 19,
-                  textStyle: {
-                    color: 'rgb(100,154,155)',
-                    fontSize: 15
-                  },
-                  formatter:function(value,index){
-                    var s_num = 0;
-                    if(value && value.length>7) {
-                      value = value.substring(0,7);
-                      s_num = 7-value.length;
-                    }
+  //           if(screen_width < 1600) {
+  //             grid_right = '30%';
+  //             grid_bottom = '40%';
+  //           }
+  //           var option = {
+  //             grid: {
+  //               top: '1%',
+  //               left: '3%',
+  //               right: grid_right,
+  //               bottom: grid_bottom,
+  //               containLabel: true
+  //             },
+  //             xAxis: {
+  //               type: 'value',
+  //               boundaryGap: [0, 0],
+  //               axisLine: {
+  //                 show: false
+  //               },
+  //               axisLabel: {
+  //                 show: false
+  //               },
+  //               axisTick: {
+  //                 show: false
+  //               },
+  //               splitLine: {
+  //                 show: false
+  //               }
+  //             },
+  //             yAxis: {
+  //               type: 'category',
+  //               data: depts,
+  //               inverse:true,
+  //               axisLine: {
+  //                 show: false
+  //               },
+  //               axisLabel: {
+  //                 margin: 19,
+  //                 textStyle: {
+  //                   color: 'rgb(100,154,155)',
+  //                   fontSize: 15
+  //                 },
+  //                 formatter:function(value,index){
+  //                   var s_num = 0;
+  //                   if(value && value.length>7) {
+  //                     value = value.substring(0,7);
+  //                     s_num = 7-value.length;
+  //                   }
                     
-                    var val_str = value;
-                    for(var i=0; i<s_num; i++) {
-                        val_str += "   ";
-                    }
-                    return val_str;
-                  }
-                },
-                axisTick: {
-                  show: false
-                },
-                splitLine: {
-                  show: false
-                }
-              },
-              series: [{ // For shadow
-                type: 'bar',
-                barWidth: '50%',
-                itemStyle: {
-                  normal: {
-                    color: 'rgba(31,54,74,1)'
-                  }
-                },
-                barGap: '-80%',
-                barCategoryGap: '100%',
-                data: max_datas,
-                animation: false
-              }, {
-                name: '部门接入数据量',
-                barWidth: '30%',
-                type: 'bar',
-                zlevel: 1,
-                data: values,
-                label: {
-                  normal: {
-                    show: true,
-                    position: 'right',
-                    textStyle: {
-                      color: 'rgb(100,154,155)',
-                      fontSize: 15
-                    }
-                  }
-                },
-                itemStyle: {
-                  normal: {
-                    color: new echarts.graphic.LinearGradient(
-                      0, 0, 1, 1, [{
-                        offset: 0,
-                        color: '#1e83d8'
-                      }, {
-                        offset: 0.5,
-                        color: 'rgb(26,137,183)'
-                      }, {
-                        offset: 1,
-                        color: 'rgb(14,181,217)'
-                      }]
-                    )
-                  },
-                  emphasis: {
-                    color: new echarts.graphic.LinearGradient(
-                      0, 0, 1, 1, [{
-                        offset: 0,
-                        color: '#188df0'
-                      }, {
-                        offset: 0.5,
-                        color: 'rgb(26,137,183)'
-                      }, {
-                        offset: 1,
-                        color: 'rgb(14,181,217)'
-                      }]
-                    )
-                  }
-                },
-              }]
-            };
-            var  option_origin = angular.copy(option);
-            chartInstance.clear();
-            chartInstance.setOption(option);
+  //                   var val_str = value;
+  //                   for(var i=0; i<s_num; i++) {
+  //                       val_str += "   ";
+  //                   }
+  //                   return val_str;
+  //                 }
+  //               },
+  //               axisTick: {
+  //                 show: false
+  //               },
+  //               splitLine: {
+  //                 show: false
+  //               }
+  //             },
+  //             series: [{ // For shadow
+  //               type: 'bar',
+  //               barWidth: '50%',
+  //               itemStyle: {
+  //                 normal: {
+  //                   color: 'rgba(31,54,74,1)'
+  //                 }
+  //               },
+  //               barGap: '-80%',
+  //               barCategoryGap: '100%',
+  //               data: max_datas,
+  //               animation: false
+  //             }, {
+  //               name: '部门接入数据量',
+  //               barWidth: '30%',
+  //               type: 'bar',
+  //               zlevel: 1,
+  //               data: values,
+  //               label: {
+  //                 normal: {
+  //                   show: true,
+  //                   position: 'right',
+  //                   textStyle: {
+  //                     color: 'rgb(100,154,155)',
+  //                     fontSize: 15
+  //                   }
+  //                 }
+  //               },
+  //               itemStyle: {
+  //                 normal: {
+  //                   color: new echarts.graphic.LinearGradient(
+  //                     0, 0, 1, 1, [{
+  //                       offset: 0,
+  //                       color: '#1e83d8'
+  //                     }, {
+  //                       offset: 0.5,
+  //                       color: 'rgb(26,137,183)'
+  //                     }, {
+  //                       offset: 1,
+  //                       color: 'rgb(14,181,217)'
+  //                     }]
+  //                   )
+  //                 },
+  //                 emphasis: {
+  //                   color: new echarts.graphic.LinearGradient(
+  //                     0, 0, 1, 1, [{
+  //                       offset: 0,
+  //                       color: '#188df0'
+  //                     }, {
+  //                       offset: 0.5,
+  //                       color: 'rgb(26,137,183)'
+  //                     }, {
+  //                       offset: 1,
+  //                       color: 'rgb(14,181,217)'
+  //                     }]
+  //                   )
+  //                 }
+  //               },
+  //             }]
+  //           };
+  //           var  option_origin = angular.copy(option);
+  //           chartInstance.clear();
+  //           chartInstance.setOption(option);
 
-            var current_index = 8;
-            stop_roll = $interval(function(){
-              if(current_index == 15) {
-                current_index = 8;
-                chartInstance.clear();
-                chartInstance.setOption(option_origin);
-                option = angular.copy(option_origin);
-              }
-              else{
-                option.series[1].data.shift();
-                option.series[1].data.push(full_data[current_index].dataNum);
+  //           var current_index = 8;
+  //           stop_roll = $interval(function(){
+  //             if(current_index == 15) {
+  //               current_index = 8;
+  //               chartInstance.clear();
+  //               chartInstance.setOption(option_origin);
+  //               option = angular.copy(option_origin);
+  //             }
+  //             else{
+  //               option.series[1].data.shift();
+  //               option.series[1].data.push(full_data[current_index].dataNum);
 
-                option.yAxis.data.shift();
-                option.yAxis.data.push(full_data[current_index].DEP_NAME);
-                current_index++;
-                chartInstance.setOption(option);
-              }
+  //               option.yAxis.data.shift();
+  //               option.yAxis.data.push(full_data[current_index].DEP_NAME);
+  //               current_index++;
+  //               chartInstance.setOption(option);
+  //             }
                
-            },2500)
+  //           },2500)
 
             
-          }
-        })
-        }
-        draw();
+  //         }
+  //       })
+  //       }
+  //       draw();
 
-        $interval(function(){
-          if(stop_roll) {
-            $interval.cancel(stop_roll);
-          }
-          draw();
-        },864000);
+  //       $interval(function(){
+  //         if(stop_roll) {
+  //           $interval.cancel(stop_roll);
+  //         }
+  //         draw();
+  //       },864000);
 
-      }
-    }
-  }])
+  //     }
+  //   }
+  // }])
 
   // 前一天消费趋势图
   dashboard.directive('wiservChartCar', ['dashboardService','$interval',
