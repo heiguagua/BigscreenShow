@@ -198,7 +198,7 @@
         else{
           $scope.toggleMap = true;
         }
-      },10000)
+      },30000)
 
       // center 系统切换
       var stop = $interval(function() {
