@@ -95,21 +95,54 @@
         })
 
         // 最新灾害性天气预警
+        $scope.hide_disaster = false;
         dashboardService.getDisasterWarning().then(function(result) {
           $scope.DisasterWarning = result.data.body;
-          $timeout(function() {
-            $(".weather-scroll").slick({
-              slidesToShow: 2,
-              slidesToScroll: 1,
-              cssEase: 'linear',
-              autoplay: true,
-              centerMode: true,
-              autoplaySpeed: 0,
-              speed: 7000,
-              vertical: true,
-              verticalSwiping: true
-            });
-          }, 300)
+          if($scope.DisasterWarning && $scope.DisasterWarning.length>0){
+            $timeout(function() {
+              $(".weather-scroll").slick({
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                cssEase: 'linear',
+                autoplay: true,
+                centerMode: true,
+                autoplaySpeed: 0,
+                speed: 7000,
+                vertical: true,
+                verticalSwiping: true
+              });
+            }, 300)
+          }
+          else{
+            $scope.hide_disaster = true;
+          }
+          
+        })
+      }
+
+      // 手动刷新灾难性天气数据
+      $scope.getTimingData = function(){
+        dashboardService.getDisasterWarning().then(function(result) {
+          $scope.DisasterWarning = result.data.body;
+          if($scope.DisasterWarning && $scope.DisasterWarning.length>0){
+            $timeout(function() {
+              $(".weather-scroll").slick({
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                cssEase: 'linear',
+                autoplay: true,
+                centerMode: true,
+                autoplaySpeed: 0,
+                speed: 7000,
+                vertical: true,
+                verticalSwiping: true
+              });
+            }, 300)
+          }
+          else{
+            $scope.hide_disaster = true;
+          }
+          
         })
       }
 
@@ -223,7 +256,7 @@
         } else {
           $scope.current_tab = $scope.current_tab + 1;
         }
-      }, 8000)
+      }, 15000)
 
       // 中间系统切换事件
       $scope.current_tab = 1;
@@ -1397,8 +1430,10 @@
                 },
 
                 grid: {
+                  left:'3%',
                   top: '20%',
-                  bottom: '5%'
+                  bottom: '40%',
+                  right:'35%'
                 },
 
                 xAxis: {
@@ -1732,15 +1767,15 @@
             $(element.find('canvas')).attr('width', map_chart_height);
             $(element.find('canvas')).attr('height', map_chart_height);
 
-            var word_spacing = 3;
+            var word_spacing = 4;
             if (map_chart_clientheight > 700) {
               word_spacing = 5;
             }
 
             var canvas = document.getElementById('myCanvas'),
               context = canvas.getContext('2d'),
-              centerX = canvas.width / 2 + 20,
-              centerY = canvas.height / 2 + 20,
+              centerX = canvas.width / 2 + 24,
+              centerY = canvas.height / 2 + 16,
               angle = Math.PI / word_spacing, //调整文字间距
               radius = map_chart_height / 2;
 

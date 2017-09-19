@@ -406,14 +406,16 @@
 							
 							<div class="weather-item">
 								<h3 class="weather-title">最新灾害性天气预警</h3>
-								<div class="weather-scroll">
+								<div class='weather-scroll' >
 									<div class="weather-info" ng-repeat="item in DisasterWarning"><label class="info-type">{{item.theam}}</label>{{item.warningContext}}</div>
+									
 									<!-- <div class="weather-info"><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我<span>市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</span></div>
 									<div class="weather-info"><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我<span>市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</span></div> -->
 								</div>
+								<a ng-show='hide_disaster' ng-click="getTimingData()" class="no-disaster"><img src="assets/images/no_disaster.png" width='70%' /></a>
 							</div>
 							
-							<div class="weather-time text-right">
+							<div class="weather-time text-right" ng-show='!hide_disaster'>
 								<div class="refresh-bg">
 									<div class="refresh"></div>
 								</div>
@@ -438,11 +440,11 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-3 honor-item corner" style="width:20%">
+						<div class="col-md-3 honor-item corner" style="width:23%">
 							<div class="item-inner">
-								<div class="item-detail">全市机关群团个数：<span class="item-number">{{CreditWebOne.organs}}</span></div>
-								<div class="item-detail">全市事业单位个数：<span class="item-number">{{CreditWebOne.institution}}</span></div>
-								<div class="item-detail">全市社会组织个数：<span class="item-number">{{CreditWebOne.socialOrganization}}</span></div>
+								<div class="item-detail">全市上月企业诉讼案件个数：<span class="item-number">{{CreditWebOne.litigation}}</span></div>
+								<div class="item-detail">全市上月受行政处罚市场主体个数：<span class="item-number">{{CreditWebOne.punish}}</span></div>
+								<div class="item-detail">全市上月受工商行政处罚市场主体数：<span class="item-number">{{CreditWebOne.punishByBusiness}}</span></div>
 							</div>
 						</div>
 						<div class="col-md-3 honor-item corner center" style="width: 25%;">
@@ -453,7 +455,7 @@
 								<div class="item-detail">最近一月吊销市场主体数：<span class="item-number">{{CreditWebTwo.revoke}}</span></div>
 							</div>
 						</div>
-						<div class="col-md-3 honor-item corner last" style="width:28%">
+						<div class="col-md-3 honor-item corner last" style="width:26%">
 							<div class="item-inner ">
 								<div class="item-detail ">全市缴纳公积金企业数：<span class="item-number">{{CreditWebThree.fund}}</span></div>
 								<div class="item-detail">全市受表彰市场主体个数：<span class="item-number">{{CreditWebThree.commendation}}</span></div>
