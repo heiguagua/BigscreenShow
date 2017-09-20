@@ -26,16 +26,16 @@
         dashboardService.getAccessDataNum().then(function(result) {
           $scope.deptAccessData = result.data.body;
           $scope.deptAccessMax = _.max(_.map($scope.deptAccessData, 'dataNum')) + 30;
-          $timeout(function() {
-            $(".dept-access-rank").slick({
-              slidesToShow: 10,
-              slidesToScroll: 1,
-              autoplay: true,
-              autoplaySpeed: 2500,
-              vertical: true,
-              verticalSwiping: true
-            });
-          }, 300)
+          // $timeout(function() {
+          //   $(".dept-access-rank").slick({
+          //     slidesToShow: 10,
+          //     slidesToScroll: 1,
+          //     autoplay: true,
+          //     autoplaySpeed: 2500,
+          //     vertical: true,
+          //     verticalSwiping: true
+          //   });
+          // }, 300)
           
         })
       }
@@ -1482,11 +1482,18 @@
                   type: 'line',
                   stack: '总量',
                   data: value_data,
-                  symbolSize: 0,
+                  symbolSize: 6,
+                  itemStyle:{
+                    normal:{
+                      color:'rgb(237,252,2)',
+                      shadowColor:'#FFF',
+                      shadowBlur:6
+                    }
+                  },
                   lineStyle: {
                     normal: {
                       width: 3,
-                      color: 'rgb(0,255,255)'
+                      color: 'rgb(237,252,2)'
                     }
                   }
                 }]

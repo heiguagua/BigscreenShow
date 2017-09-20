@@ -35,20 +35,5 @@
 	},{
 		"dataNum": 60,
 		"DEP_NAME": "市地税局"
-	},{
-		"dataNum": 50,
-		"DEP_NAME": "市市场服务中心"
-	},{
-		"dataNum": 40,
-		"DEP_NAME": "市景区景区管理中心"
-	},{
-		"dataNum": 30,
-		"DEP_NAME": "市法制办"
-	},{
-		"dataNum": 20,
-		"DEP_NAME": "市农发局"
-	},{
-		"dataNum": 10,
-		"DEP_NAME": "市住建局"
 	}]
 }
