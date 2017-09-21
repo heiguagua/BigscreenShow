@@ -24,6 +24,31 @@
 
     .system-menus {
       height: 100%;
+
+      .slick-prev {
+        top: -5px;
+        left: 44%;
+        width: 40px;
+        height: 28px;
+
+        &:before {
+          content: url(../assets/images/arrow_up.png);
+        }
+
+      }
+
+      .slick-next {
+        width: 40px;
+        height: 28px;
+        top: 102%;
+        left: 44%;
+
+        &:before {
+          content: url(../assets/images/arrow_down.png);
+        }
+
+      }
+
     }
 
     .system-profile {
@@ -360,7 +385,7 @@
             padding-bottom: 4rem;
             line-height: 2rem;
             min-height: 2rem;
-
+            width: 100% !important;
             &:nth-child(3) {
             }
 
@@ -384,19 +409,26 @@
 
         .weather-scroll {
           overflow: hidden;
-          -webkit-mask-image: -webkit-gradient(linear, 0 45%, 0 52%, from(#33a1d2), to(rgba(0, 0, 255, 0)));
+          &.mask{
+            -webkit-mask-image: -webkit-gradient(linear, 0 45%, 0 52%, from(#33a1d2), to(rgba(0, 0, 255, 0)));
+          }
+          
         }
-        .no-disaster{
-              display: block;
-              text-align: center;
-              position: relative;
-             top: -4rem;
-          img{
-            width:280px;
+
+        .no-disaster {
+          display: block;
+          text-align: center;
+          position: relative;
+          top: -4rem;
+
+          img {
+            width: 280px;
             margin: 0 auto;
             cursor: pointer;
           }
+
         }
+
         .weather-time {
           padding-right: 4rem;
           position: relative;
@@ -737,11 +769,12 @@
 
         }
 
-        &.current {
+        &.slick-current {
           //border: 1px solid rgb(4, 219, 224);
 
           a {
-            color: rgb(4, 219, 224)
+            color: rgb(4, 219, 224);
+            border:1px solid rgb(4, 219, 224);
           }
 
         }
@@ -1233,18 +1266,22 @@
     .chart-full {
       width: 100%;
       float: left;
-        height: 100%;
-        #migrate-wrap{
-              background: url(../assets/images/map.png) no-repeat center;
-        }
+      height: 100%;
+
+      #migrate-wrap {
+        background: url(../assets/images/map.png) no-repeat center;
+      }
+
       .dept-access-data {
         height: 100%;
         padding-left: 1rem;
         padding-right: 5rem;
         background: url(../assets/images/bg-line-vertical.png) no-repeat left;
+
         button {
-            display: none !important;
-          }
+          display: none !important;
+        }
+
         .access-title {
           height: 17%;
           padding: 4rem 0 1rem 2rem;
@@ -1257,84 +1294,101 @@
           background-color: rgba(31, 48, 68, 1);
           border: 1px solid rgba(31, 48, 68, 1);
         }
-        .progress-bar{
-            transition: width .6s 1s;
-            background: -webkit-linear-gradient(left, #1e83d8, rgb(26,137,183), rgb(14,181,217));
-            background: -o-linear-gradient(left, #1e83d8, rgb(26,137,183), rgb(14,181,217));
-            background: linear-gradient(to right, #1e83d8, rgb(26,137,183), rgb(14,181,217));
+
+        .progress-bar {
+          transition: width .6s 1s;
+          background: -webkit-linear-gradient(left, #1e83d8, rgb(26, 137, 183), rgb(14, 181, 217));
+          background: -o-linear-gradient(left, #1e83d8, rgb(26, 137, 183), rgb(14, 181, 217));
+          background: linear-gradient(to right, #1e83d8, rgb(26, 137, 183), rgb(14, 181, 217));
         }
-        .progress-wrap{
+
+        .progress-wrap {
           padding-left: 50px;
           opacity: 1;
-          
-          &.rank_1{
+
+          &.rank_1 {
             background: url(../assets/images/rank.png) no-repeat left;
             background-position: -44px -22px;
           }
-          &.rank_2{
+
+          &.rank_2 {
             background: url(../assets/images/rank.png) no-repeat left;
             background-position: -44px -94px;
           }
-          &.rank_3{
+
+          &.rank_3 {
             background: url(../assets/images/rank.png) no-repeat left;
             background-position: -44px -166px;
           }
-          &.rank_4{
+
+          &.rank_4 {
             background: url(../assets/images/rank.png) no-repeat left;
             background-position: -44px -238px;
           }
-          &.rank_5{
+
+          &.rank_5 {
             background: url(../assets/images/rank.png) no-repeat left;
             background-position: -44px -310px;
           }
-          
-          &.rank_6{
+
+          &.rank_6 {
             background: url(../assets/images/rank.png) no-repeat left;
             background-position: -44px -382px;
           }
-          &.rank_7{
+
+          &.rank_7 {
             background: url(../assets/images/rank.png) no-repeat left;
             background-position: -44px -454px;
           }
-          &.rank_8{
+
+          &.rank_8 {
             background: url(../assets/images/rank.png) no-repeat left;
             background-position: -44px -526px;
           }
-          &.rank_9{
+
+          &.rank_9 {
             background: url(../assets/images/rank.png) no-repeat left;
             background-position: -44px -598px;
           }
-          &.rank_10{
+
+          &.rank_10 {
             background: url(../assets/images/rank.png) no-repeat left;
             background-position: -44px -670px;
           }
-          &.rank_11{
+
+          &.rank_11 {
             background: url(../assets/images/rank.png) no-repeat left;
             background-position: -44px -742px;
           }
-          &.rank_12{
+
+          &.rank_12 {
             background: url(../assets/images/rank.png) no-repeat left;
             background-position: -44px -814px;
           }
-          &.rank_13{
+
+          &.rank_13 {
             background: url(../assets/images/rank.png) no-repeat left;
             background-position: -44px -886px;
           }
-          &.rank_14{
+
+          &.rank_14 {
             background: url(../assets/images/rank.png) no-repeat left;
             background-position: -44px -958px;
           }
-          &.rank_15{
+
+          &.rank_15 {
             background: url(../assets/images/rank.png) no-repeat left;
             background-position: -44px -1030px;
           }
+
         }
-        .dept-name{
+
+        .dept-name {
           display: inline-block;
-          width:20%;
-          font-size:16px;
-          color:#649a9b;
-           vertical-align: middle;
+          width: 20%;
+          font-size: 16px;
+          color: #649a9b;
+          vertical-align: middle;
           margin-bottom: 21px;
           white-space: nowrap;
           padding-right: 15px;
@@ -1342,25 +1396,29 @@
           overflow: hidden;
           text-overflow: ellipsis;
         }
-        .access-num{
+
+        .access-num {
           display: inline-block;
-          font-size:16px;
-          color:#649a9b;
-           vertical-align: middle;
+          font-size: 16px;
+          color: #649a9b;
+          vertical-align: middle;
           margin-bottom: 21px;
-          padding-left:15px;
+          padding-left: 15px;
         }
-        .dept-rank{
+
+        .dept-rank {
           display: inline-block;
           width: 65%;
           vertical-align: middle;
         }
+
         @media screen and (max-width:1600px) {
-        .dept-name,.dept-rank,.access-num {
-            margin-bottom:10px;
+          .dept-name, .dept-rank, .access-num {
+            margin-bottom: 10px;
+          }
+
         }
 
-      }
         .access-chart {
           height: 80%;
         }
@@ -1369,9 +1427,6 @@
           padding-right: 3rem;
           height: 72%;
           overflow: hidden;
-
-          
-
         }
 
         .t-cell {
@@ -1658,17 +1713,18 @@
         position: relative;
         // width: 802px;
         // height: 802px;
+        background: url(../assets/images/datamap.png) no-repeat center;
         .flex-num(1);
-        border: 36px solid rgba(10, 62, 108, 0.5);
-        border-left-color: rgba(21, 149, 160, 0.6);
-        border-right-color: rgba(113, 62, 38, 0.7);
-        border-top-color: rgba(21, 149, 160, 0.6);
-        border-bottom-color: rgba(113, 62, 38, 0.7);
-        margin: 0 auto;
-        border-radius: 50%;
-        background: url("../assets/images/map_bg.png") center no-repeat;
-        background-size: 100%;
-        margin-bottom: 25px;
+        // border: 36px solid rgba(10, 62, 108, 0.5);
+        // border-left-color: rgba(21, 149, 160, 0.6);
+        // border-right-color: rgba(113, 62, 38, 0.7);
+        // border-top-color: rgba(21, 149, 160, 0.6);
+        // border-bottom-color: rgba(113, 62, 38, 0.7);
+        // margin: 0 auto;
+        // border-radius: 50%;
+        // background: url("../assets/images/map_bg.png") center no-repeat;
+        // background-size: 100%;
+        // margin-bottom: 25px;
 
         .node {
           circle {

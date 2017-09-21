@@ -9,6 +9,47 @@
       var vm = this;
       $rootScope.change_flag = false; // 不切换
       $scope.update_day_date = new Date();
+      
+
+      $timeout(function() {
+        $("#menu-scroll").slick({
+              slidesToShow: 5,
+              slidesToScroll: 1,
+              autoplay: true,
+              autoplaySpeed: 15000,
+              vertical: true,
+              verticalSwiping: true
+            });
+        $scope.current_tab = 1;
+        $('#menu-scroll').on('beforeChange', function(event, slick, currentSlide,nextSlide){
+          $scope.current_tab = nextSlide+1;
+          if($scope.current_tab == 5){// 天气
+
+            $timeout(function() {
+              $(".weather-scroll").slick({
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                cssEase: 'linear',
+                autoplay: true,
+                centerMode: true,
+                autoplaySpeed: 0,
+                speed: 7000,
+                vertical: true,
+                verticalSwiping: true
+              });
+            }, 1500)
+          }
+        });
+
+       
+      },1000)
+        
+       // 中间系统切换事件
+      $scope.toggle = function(num) {
+        $scope.current_tab = num;
+        //$interval.cancel(stop);
+        $('#menu-scroll').slick('slickGoTo',num-1);
+      }
 
       // 获取信息资源目录和共享情况统计数
       var getDataCount = function() {
@@ -99,19 +140,19 @@
         dashboardService.getDisasterWarning().then(function(result) {
           $scope.DisasterWarning = result.data.body;
           if($scope.DisasterWarning && $scope.DisasterWarning.length>0){
-            $timeout(function() {
-              $(".weather-scroll").slick({
-                slidesToShow: 2,
-                slidesToScroll: 1,
-                cssEase: 'linear',
-                autoplay: true,
-                centerMode: true,
-                autoplaySpeed: 0,
-                speed: 7000,
-                vertical: true,
-                verticalSwiping: true
-              });
-            }, 300)
+            // $timeout(function() {
+            //   $(".weather-scroll").slick({
+            //     slidesToShow: 2,
+            //     slidesToScroll: 1,
+            //     cssEase: 'linear',
+            //     autoplay: true,
+            //     centerMode: true,
+            //     autoplaySpeed: 0,
+            //     speed: 7000,
+            //     vertical: true,
+            //     verticalSwiping: true
+            //   });
+            // }, 300)
           }
           else{
             $scope.hide_disaster = true;
@@ -178,7 +219,6 @@
               item.itemStyle = 'item-down';
             }
           })
-          console.log($scope.IndustrialPolicy);
           // 崇州市大数据产业政策
           $timeout(function() {
             $("#pro-list").slick({
@@ -234,52 +274,31 @@
       },30000)
 
       // center 系统切换
-      var stop = $interval(function() {
-        if ($scope.current_tab == 6) {
-          $scope.current_tab = 1;
-        } else if ($scope.current_tab == 4) {
-          $scope.current_tab = $scope.current_tab + 1;
-          // 成都市公共气象服务平台天气滚动播放
-          $timeout(function() {
-            $(".weather-scroll").slick({
-              slidesToShow: 2,
-              slidesToScroll: 1,
-              cssEase: 'linear',
-              autoplay: true,
-              centerMode: true,
-              autoplaySpeed: 0,
-              speed: 7000,
-              vertical: true,
-              verticalSwiping: true
-            });
-          }, 300)
-        } else {
-          $scope.current_tab = $scope.current_tab + 1;
-        }
-      }, 15000)
+      // var stop = $interval(function() {
+      //   if ($scope.current_tab == 6) {
+      //     $scope.current_tab = 1;
+      //   } else if ($scope.current_tab == 4) {
+      //     $scope.current_tab = $scope.current_tab + 1;
+      //     // 成都市公共气象服务平台天气滚动播放
+      //     $timeout(function() {
+      //       $(".weather-scroll").slick({
+      //         slidesToShow: 2,
+      //         slidesToScroll: 1,
+      //         cssEase: 'linear',
+      //         autoplay: true,
+      //         centerMode: true,
+      //         autoplaySpeed: 0,
+      //         speed: 7000,
+      //         vertical: true,
+      //         verticalSwiping: true
+      //       });
+      //     }, 300)
+      //   } else {
+      //     $scope.current_tab = $scope.current_tab + 1;
+      //   }
+      // }, 15000)
 
-      // 中间系统切换事件
-      $scope.current_tab = 1;
-      $scope.toggle = function(num) {
-        $scope.current_tab = num;
-        //$interval.cancel(stop);
-        if (num == 5) {
-          $timeout(function() {
-            $(".weather-scroll").slick({
-              slidesToShow: 2,
-              slidesToScroll: 1,
-              cssEase: 'linear',
-              autoplay: true,
-              centerMode: true,
-              autoplaySpeed: 0,
-              speed: 7000,
-              vertical: true,
-              verticalSwiping: true
-            });
-          }, 300)
-        }
 
-      }
 
       //定时刷新数据
       $interval(function() { // 按天更新的数据
