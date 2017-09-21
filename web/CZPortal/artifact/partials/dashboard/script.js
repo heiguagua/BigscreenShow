@@ -67,16 +67,11 @@
         dashboardService.getAccessDataNum().then(function(result) {
           $scope.deptAccessData = result.data.body;
           $scope.deptAccessMax = _.max(_.map($scope.deptAccessData, 'dataNum')) + 30;
-          // $timeout(function() {
-          //   $(".dept-access-rank").slick({
-          //     slidesToShow: 10,
-          //     slidesToScroll: 1,
-          //     autoplay: true,
-          //     autoplaySpeed: 2500,
-          //     vertical: true,
-          //     verticalSwiping: true
-          //   });
-          // }, 300)
+          $timeout(function() {
+            _.forEach($scope.deptAccessData,function(item){
+              item.i_width = item.dataNum/$scope.deptAccessMax*100 +'%';
+            })
+          }, 300)
           
         })
       }
@@ -269,7 +264,16 @@
           $scope.toggleMap = false;
         }
         else{
+
           $scope.toggleMap = true;
+          _.forEach($scope.deptAccessData,function(item){
+              item.i_width = '0%';
+            })
+          $timeout(function() {
+            _.forEach($scope.deptAccessData,function(item){
+              item.i_width = item.dataNum/$scope.deptAccessMax*100 +'%';
+            })
+          }, 100)
         }
       },30000)
 

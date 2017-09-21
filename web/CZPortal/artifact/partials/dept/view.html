@@ -11,10 +11,10 @@
           <h3 class="access-title">部门已接入数据总量Top10</h3>
           <!-- <div wiserv-chart-access-data class="access-chart"></div> -->
           <div class="dept-access-rank">
-            <div class="progress-wrap rank_{{$index+1}}" ng-repeat='item in deptAccessData track by $index'>
+            <div class="progress-wrap  rank_{{$index+1}}" ng-repeat='item in deptAccessData track by $index'>
             <label class="dept-name" title={{item.DEP_NAME}}>{{item.DEP_NAME}}</label>
             <div class="progress dept-rank" >
-              <div class="progress-bar " role="progressbar" aria-valuenow="{{item.dataNum}}" aria-valuemin="0" aria-valuemax="{{deptAccessMax}}" style="width: {{item.dataNum/deptAccessMax*100}}%">
+              <div class="progress-bar active  progress-bar-striped" role="progressbar" aria-valuenow="{{item.dataNum}}" aria-valuemin="0" aria-valuemax="{{deptAccessMax}}" style="width: {{item.i_width}}">
                 <span class="sr-only">已接入数据量{{item.dataNum}}</span>
               </div>
             </div>
