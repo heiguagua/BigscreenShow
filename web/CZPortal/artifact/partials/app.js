@@ -86,8 +86,10 @@
       function interceptor($q, $location) {
         return {
           'request': function(config) {
-            var screen_width = screen.width;
-            var screen_height = screen.height;
+            // var screen_width = screen.width;
+            // var screen_height = screen.height;
+            var screen_width = 2732;
+            var screen_height = 1536;
             var path = $location.path();
             //$('body').css({'font-size':document.documentElement.clientWidth / 6.4 + 'px'});
             setTimeout(function(){

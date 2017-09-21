@@ -105,57 +105,57 @@
 						<div class="serv-right">
 							<div class="serv-up-wrap">
 								<div class="col-md-3 serv-item">
-								<div class="media">
-									<div class="media-left">
-										<a>
-											<img class="media-object" src="assets/images/serv_ico_1.png" alt="全市事业人员人数">
-										</a>
-									</div>
-									<div class="media-body">
-										<h4 class="media-heading">全市事业人员人数</h4>
-										<div class="item-num"><span>{{CivilServant.careerPersonnel}}</span> </div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3 serv-item">
-								<div class="media">
-									<div class="media-left">
-										<a>
-											<img class="media-object" src="assets/images/serv_ico_2.png" alt="前一天在岗人数">
-										</a>
-									</div>
-									<div class="media-body">
-										<h4 class="media-heading">前一天在岗人数</h4>
-										<div class="item-num"><span>{{CivilServant.onTheJob}}</span> </div>
+									<div class="media">
+										<div class="media-left">
+											<a>
+												<img class="media-object" src="assets/images/serv_ico_1.png" alt="全市事业人员人数">
+											</a>
+										</div>
+										<div class="media-body">
+											<h4 class="media-heading">全市事业人员人数</h4>
+											<div class="item-num"><span>{{CivilServant.careerPersonnel}}</span> </div>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-md-3 serv-item">
-								<div class="media">
-									<div class="media-left">
-										<a>
-											<img class="media-object" src="assets/images/serv_ico_3.png" alt="前一天迟到人数">
-										</a>
-									</div>
-									<div class="media-body">
-										<h4 class="media-heading">前一天迟到人数</h4>
-										<div class="item-num"><span>{{CivilServant.beLate}}</span> </div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3 serv-item">
-								<div class="media">
-									<div class="media-left">
-										<a>
-											<img class="media-object" src="assets/images/serv_ico_4.png" alt="前一天早退人数">
-										</a>
-									</div>
-									<div class="media-body">
-										<h4 class="media-heading">前一天早退人数</h4>
-										<div class="item-num"><span>{{CivilServant.leaveEarly}}</span> </div>
+								<div class="col-md-3 serv-item">
+									<div class="media">
+										<div class="media-left">
+											<a>
+												<img class="media-object" src="assets/images/serv_ico_2.png" alt="前一天在岗人数">
+											</a>
+										</div>
+										<div class="media-body">
+											<h4 class="media-heading">前一天在岗人数</h4>
+											<div class="item-num"><span>{{CivilServant.onTheJob}}</span> </div>
+										</div>
 									</div>
 								</div>
-							</div>
+								<div class="col-md-3 serv-item">
+									<div class="media">
+										<div class="media-left">
+											<a>
+												<img class="media-object" src="assets/images/serv_ico_3.png" alt="前一天迟到人数">
+											</a>
+										</div>
+										<div class="media-body">
+											<h4 class="media-heading">前一天迟到人数</h4>
+											<div class="item-num"><span>{{CivilServant.beLate}}</span> </div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3 serv-item">
+									<div class="media">
+										<div class="media-left">
+											<a>
+												<img class="media-object" src="assets/images/serv_ico_4.png" alt="前一天早退人数">
+											</a>
+										</div>
+										<div class="media-body">
+											<h4 class="media-heading">前一天早退人数</h4>
+											<div class="item-num"><span>{{CivilServant.leaveEarly}}</span> </div>
+										</div>
+									</div>
+								</div>
 							</div>
 							<div class="col-md-3 serv-item">
 								<div class="media">
@@ -280,194 +280,199 @@
 									<h4 class="media-heading">最近一个月非常满意</h4>
 									<div class="item-num">
 										<span>{{GovernmentApprovalSystem.satisfiedAppraise }}</span> </div>
-									<h4 >个办件</h4>
-								</div>
-							</div>
-						</div>
-						
-						
-						<div class="col-md-2 gov-item bg-none">
-							<div class="media">
-								<div class="media-left">
-									<a>
-										<img class="media-object" src="assets/images/gov_ico_6.png" alt="截止前一天超时">
-									</a>
-								</div>
-								<div class="media-body">
-									<h4 class="media-heading">最近一个月未评价</h4>
-									<div class="item-num">
-										<span>{{GovernmentApprovalSystem.noAppraise}}</span> </div>
-									<h4 >个办件</h4>
-								</div>
-							</div>
-						</div>
-						<div class="update-time text-right">数据更新时间：<span>{{update_day_date | date:"yyyy-MM-dd HH:mm:ss"}}</span></div>
-					</div>
-				</div>
-				<!--成都市区域自动站监测平台-->
-				<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 4]" id="area" ng-show='current_tab == 4'>
-					<div class="area-wrap">
-						<div class="col-md-4 area-item">
-							<img src="assets/images/area_1.png" alt="地图" width="60%" />
-							<div class="watch-info">
-								<div class="media">
-									<div class="media-body">
-										<h4 class="media-heading">成都市监测站个数</h4>
-										<div class="item-num">
-											<span>{{MeteorologicalObservationStation.chengdu}}</span> </div>
+										<h4 >个办件</h4>
 									</div>
 								</div>
+							</div>
+							
+							
+							<div class="col-md-2 gov-item bg-none">
 								<div class="media">
+									<div class="media-left">
+										<a>
+											<img class="media-object" src="assets/images/gov_ico_6.png" alt="截止前一天超时">
+										</a>
+									</div>
 									<div class="media-body">
-										<h4 class="media-heading">崇州市监测站个数</h4>
+										<h4 class="media-heading">最近一个月未评价</h4>
 										<div class="item-num">
-											<span>{{MeteorologicalObservationStation.chongzhou}}</span> 
+											<span>{{GovernmentApprovalSystem.noAppraise}}</span> </div>
+											<h4 >个办件</h4>
 										</div>
 									</div>
 								</div>
-								<div class="media">
-									<div class="media-body">
-										<h4 class="media-heading">前一天新增监测个数</h4>
-										<div class="item-num">
-											<span>{{MeteorologicalObservationStation.yesterday}}</span> 
+								<div class="update-time text-right">数据更新时间：<span>{{update_day_date | date:"yyyy-MM-dd HH:mm:ss"}}</span></div>
+							</div>
+						</div>
+						<!--成都市区域自动站监测平台-->
+						<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 4]" id="area" ng-show='current_tab == 4'>
+							<div class="area-wrap">
+								<div class="col-md-4 area-item">
+									<img src="assets/images/area_1.png" alt="地图" width="60%" />
+									<div class="watch-info">
+										<div class="media">
+											<div class="media-body">
+												<h4 class="media-heading">成都市监测站个数</h4>
+												<div class="item-num">
+													<span>{{MeteorologicalObservationStation.chengdu}}</span> </div>
+												</div>
+											</div>
+											<div class="media">
+												<div class="media-body">
+													<h4 class="media-heading">崇州市监测站个数</h4>
+													<div class="item-num">
+														<span>{{MeteorologicalObservationStation.chongzhou}}</span>
+													</div>
+												</div>
+											</div>
+											<div class="media">
+												<div class="media-body">
+													<h4 class="media-heading">前一天新增监测个数</h4>
+													<div class="item-num">
+														<span>{{MeteorologicalObservationStation.yesterday}}</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-8 area-item">
+										<div class="col-md-4 area-detail">
+											<div class="media">
+												<div class="media-left">
+													<a>
+														<img class="media-object" src="assets/images/area_2.png" alt="最近一小时最高温">
+													</a>
+												</div>
+												<div class="media-body">
+													<h4 class="media-heading">最近一小时最高温</h4>
+													<div class="item-num"><span>{{Mos_maxTemperature.zgqw/10}}°C</span> </div>
+												</div>
+												<p class="info-label">监测站名：{{Mos_maxTemperature.zm}}</p>
+												<p class="info-label">出现时间：{{Mos_maxTemperature.rksj}}</p>
+											</div>
+										</div>
+										<div class="col-md-4 area-detail">
+											<div class="media">
+												<div class="media-left">
+													<a>
+														<img class="media-object" src="assets/images/area_3.png" alt="最近一小时最低温度">
+													</a>
+												</div>
+												<div class="media-body">
+													<h4 class="media-heading">最近一小时最低温度</h4>
+													<div class="item-num"><span>{{Mos_minTemperature.zdqw/10}}°C</span> </div>
+												</div>
+												<p class="info-label">监测站名：{{Mos_minTemperature.zm}}</p>
+												<p class="info-label">出现时间：{{Mos_minTemperature.rksj}}</p>
+											</div>
+										</div>
+										<div class="col-md-4 area-detail">
+											<div class="media">
+												<div class="media-left">
+													<a>
+														<img class="media-object" src="assets/images/area_4.png" alt="最近一小时最大降水">
+													</a>
+												</div>
+												<div class="media-body">
+													<h4 class="media-heading">最近一小时最大降水</h4>
+													<div class="item-num"><span>{{Mos_maxRainfall.yxsyl}}mm</span> </div>
+												</div>
+												<p class="info-label">监测站名：{{Mos_maxRainfall.zm}}</p>
+												<p class="info-label">出现时间：{{Mos_maxRainfall.rksj}}</p>
+											</div>
+										</div>
+									</div>
+									<div class="update-time text-right">数据更新时间：<span>{{update_date | date:"yyyy-MM-dd HH:mm:ss"}}</span></div>
+								</div>
+							</div>
+							<!--成都市公共气象服务平台-->
+							<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 5]" id="weather" ng-show='current_tab == 5'>
+								<div class="weather-wrap">
+									<div class="col-md-6 bg-line">
+										<div class="weather-item">
+											<h3 class="weather-title">短时天气预报<a class="pull-right" href="http://10.190.88.18:8080/app/home.action" target="_blank">更多</a></h3>
+											<div class="weather-info" ng-show='!hide_weather'>{{WeatherForecast.context}}</div>
+											<a ng-show='hide_weather' ng-click="getWeatherData()" class="no-weather"><img src="assets/images/no_weather.png" width='28%' /></a>
+										</div>
+										
+										<div class="weather-time text-right" ng-show='!hide_weather'>
+											<div class="refresh-bg">
+												<div class="refresh"></div>
+											</div>
+											<h3>{{WeatherForecast.department}}</h3>
+											<h4>{{WeatherForecast.publishTime}}</h4>
+										</div>
+									</div>
+									<div class="col-md-6">
+										
+										<div class="weather-item">
+											<h3 class="weather-title">最新灾害性天气预警<a class="pull-right" href="http://10.190.88.18:8080/app/home.action" target="_blank">更多</a></h3>
+											<div class='weather-scroll' ng-class="{true:'mask',false:''}[DisasterWarning.length>2]">
+												<div class="weather-info" ng-repeat="item in DisasterWarning"><label class="info-type">{{item.theam}}</label>{{item.warningContext}}</div>
+												
+												<!-- <div class="weather-info"><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我<span>市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</span></div>
+												<div class="weather-info"><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我<span>市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</span></div> -->
+											</div>
+											<a ng-show='hide_disaster' ng-click="getTimingData()" class="no-disaster"><img src="assets/images/no_disaster.png" width='70%' /></a>
+										</div>
+										
+										<div class="weather-time text-right" ng-show='!hide_disaster'>
+											<div class="refresh-bg">
+												<div class="refresh"></div>
+											</div>
+											<h3>{{DisasterWarning[0].department}}</h3>
+											<h4>{{DisasterWarning[0].publishTime}}</h4>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-md-8 area-item">
-							<div class="col-md-4 area-detail">
-								<div class="media">
-									<div class="media-left">
-										<a>
-											<img class="media-object" src="assets/images/area_2.png" alt="最近一小时最高温">
-										</a>
+							<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 6]" id="honor" ng-show='current_tab == 6'>
+								<div class="honor-wrap">
+									<div class="col-md-3 honor-item">
+										<div class="media">
+											<div class="media-left">
+												<a>
+													<img class="media-object" src="assets/images/honor.png" alt="全市市场主体个数" style="width:200px">
+												</a>
+											</div>
+											<div class="media-body">
+												<h4 class="media-heading">全市市场主体个数</h4>
+												<div class="item-num"><span>{{CreditWebOne.marketSubject}}</span> </div>
+											</div>
+										</div>
 									</div>
-									<div class="media-body">
-										<h4 class="media-heading">最近一小时最高温</h4>
-										<div class="item-num"><span>{{Mos_maxTemperature.zgqw/10}}°C</span> </div>
+									<div class="col-md-3 honor-item corner" style="width:23%">
+										<div class="item-inner">
+											<div class="item-detail">全市受表彰市场主体个数：<span class="item-number">{{CreditWebThree.commendation}}</span></div>
+											<div class="item-detail ">全市缴纳公积金企业数：<span class="item-number">{{CreditWebThree.fund}}</span></div>
+											<div class="item-detail">全市获得专利企业数：<span class="item-number">{{CreditWebThree.patent}}</span></div>
+										</div>
 									</div>
-									<p class="info-label">监测站名：{{Mos_maxTemperature.zm}}</p>
-									<p class="info-label">出现时间：{{Mos_maxTemperature.rksj}}</p>
-								</div>
-							</div>
-							<div class="col-md-4 area-detail">
-								<div class="media">
-									<div class="media-left">
-										<a>
-											<img class="media-object" src="assets/images/area_3.png" alt="最近一小时最低温度">
-										</a>
+									<div class="col-md-3 honor-item corner center" style="width: 25%;">
+										<div class="item-inner ">
+											<div class="item-detail">全市受行政表彰市场主体个数：<span class="item-number">{{CreditWebThree.administrationCommend}}</span></div>
+											<div class="item-detail">全市上年度拖欠水电费市场主体个数：<span class="item-number">{{CreditWebThree.waterAndElectricity}}</span></div>
+											<div class="item-detail">全市上月企业诉讼案件个数：<span class="item-number">{{CreditWebOne.litigation}}</span></div>
+											<div class="item-detail ">最近一月新准入市场主体个数：<span class="item-number">{{CreditWebTwo.admittance}}</span></div>
+										</div>
 									</div>
-									<div class="media-body">
-										<h4 class="media-heading">最近一小时最低温度</h4>
-										<div class="item-num"><span>{{Mos_minTemperature.zdqw/10}}°C</span> </div>
+									<div class="col-md-3 honor-item  last" style="width:26%">
+									 	<div id="myCanvasContainer">
+											<canvas width="760" height="480" id="myCanvas">
+											</canvas>
+										</div>
+										<div id="tags">
+											<ul>
+												<li ng-repeat="item in entries"><a style="color:{{item.color?item.color:'#FFF'}}">{{item.label}}</a></li>
+			
+											</ul>
+										</div> 
+										<!-- <div id="tag-cloud"></div> -->
 									</div>
-									<p class="info-label">监测站名：{{Mos_minTemperature.zm}}</p>
-									<p class="info-label">出现时间：{{Mos_minTemperature.rksj}}</p>
-								</div>
-							</div>
-							<div class="col-md-4 area-detail">
-								<div class="media">
-									<div class="media-left">
-										<a>
-											<img class="media-object" src="assets/images/area_4.png" alt="最近一小时最大降水">
-										</a>
-									</div>
-									<div class="media-body">
-										<h4 class="media-heading">最近一小时最大降水</h4>
-										<div class="item-num"><span>{{Mos_maxRainfall.yxsyl}}mm</span> </div>
-									</div>
-									<p class="info-label">监测站名：{{Mos_maxRainfall.zm}}</p>
-									<p class="info-label">出现时间：{{Mos_maxRainfall.rksj}}</p>
+									<div class="update-time text-right">数据更新时间：<span>{{update_day_date | date:"yyyy-MM-dd HH:mm:ss"}}</span></div>
 								</div>
 							</div>
 						</div>
-						<div class="update-time text-right">数据更新时间：<span>{{update_date | date:"yyyy-MM-dd HH:mm:ss"}}</span></div>
-					</div>
-				</div>
-				<!--成都市公共气象服务平台-->
-				<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 5]" id="weather" ng-show='current_tab == 5'>
-					<div class="weather-wrap">
-						<div class="col-md-6 bg-line">
-							<div class="weather-item">
-								<h3 class="weather-title">短时天气预报<a class="pull-right">更多</a></h3>
-								<div class="weather-info">{{WeatherForecast.context}}</div>
-							</div>
-							
-							<div class="weather-time text-right">
-								<div class="refresh-bg">
-									<div class="refresh"></div>
-								</div>
-								<h3>{{WeatherForecast.department}}</h3>
-								<h4>{{WeatherForecast.publishTime}}</h4>
-							</div>
-						</div>
-						<div class="col-md-6">
-							
-							<div class="weather-item">
-								<h3 class="weather-title">最新灾害性天气预警</h3>
-								<div class='weather-scroll' ng-class="{true:'mask',false:''}[DisasterWarning.length>2]">
-									<div class="weather-info" ng-repeat="item in DisasterWarning"><label class="info-type">{{item.theam}}</label>{{item.warningContext}}</div>
-									
-									<!-- <div class="weather-info"><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我<span>市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</span></div>
-									<div class="weather-info"><label class="info-type">崇州市解除第38号暴雨黄色预警信号</label>19日01时开始，我市部分乡镇出现短时强降水，预计未来6小时内我<span>市降雨持续，部分乡镇降雨量可达暴雨，请注意防范暴雨、雷电、大风带来的不利影响。</span></div> -->
-								</div>
-								<a ng-show='hide_disaster' ng-click="getTimingData()" class="no-disaster"><img src="assets/images/no_disaster.png" width='70%' /></a>
-							</div>
-							
-							<div class="weather-time text-right" ng-show='!hide_disaster'>
-								<div class="refresh-bg">
-									<div class="refresh"></div>
-								</div>
-								<h3>{{DisasterWarning[0].department}}</h3>
-								<h4>{{DisasterWarning[0].publishTime}}</h4>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 6]" id="honor" ng-show='current_tab == 6'>
-					<div class="honor-wrap">
-						<div class="col-md-3 honor-item">
-							<div class="media">
-								<div class="media-left">
-									<a>
-										<img class="media-object" src="assets/images/honor.png" alt="全市市场主体个数" style="width:200px">
-									</a>
-								</div>
-								<div class="media-body">
-									<h4 class="media-heading">全市市场主体个数</h4>
-									<div class="item-num"><span>{{CreditWebOne.marketSubject}}</span> </div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3 honor-item corner" style="width:23%">
-							<div class="item-inner">
-								<div class="item-detail">全市上月企业诉讼案件个数：<span class="item-number">{{CreditWebOne.litigation}}</span></div>
-								<div class="item-detail">全市上月受行政处罚市场主体个数：<span class="item-number">{{CreditWebOne.punish}}</span></div>
-								<div class="item-detail">全市上月受工商行政处罚市场主体数：<span class="item-number">{{CreditWebOne.punishByBusiness}}</span></div>
-							</div>
-						</div>
-						<div class="col-md-3 honor-item corner center" style="width: 25%;">
-							<div class="item-inner ">
-								<div class="item-detail ">最近一月新准入市场主体个数：<span class="item-number">{{CreditWebTwo.admittance}}</span></div>
-								<div class="item-detail">最近一月主体市场退出个数：<span class="item-number">{{CreditWebTwo.leave}}</span></div>
-								<div class="item-detail">最近一月注销市场主体数：<span class="item-number">{{CreditWebTwo.cancel}}</span></div>
-								<div class="item-detail">最近一月吊销市场主体数：<span class="item-number">{{CreditWebTwo.revoke}}</span></div>
-							</div>
-						</div>
-						<div class="col-md-3 honor-item corner last" style="width:26%">
-							<div class="item-inner ">
-								<div class="item-detail ">全市缴纳公积金企业数：<span class="item-number">{{CreditWebThree.fund}}</span></div>
-								<div class="item-detail">全市受表彰市场主体个数：<span class="item-number">{{CreditWebThree.commendation}}</span></div>
-								<div class="item-detail">全市获得专利企业数：<span class="item-number">{{CreditWebThree.patent}}</span></div>
-								<div class="item-detail">全市受行政表彰市场主体个数：<span class="item-number">{{CreditWebThree.administrationCommend}}</span></div>
-								<div class="item-detail">全市上年度拖欠水电费市场主体个数：<span class="item-number">{{CreditWebThree.waterAndElectricity}}</span></div>
-							</div>
-						</div>
-						<div class="update-time text-right">数据更新时间：<span>{{update_day_date | date:"yyyy-MM-dd HH:mm:ss"}}</span></div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
