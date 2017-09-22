@@ -67,11 +67,20 @@
         dashboardService.getAccessDataNum().then(function(result) {
           $scope.deptAccessData = result.data.body;
           $scope.deptAccessMax = _.max(_.map($scope.deptAccessData, 'dataNum')) + 30;
-          $timeout(function() {
-            _.forEach($scope.deptAccessData, function(item) {
+          _.forEach($scope.deptAccessData, function(item) {
               item.i_width = item.dataNum / $scope.deptAccessMax * 100 + '%';
             })
-          }, 300)
+          $timeout(function() {
+            $(".dept-access-rank").slick({
+                  slidesToShow: 8,
+                  slidesToScroll: 1,
+                  autoplay: true,
+                  autoplaySpeed: 2500,
+                  vertical: true,
+                  verticalSwiping: true
+                });
+          }, 100);
+          
 
         })
       }
@@ -442,9 +451,9 @@
       init();
 
       // 信息资源目录和共享情况内容切换
-      $scope.toggleMap = true;
-      $interval(function() {
-        if ($scope.toggleMap) {
+      $scope.toggleDept = function(){
+        if($scope.allow_toggle) {// 鼠标在视图内，禁止自动切换
+          if ($scope.toggleMap) {
           $scope.toggleMap = false;
         } else {
 
@@ -456,9 +465,33 @@
             _.forEach($scope.deptAccessData, function(item) {
               item.i_width = item.dataNum / $scope.deptAccessMax * 100 + '%';
             })
+            $('.dept-access-rank').slick('slickGoTo', 0);
           }, 100)
         }
+        }
+        
+      }
+
+      $scope.deptToggleClick = function(){
+        $scope.allow_toggle = true;
+        $scope.toggleDept();
+      }
+
+      $scope.toggleMap = true;
+      $scope.deptViewTitle = "切换视图";
+      $interval(function() {
+        $scope.toggleDept();
       }, 30000)
+
+      //部门视图鼠标进入
+      $scope.allow_toggle = true;
+      $scope.mouseEnter = function(){
+        $scope.allow_toggle = false;
+      }
+      //部门视图鼠标移除
+      $scope.mouseLeave = function(){
+        $scope.allow_toggle = true;
+      }
 
       // center 系统切换
       // var stop = $interval(function() {
@@ -1620,8 +1653,24 @@
           function draw() {
             dashboardService.getVehicleView().then(function(result) {
               var data = result.data.body;
-              var x_data = _.map(data, "_id");
-              var value_data = _.map(data, "count");
+              var x_values = _.map(data, "_id");
+              var values = [];
+
+              var x_data = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"];
+              _.forEach(x_data,function(item,index){
+                var obj = {};
+                obj.name = item;
+                var date_index = _.indexOf(x_values, item);
+                if(date_index > -1) {
+                  obj.value = data[date_index].count;
+                }
+                else{
+                  obj.value = 0;
+                }
+                
+                values.push(obj);
+              })
+              console.log(values);
               var option = {
                 title: {
                   text: '前一天消费趋势图（笔）',
@@ -1688,7 +1737,7 @@
                   name: '前一天消费(笔)',
                   type: 'line',
                   stack: '总量',
-                  data: value_data,
+                  data: values,
                   symbolSize: 6,
                   itemStyle: {
                     normal: {

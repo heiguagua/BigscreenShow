@@ -12,7 +12,7 @@
 						<a  aria-controls="servant" role="tab" data-toggle="tab" ng-click="toggle(2)">崇州市公务员考核系统</a>
 					</div>
 					<div class="menu-item" >
-						<a aria-controls="gov" role="tab" data-toggle="tab" ng-click="toggle(3)">成都•崇州市政务审批服务平台</a>
+						<a aria-controls="gov" role="tab" data-toggle="tab" ng-click="toggle(3)">成都信用网（崇州）</a>
 					</div>
 					<div class="menu-item" >
 						<a  aria-controls="area" role="tab" data-toggle="tab" ng-click="toggle(4)">成都市区域自动站监测平台</a>
@@ -40,7 +40,7 @@
 										</a>
 									</div>
 									<div class="media-body">
-										<h4 class="media-heading">累计交易天府通卡数量</h4>
+										<h4 class="media-heading">智慧卡当前活跃用户数量</h4>
 										<div class="item-num"><span>{{Vehicle.all|number}}</span> 张</div>
 									</div>
 								</div>
@@ -96,7 +96,7 @@
 					<div class="col-md-2 car-info-wrap">
 						<div class="item text-center">
 							<img src="assets/images/serv_total.png" alt="全市公务员人数" />
-							<p class="text-center serv-title">全市公务员人数</p>
+							<p class="text-center serv-title">全市公务员注册人数</p>
 							<div class="item-num"><span>{{CivilServant.all|number}}</span> </div>
 						</div>
 						
@@ -112,7 +112,7 @@
 											</a>
 										</div>
 										<div class="media-body">
-											<h4 class="media-heading">全市事业人员人数</h4>
+											<h4 class="media-heading">全市事业人员注册人数</h4>
 											<div class="item-num"><span>{{CivilServant.careerPersonnel|number}}</span> </div>
 										</div>
 									</div>
@@ -192,7 +192,7 @@
 										</a>
 									</div>
 									<div class="media-body">
-										<h4 class="media-heading">最近一季度考核成绩<br/>100分-80分人数</h4>
+										<h4 class="media-heading">最近一季度考核成绩<br/>为优秀的人数</h4>
 										<div class="item-num"><span>{{CivilServant.quarter|number}}</span> </div>
 									</div>
 								</div>
@@ -222,7 +222,7 @@
 									</a>
 								</div>
 								<div class="media-body">
-									<h4 class="media-heading">全市累计办件数量</h4>
+									<h4 class="media-heading">崇州市累计办件数量</h4>
 									<div class="item-num"><span>{{GovernmentApprovalSystem.finishAll|number}}</span> </div>
 								</div>
 							</div>
@@ -237,7 +237,7 @@
 								<div class="media-body">
 									<h4 class="media-heading">累计</h4>
 									<div class="item-num"><span>{{GovernmentApprovalSystem.legalPerson|number}}</span> </div>
-									<h4 >个法人申请办件</h4>
+									<h4 >法人申请办件</h4>
 								</div>
 							</div>
 						</div>
@@ -251,7 +251,7 @@
 								<div class="media-body">
 									<h4 class="media-heading">累计</h4>
 									<div class="item-num"><span>{{GovernmentApprovalSystem.naturalPerson|number}}</span> </div>
-									<h4 >个自然人申请办件</h4>
+									<h4 >自然人申请办件</h4>
 								</div>
 							</div>
 						</div>
@@ -308,7 +308,7 @@
 						<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 4]" id="area" ng-show='current_tab == 4'>
 							<div class="area-wrap">
 								<div class="col-md-4 area-item">
-									<img src="assets/images/area_1.png" alt="地图" width="40%" />
+									<img src="assets/images/area_1.png" alt="地图" width="40%" style="    margin-right: 2rem;" />
 									<div class="watch-info">
 										<div class="media">
 											<div class="media-body">
@@ -327,7 +327,7 @@
 											</div>
 											<div class="media">
 												<div class="media-body">
-													<h4 class="media-heading">前一天新增监测个数</h4>
+													<h4 class="media-heading">前一天新增气象监测条数</h4>
 													<div class="item-num">
 														<span>{{MeteorologicalObservationStation.yesterday|number}}</span>
 													</div>
@@ -344,7 +344,7 @@
 													</a>
 												</div>
 												<div class="media-body">
-													<h4 class="media-heading">最近一小时最高温</h4>
+													<h4 class="media-heading">最近一小时最高温度<br/>（大成都范围内）</h4>
 													<div class="item-num"><span>{{Mos_maxTemperature.zgqw/10}}°C</span> </div>
 												</div>
 												<p class="info-label">监测站名：{{Mos_maxTemperature.zm}}</p>
@@ -359,7 +359,7 @@
 													</a>
 												</div>
 												<div class="media-body">
-													<h4 class="media-heading">最近一小时最低温度</h4>
+													<h4 class="media-heading">最近一小时最低温度<br/>（大成都范围内）</h4>
 													<div class="item-num"><span>{{Mos_minTemperature.zdqw/10}}°C</span> </div>
 												</div>
 												<p class="info-label">监测站名：{{Mos_minTemperature.zm}}</p>
@@ -374,7 +374,7 @@
 													</a>
 												</div>
 												<div class="media-body">
-													<h4 class="media-heading">最近一小时最大降水</h4>
+													<h4 class="media-heading">最近一小时最大降水<br/>（大成都范围内）</h4>
 													<div class="item-num"><span>{{Mos_maxRainfall.yxsyl|number}}mm</span> </div>
 												</div>
 												<p class="info-label">监测站名：{{Mos_maxRainfall.zm}}</p>
@@ -432,7 +432,7 @@
 										<div class="media">
 											<div class="media-left">
 												<a>
-													<img class="media-object" src="assets/images/honor.png" alt="全市市场主体个数" style="width:200px">
+													<img class="media-object" src="assets/images/img-balance.png" alt="全市市场主体个数" style="width:200px">
 												</a>
 											</div>
 											<div class="media-body">
@@ -450,10 +450,11 @@
 									</div>
 									<div class="col-md-3 honor-item corner center" style="width: 25%;">
 										<div class="item-inner ">
-											<div class="item-detail">全市受行政表彰市场主体个数：<span class="item-number">{{CreditWebThree.administrationCommend|number}}</span></div>
 											<div class="item-detail">全市上年度拖欠水电费市场主体个数：<span class="item-number">{{CreditWebThree.waterAndElectricity|number}}</span></div>
-											<div class="item-detail">全市上月企业诉讼案件个数：<span class="item-number">{{CreditWebOne.litigation|number}}</span></div>
+											<!-- <div class="item-detail">全市受行政表彰市场主体个数：<span class="item-number">{{CreditWebThree.administrationCommend|number}}</span></div> -->
 											<div class="item-detail ">最近一月新准入市场主体个数：<span class="item-number">{{CreditWebTwo.admittance|number}}</span></div>
+											<div class="item-detail">全市上月企业诉讼案件个数：<span class="item-number">{{CreditWebOne.litigation|number}}</span></div>
+											
 										</div>
 									</div>
 									<div class="col-md-3 honor-item  last" style="width:26%">

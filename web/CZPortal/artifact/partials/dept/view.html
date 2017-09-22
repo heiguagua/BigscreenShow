@@ -1,4 +1,5 @@
-<div>
+<div class="dept-data-box-wrap" ng-mouseleave="mouseLeave()" ng-mouseenter="mouseEnter()">
+  <a ng-click="deptToggleClick()" title="{{deptViewTitle}}" class="toggle-tag"><i class="glyphicon glyphicon-transfer"></i></a>
   <!--迁徙图-->
   <div class='section dept active' ng-class="{true:'active',false:'inactive'}[toggleMap]">
     <h1>崇州市政务信息资源目录和共享情况</h1>
@@ -8,9 +9,10 @@
           <div wiserv-chart-migrate style="height:100%;" id="migrate-wrap"></div>
         </div>
         <div class='col-md-5 dept-access-data'  >
-          <h3 class="access-title">部门已接入数据总量Top10</h3>
+          <h3 class="access-title">部门已接入数据资源（集）个数Top10</h3>
           <!-- <div wiserv-chart-access-data class="access-chart"></div> -->
-          <div class="dept-access-rank">
+          <div class="dept-access-rank" style="    max-height: 450px;
+    overflow: hidden;">
             <div class="progress-wrap  rank_{{$index+1}}" ng-repeat='item in deptAccessData track by $index'>
             <label class="dept-name" title={{item.DEP_NAME}}>{{item.DEP_NAME}}</label>
             <div class="progress dept-rank" >
