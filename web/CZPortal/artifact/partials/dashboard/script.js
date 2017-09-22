@@ -9,21 +9,21 @@
       var vm = this;
       $rootScope.change_flag = false; // 不切换
       $scope.update_day_date = new Date();
-      
+      $scope.update_date = new Date();
 
       $timeout(function() {
         $("#menu-scroll").slick({
-              slidesToShow: 5,
-              slidesToScroll: 1,
-              autoplay: true,
-              autoplaySpeed: 30000,
-              vertical: true,
-              verticalSwiping: true
-            });
+          slidesToShow: 5,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 30000,
+          vertical: true,
+          verticalSwiping: true
+        });
         $scope.current_tab = 1;
-        $('#menu-scroll').on('beforeChange', function(event, slick, currentSlide,nextSlide){
-          $scope.current_tab = nextSlide+1;
-          if($scope.current_tab == 5){// 天气
+        $('#menu-scroll').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+          $scope.current_tab = nextSlide + 1;
+          if ($scope.current_tab == 5) { // 天气
 
             $timeout(function() {
               $(".weather-scroll").slick({
@@ -41,14 +41,14 @@
           }
         });
 
-       
-      },1000)
-        
-       // 中间系统切换事件
+
+      }, 1000)
+
+      // 中间系统切换事件
       $scope.toggle = function(num) {
         $scope.current_tab = num;
         //$interval.cancel(stop);
-        $('#menu-scroll').slick('slickGoTo',num-1);
+        $('#menu-scroll').slick('slickGoTo', num - 1);
       }
 
       // 获取信息资源目录和共享情况统计数
@@ -68,11 +68,11 @@
           $scope.deptAccessData = result.data.body;
           $scope.deptAccessMax = _.max(_.map($scope.deptAccessData, 'dataNum')) + 30;
           $timeout(function() {
-            _.forEach($scope.deptAccessData,function(item){
-              item.i_width = item.dataNum/$scope.deptAccessMax*100 +'%';
+            _.forEach($scope.deptAccessData, function(item) {
+              item.i_width = item.dataNum / $scope.deptAccessMax * 100 + '%';
             })
           }, 300)
-          
+
         })
       }
 
@@ -128,21 +128,20 @@
         // 短时天气预报
         $scope.hide_weather = false;
         dashboardService.getWeatherForecast().then(function(result) {
-          if(result && result.data && result.data.body && result.data.body[0]) {
+          if (result && result.data && result.data.body && result.data.body[0]) {
             $scope.hide_weather = false;
             $scope.WeatherForecast = result.data.body[0];
-          }
-          else{
+          } else {
             $scope.hide_weather = true;
           }
-          
+
         })
 
         // 最新灾害性天气预警
         $scope.hide_disaster = false;
         dashboardService.getDisasterWarning().then(function(result) {
           $scope.DisasterWarning = result.data.body;
-          if($scope.DisasterWarning && $scope.DisasterWarning.length>0){
+          if ($scope.DisasterWarning && $scope.DisasterWarning.length > 0) {
             // $timeout(function() {
             //   $(".weather-scroll").slick({
             //     slidesToShow: 2,
@@ -156,19 +155,18 @@
             //     verticalSwiping: true
             //   });
             // }, 300)
-          }
-          else{
+          } else {
             $scope.hide_disaster = true;
           }
-          
+
         })
       }
 
       // 手动刷新灾难性天气数据
-      $scope.getTimingData = function(){
+      $scope.getTimingData = function() {
         dashboardService.getDisasterWarning().then(function(result) {
           $scope.DisasterWarning = result.data.body;
-          if($scope.DisasterWarning && $scope.DisasterWarning.length>0){
+          if ($scope.DisasterWarning && $scope.DisasterWarning.length > 0) {
             $scope.hide_disaster = false;
             $timeout(function() {
               $(".weather-scroll").slick({
@@ -183,25 +181,23 @@
                 verticalSwiping: true
               });
             }, 300)
-          }
-          else{
+          } else {
             $scope.hide_disaster = true;
           }
-          
+
         })
       }
 
       // 手动刷新天气预报
-      $scope.getWeatherData = function(){
+      $scope.getWeatherData = function() {
         dashboardService.getWeatherForecast().then(function(result) {
-          if(result && result.data && result.data.body && result.data.body[0]) {
+          if (result && result.data && result.data.body && result.data.body[0]) {
             $scope.hide_weather = false;
             $scope.WeatherForecast = result.data.body[0];
-          }
-          else{
+          } else {
             $scope.hide_weather = true;
           }
-          
+
         })
       }
 
@@ -222,106 +218,171 @@
           $scope.CreditWebThree = result.data.body[0];
         })
 
-         $scope.entries = [ 
-                { label: '社保登记',color:"#01ccd1"},
-                { label: '税务登记'},
-                { label: '司法行政登记',color:"#01ccd1"},
-                { label: '事业单位登记'},
-                { label: '注册人'},
-                { label: '市场主体退出（注销）'},
-                { label: '市场主体退出（吊销）',color:"#01ccd1"},
-                { label: '事业单位年报'},
-                { label: '机关群团登记'},
-                { label: '诚信企业评价',color:"#01ccd1"},
-                { label: '批评谴责',color:"#01ccd1"},
-                { label: '失信被执行人'},
-                { label: '欠费'},
-                { label: '司法执行'},
-                { label: '司法判决'},
-                { label: '当事人'},
-                { label: '清洁生产审核',color:"#01ccd1"},
-                { label: '产品质量监督抽查'},
-                { label: '拖欠公积金'},
-                { label: '表彰奖励'},
-                { label: '中小企业信用等级'},
-                { label: '食品生产经营企业监管等级',color:"#01ccd1"},
-                { label: '纳税信用评级'},
-                { label: '其它行政处理措施',color:"#01ccd1"},
-                { label: '重大税收违法'},
-                { label: '行政奖励'},
-                { label: '行政强制措施'},
-                { label: '工商局行政处罚'},
-                { label: '行政处罚'},
-                { label: '民政登记',color:"#01ccd1"},
-                { label: '商标'},
-                { label: '专利'},
-                { label: '集团成员'},
-                { label: '上级单位',color:"#01ccd1"},
-                { label: '分支机构'},
-                { label: '主要人员'},
-                { label: '动产抵押'},
-                { label: '行业资质资格（质监局）'},
-                { label: '对外贸易经营者备案登记',color:"#01ccd1"},
-                { label: '绿色食品'},
-                { label: '农产品地理标志'},
-                { label: '无公害农产品'},
-                { label: '行业资质资格'},
-                { label: '行政许可'},
-                { label: '市场主体退出',color:"#01ccd1"},
-                { label: '股权出质'},
-                { label: '消费者投诉站名单'},
-                { label: '市属公园'},
-                { label: '协会成员单位',color:"#01ccd1"},
-                { label: '机构代码证发放'},
-                { label: '公积金缴存登记'},
-                { label: '市场主体'}
+        $scope.entries = [{
+            label: '社保登记',
+            color: "#01ccd1"
+          }, {
+            label: '税务登记'
+          }, {
+            label: '司法行政登记',
+            color: "#01ccd1"
+          }, {
+            label: '事业单位登记'
+          }, {
+            label: '企业注册人'
+          }, {
+            label: '市场主体退出（注销）'
+          }, {
+            label: '市场主体退出（吊销）',
+            color: "#01ccd1"
+          }, {
+            label: '事业单位年报'
+          }, {
+            label: '机关群团登记'
+          }, {
+            label: '诚信企业评价',
+            color: "#01ccd1"
+          }, {
+            label: '批评谴责',
+            color: "#01ccd1"
+          }, {
+            label: '失信被执行人'
+          }, {
+            label: '水电欠费信息'
+          }, {
+            label: '司法执行'
+          }, {
+            label: '司法判决'
+          }, {
+            label: '产品质量监督抽查'
+          }, {
+            label: '拖欠公积金'
+          }, {
+            label: '表彰奖励'
+          }, {
+            label: '中小企业信用等级'
+          }, {
+            label: '食品生产经营企业监管等级',
+            color: "#01ccd1"
+          }, {
+            label: '纳税信用评级'
+          }, {
+            label: '其它行政处理措施',
+            color: "#01ccd1"
+          }, {
+            label: '重大税收违法'
+          }, {
+            label: '行政奖励'
+          }, {
+            label: '行政强制措施'
+          }, {
+            label: '工商局行政处罚',
+            color: "#01ccd1"
+          }, {
+            label: '行政处罚'
+          }, {
+            label: '民政登记',
+            color: "#01ccd1"
+          }, {
+            label: '商标'
+          }, {
+            label: '专利'
+          }, {
+            label: '动产抵押'
+          }, {
+            label: '对外贸易经营者备案登记',
+            color: "#01ccd1"
+          }, {
+            label: '绿色食品'
+          }, {
+            label: '农产品地理标志'
+          }, {
+            label: '无公害农产品'
+          }, {
+            label: '行业资质资格',
+            color: "#01ccd1"
+          }, {
+            label: '行政许可',
+            color: "#01ccd1"
+          }, {
+            label: '市场主体退出',
+            color: "#01ccd1"
+          }, {
+            label: '股权出质'
+          }, {
+            label: '消费者投诉站'
+          }, {
+            label: '协会成员单位',
+            color: "#01ccd1"
+          }, {
+            label: '机构代码证发放'
+          }, {
+            label: '公积金缴存登记'
+          }, {
+            label: '市场主体'
+          }
 
 
-            ];
+        ];
 
-            var settings = {
+        var settings = {
 
-                entries: $scope.entries,
-                width: 900,
-                height: 400,
-                radius: '40%',
-                radiusMin: 175,
-                bgDraw: true,
-                bgColor: 'transparent',
-                opacityOver: 1.00,
-                opacityOut: 0.05,
-                opacitySpeed: 10,
-                fov: 1000,
-                speed: 0.2,
-                fontFamily: 'Oswald, Arial, sans-serif',
-                fontSize: '18',
-                fontColor: '#fff',
-                fontWeight: 'normal',//bold
-                fontStyle: 'normal',//italic 
-                fontStretch: 'normal',//wider, narrower, ultra-condensed, extra-condensed, condensed, semi-condensed, semi-expanded, expanded, extra-expanded, ultra-expanded
-                fontToUpperCase: true
+          entries: $scope.entries,
+          width: 900,
+          height: 400,
+          radius: '40%',
+          radiusMin: 175,
+          bgDraw: true,
+          bgColor: 'transparent',
+          opacityOver: 1.00,
+          opacityOut: 0.05,
+          opacitySpeed: 10,
+          fov: 1000,
+          speed: 0.2,
+          fontFamily: 'Oswald, Arial, sans-serif',
+          fontSize: '18',
+          fontColor: '#fff',
+          fontWeight: 'normal', //bold
+          fontStyle: 'normal', //italic 
+          fontStretch: 'normal', //wider, narrower, ultra-condensed, extra-condensed, condensed, semi-condensed, semi-expanded, expanded, extra-expanded, ultra-expanded
+          fontToUpperCase: true
 
-            };
+        };
 
-            //var svg3DTagCloud = new SVG3DTagCloud( document.getElementById( 'holder'  ), settings );
-           //$( '#tag-cloud' ).svg3DTagCloud( settings );
-           $timeout(function() {
-            if(!$('#myCanvas').tagcanvas({
-              textColour: null,
-              initial:[0.01,-0.05],
-              textHeight:12,
-              outlineColour: '#ff00ff',
-              reverse: true,
-              radiusY:1,
-              radiusX:1.5,
-              depth: 0.8,
-              maxSpeed: 0.05,
-              wheelZoom:false
-            },'tags')) {
-              // something went wrong, hide the canvas container
-              $('#myCanvasContainer').hide();
-            }
-           }, 600);
+        //var svg3DTagCloud = new SVG3DTagCloud( document.getElementById( 'holder'  ), settings );
+        //$( '#tag-cloud' ).svg3DTagCloud( settings );
+        $timeout(function() {
+          var o = {
+            textFont: 'Arial, Helvetica, sans-serif',
+            maxSpeed: 0.05,
+            minSpeed: 0.01,
+            textColour: null,
+            textHeight: 12,
+            outlineMethod: 'colour',
+            fadeIn: 800,
+            outlineColour: '#41b1c3',
+            outlineOffset: 0,
+            depth: 0.97,
+            minBrightness: 0.2,
+            wheelZoom: false,
+            reverse: true,
+            shadowBlur: 2,
+            shuffleTags: true,
+            shadowOffset: [1, 1],
+            stretchX: 1.6,
+            initial: [0, 0.1],
+            clickToFront: 600,
+            maxSpeed: 0.01,
+            outlineDashSpeed:0.5
+          };
+          var s = (new Date).getTime() / 360;
+          o.initial[0] = 0.18 * Math.cos(s);
+          o.initial[1] = 0.18* Math.sin(s);
+          if (!$('#myCanvas').tagcanvas(o, 'tags')) {
+            // something went wrong, hide the canvas container
+            $('#myCanvasContainer').hide();
+          }
+        }, 600);
       }
 
       // 大数据产业政策
@@ -329,15 +390,15 @@
         dashboardService.getIndustrialPolicy().then(function(result) {
           $scope.IndustrialPolicy = result.data.body;
           _.forEach($scope.IndustrialPolicy, function(item, index) {
-            if (index % 3 == 0) {
-              item.itemStyle = 'item-up';
-            } else if (index % 3 == 1) {
-              item.itemStyle = 'item-center';
-            } else {
-              item.itemStyle = 'item-down';
-            }
-          })
-          // 崇州市大数据产业政策
+              if (index % 3 == 0) {
+                item.itemStyle = 'item-up';
+              } else if (index % 3 == 1) {
+                item.itemStyle = 'item-center';
+              } else {
+                item.itemStyle = 'item-down';
+              }
+            })
+            // 崇州市大数据产业政策
           $timeout(function() {
             $("#pro-list").slick({
               slidesToShow: 3,
@@ -382,23 +443,22 @@
 
       // 信息资源目录和共享情况内容切换
       $scope.toggleMap = true;
-      $interval(function(){
-        if($scope.toggleMap) {
+      $interval(function() {
+        if ($scope.toggleMap) {
           $scope.toggleMap = false;
-        }
-        else{
+        } else {
 
           $scope.toggleMap = true;
-          _.forEach($scope.deptAccessData,function(item){
-              item.i_width = '0%';
-            })
+          _.forEach($scope.deptAccessData, function(item) {
+            item.i_width = '0%';
+          })
           $timeout(function() {
-            _.forEach($scope.deptAccessData,function(item){
-              item.i_width = item.dataNum/$scope.deptAccessMax*100 +'%';
+            _.forEach($scope.deptAccessData, function(item) {
+              item.i_width = item.dataNum / $scope.deptAccessMax * 100 + '%';
             })
           }, 100)
         }
-      },30000)
+      }, 30000)
 
       // center 系统切换
       // var stop = $interval(function() {
@@ -444,6 +504,7 @@
 
       $interval(function() { // 按1小时更新的数据
         getAreaObservation(); // 区域检测
+        $scope.update_date = new Date();
       }, 3600000);
 
       $scope.changeRoute = function() {
@@ -1576,10 +1637,10 @@
                 },
 
                 grid: {
-                  left:'3%',
+                  left: '3%',
                   top: '20%',
                   bottom: '40%',
-                  right:'35%'
+                  right: '35%'
                 },
 
                 xAxis: {
@@ -1629,11 +1690,11 @@
                   stack: '总量',
                   data: value_data,
                   symbolSize: 6,
-                  itemStyle:{
-                    normal:{
-                      color:'rgb(237,252,2)',
-                      shadowColor:'#FFF',
-                      shadowBlur:6
+                  itemStyle: {
+                    normal: {
+                      color: 'rgb(237,252,2)',
+                      shadowColor: '#FFF',
+                      shadowBlur: 6
                     }
                   },
                   lineStyle: {
