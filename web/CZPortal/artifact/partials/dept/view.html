@@ -18,7 +18,7 @@
                 <span class="sr-only">已接入数据量{{item.dataNum}}</span>
               </div>
             </div>
-            <span class="access-num">{{item.dataNum}}</span>
+            <span class="access-num">{{item.dataNum|number}}</span>
           </div>
           </div>
          
@@ -41,7 +41,7 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading">覆盖政府部门和公共企事业机构个数</h4>
-              <div class="item-num"><span>{{ResourceCombing.organ}}</span></div>
+              <div class="item-num"><span>{{ResourceCombing.organ|number}}</span></div>
             </div>
           </div>
         </div>
@@ -54,7 +54,7 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading">信息资源目录数</h4>
-              <div class="item-num"><span>{{ResourceCombing.resource}}</span></div>
+              <div class="item-num"><span>{{ResourceCombing.resource|number}}</span></div>
             </div>
           </div>
         </div>
@@ -67,7 +67,7 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading">目录数据项个数</h4>
-              <div class="item-num"><span>{{ResourceCombing.data}}</span></div>
+              <div class="item-num"><span>{{ResourceCombing.data|number}}</span></div>
             </div>
           </div>
         </div>
@@ -80,7 +80,7 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading">信息化系统个数</h4>
-              <div class="item-num"><span>{{ResourceCombing.system}}</span></div>
+              <div class="item-num"><span>{{ResourceCombing.system|number}}</span></div>
             </div>
           </div>
         </div>
@@ -93,7 +93,7 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading">已汇集数据量({{dataCountLast[0].dataCountUnit}}条)</h4>
-              <div class="item-num"><span>{{dataCountLast[0].dataCount}}</span></div>
+              <div class="item-num"><span>{{dataCountLast[0].dataCount|number}}</span></div>
             </div>
           </div>
         </div>
@@ -106,7 +106,7 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading">最近一周新增({{dataCountLast[1].dataCountUnit}}条)</h4>
-              <div class="item-num"><span>{{dataCountLast[1].dataCount}}</span></div>
+              <div class="item-num"><span>{{dataCountLast[1].dataCount|number}}</span></div>
             </div>
           </div>
         </div>

@@ -16,7 +16,7 @@
               slidesToShow: 5,
               slidesToScroll: 1,
               autoplay: true,
-              autoplaySpeed: 15000,
+              autoplaySpeed: 30000,
               vertical: true,
               verticalSwiping: true
             });
@@ -223,55 +223,55 @@
         })
 
          $scope.entries = [ 
-                { label: '社保登记',color:"#02929e"},
+                { label: '社保登记',color:"#01ccd1"},
                 { label: '税务登记'},
-                { label: '司法行政登记',color:"#02929e"},
+                { label: '司法行政登记',color:"#01ccd1"},
                 { label: '事业单位登记'},
                 { label: '注册人'},
                 { label: '市场主体退出（注销）'},
-                { label: '市场主体退出（吊销）',color:"#02929e"},
+                { label: '市场主体退出（吊销）',color:"#01ccd1"},
                 { label: '事业单位年报'},
                 { label: '机关群团登记'},
-                { label: '诚信企业评价',color:"#02929e"},
-                { label: '批评谴责',color:"#02929e"},
+                { label: '诚信企业评价',color:"#01ccd1"},
+                { label: '批评谴责',color:"#01ccd1"},
                 { label: '失信被执行人'},
                 { label: '欠费'},
                 { label: '司法执行'},
                 { label: '司法判决'},
                 { label: '当事人'},
-                { label: '清洁生产审核',color:"#02929e"},
+                { label: '清洁生产审核',color:"#01ccd1"},
                 { label: '产品质量监督抽查'},
                 { label: '拖欠公积金'},
                 { label: '表彰奖励'},
                 { label: '中小企业信用等级'},
-                { label: '食品生产经营企业监管等级',color:"#02929e"},
+                { label: '食品生产经营企业监管等级',color:"#01ccd1"},
                 { label: '纳税信用评级'},
-                { label: '其它行政处理措施',color:"#02929e"},
+                { label: '其它行政处理措施',color:"#01ccd1"},
                 { label: '重大税收违法'},
                 { label: '行政奖励'},
                 { label: '行政强制措施'},
                 { label: '工商局行政处罚'},
                 { label: '行政处罚'},
-                { label: '民政登记'},
+                { label: '民政登记',color:"#01ccd1"},
                 { label: '商标'},
                 { label: '专利'},
                 { label: '集团成员'},
-                { label: '上级单位',color:"#02929e"},
+                { label: '上级单位',color:"#01ccd1"},
                 { label: '分支机构'},
                 { label: '主要人员'},
                 { label: '动产抵押'},
                 { label: '行业资质资格（质监局）'},
-                { label: '对外贸易经营者备案登记',color:"#02929e"},
+                { label: '对外贸易经营者备案登记',color:"#01ccd1"},
                 { label: '绿色食品'},
                 { label: '农产品地理标志'},
                 { label: '无公害农产品'},
                 { label: '行业资质资格'},
                 { label: '行政许可'},
-                { label: '市场主体退出',color:"#02929e"},
+                { label: '市场主体退出',color:"#01ccd1"},
                 { label: '股权出质'},
                 { label: '消费者投诉站名单'},
                 { label: '市属公园'},
-                { label: '协会成员单位',color:"#02929e"},
+                { label: '协会成员单位',color:"#01ccd1"},
                 { label: '机构代码证发放'},
                 { label: '公积金缴存登记'},
                 { label: '市场主体'}
@@ -309,9 +309,11 @@
             if(!$('#myCanvas').tagcanvas({
               textColour: null,
               initial:[0.01,-0.05],
-              textHeight:16,
+              textHeight:12,
               outlineColour: '#ff00ff',
               reverse: true,
+              radiusY:1,
+              radiusX:1.5,
               depth: 0.8,
               maxSpeed: 0.05,
               wheelZoom:false
@@ -319,7 +321,7 @@
               // something went wrong, hide the canvas container
               $('#myCanvasContainer').hide();
             }
-           }, 300);
+           }, 600);
       }
 
       // 大数据产业政策

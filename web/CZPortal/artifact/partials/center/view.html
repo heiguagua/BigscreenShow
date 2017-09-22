@@ -41,7 +41,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">累计交易天府通卡数量</h4>
-										<div class="item-num"><span>{{Vehicle.all}}</span> 张</div>
+										<div class="item-num"><span>{{Vehicle.all|number}}</span> 张</div>
 									</div>
 								</div>
 							</div>
@@ -54,7 +54,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">前一天交易</h4>
-										<div class="item-num"><span>{{Vehicle.yesterday}}</span> 笔</div>
+										<div class="item-num"><span>{{Vehicle.yesterday|number}}</span> 笔</div>
 									</div>
 								</div>
 							</div>
@@ -67,7 +67,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">最近一周累计交易</h4>
-										<div class="item-num"><span>{{Vehicle.week}}</span> 笔</div>
+										<div class="item-num"><span>{{Vehicle.week|number}}</span> 笔</div>
 									</div>
 								</div>
 							</div>
@@ -80,7 +80,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">最近一月累计交易金额</h4>
-										<div class="item-num"><span>{{Vehicle.month}}</span> 元</div>
+										<div class="item-num"><span>{{Vehicle.month|number}}</span> 元</div>
 									</div>
 								</div>
 							</div>
@@ -97,7 +97,7 @@
 						<div class="item text-center">
 							<img src="assets/images/serv_total.png" alt="全市公务员人数" />
 							<p class="text-center serv-title">全市公务员人数</p>
-							<div class="item-num"><span>{{CivilServant.all}}</span> </div>
+							<div class="item-num"><span>{{CivilServant.all|number}}</span> </div>
 						</div>
 						
 					</div>
@@ -113,7 +113,7 @@
 										</div>
 										<div class="media-body">
 											<h4 class="media-heading">全市事业人员人数</h4>
-											<div class="item-num"><span>{{CivilServant.careerPersonnel}}</span> </div>
+											<div class="item-num"><span>{{CivilServant.careerPersonnel|number}}</span> </div>
 										</div>
 									</div>
 								</div>
@@ -126,7 +126,7 @@
 										</div>
 										<div class="media-body">
 											<h4 class="media-heading">前一天在岗人数</h4>
-											<div class="item-num"><span>{{CivilServant.onTheJob}}</span> </div>
+											<div class="item-num"><span>{{CivilServant.onTheJob|number}}</span> </div>
 										</div>
 									</div>
 								</div>
@@ -139,7 +139,7 @@
 										</div>
 										<div class="media-body">
 											<h4 class="media-heading">前一天迟到人数</h4>
-											<div class="item-num"><span>{{CivilServant.beLate}}</span> </div>
+											<div class="item-num"><span>{{CivilServant.beLate|number}}</span> </div>
 										</div>
 									</div>
 								</div>
@@ -152,7 +152,7 @@
 										</div>
 										<div class="media-body">
 											<h4 class="media-heading">前一天早退人数</h4>
-											<div class="item-num"><span>{{CivilServant.leaveEarly}}</span> </div>
+											<div class="item-num"><span>{{CivilServant.leaveEarly|number}}</span> </div>
 										</div>
 									</div>
 								</div>
@@ -166,7 +166,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">前一天<br/>提交的工作日志数量</h4>
-										<div class="item-num"><span>{{CivilServant.daily}}</span> </div>
+										<div class="item-num"><span>{{CivilServant.daily|number}}</span> </div>
 									</div>
 								</div>
 							</div>
@@ -179,7 +179,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">最近一周<br/>提交工作周报数量</h4>
-										<div class="item-num"><span>{{CivilServant.weekly}}</span> </div>
+										<div class="item-num"><span>{{CivilServant.weekly|number}}</span> </div>
 									</div>
 								</div>
 							</div>
@@ -193,7 +193,7 @@
 									</div>
 									<div class="media-body">
 										<h4 class="media-heading">最近一季度考核成绩<br/>100分-80分人数</h4>
-										<div class="item-num"><span>{{CivilServant.quarter}}</span> </div>
+										<div class="item-num"><span>{{CivilServant.quarter|number}}</span> </div>
 									</div>
 								</div>
 							</div>
@@ -223,7 +223,7 @@
 								</div>
 								<div class="media-body">
 									<h4 class="media-heading">全市累计办件数量</h4>
-									<div class="item-num"><span>{{GovernmentApprovalSystem.finishAll}}</span> </div>
+									<div class="item-num"><span>{{GovernmentApprovalSystem.finishAll|number}}</span> </div>
 								</div>
 							</div>
 						</div>
@@ -236,7 +236,7 @@
 								</div>
 								<div class="media-body">
 									<h4 class="media-heading">累计</h4>
-									<div class="item-num"><span>{{GovernmentApprovalSystem.legalPerson}}</span> </div>
+									<div class="item-num"><span>{{GovernmentApprovalSystem.legalPerson|number}}</span> </div>
 									<h4 >个法人申请办件</h4>
 								</div>
 							</div>
@@ -250,7 +250,7 @@
 								</div>
 								<div class="media-body">
 									<h4 class="media-heading">累计</h4>
-									<div class="item-num"><span>{{GovernmentApprovalSystem.naturalPerson}}</span> </div>
+									<div class="item-num"><span>{{GovernmentApprovalSystem.naturalPerson|number}}</span> </div>
 									<h4 >个自然人申请办件</h4>
 								</div>
 							</div>
@@ -264,7 +264,7 @@
 								</div>
 								<div class="media-body">
 									<h4 class="media-heading">前一天新提交</h4>
-									<div class="item-num"><span>{{GovernmentApprovalSystem.finishYesterday}}</span> </div>
+									<div class="item-num"><span>{{GovernmentApprovalSystem.finishYesterday|number}}</span> </div>
 									<h4 >个办件</h4>
 								</div>
 							</div>
@@ -279,7 +279,7 @@
 								<div class="media-body">
 									<h4 class="media-heading">最近一个月非常满意</h4>
 									<div class="item-num">
-										<span>{{GovernmentApprovalSystem.satisfiedAppraise }}</span> </div>
+										<span>{{GovernmentApprovalSystem.satisfiedAppraise |number}}</span> </div>
 										<h4 >个办件</h4>
 									</div>
 								</div>
@@ -296,7 +296,7 @@
 									<div class="media-body">
 										<h4 class="media-heading">最近一个月未评价</h4>
 										<div class="item-num">
-											<span>{{GovernmentApprovalSystem.noAppraise}}</span> </div>
+											<span>{{GovernmentApprovalSystem.noAppraise|number}}</span> </div>
 											<h4 >个办件</h4>
 										</div>
 									</div>
@@ -308,20 +308,20 @@
 						<div role="tabpanel" class="tab-pane fade" ng-class="{true:'in active',false:'inactive'}[current_tab == 4]" id="area" ng-show='current_tab == 4'>
 							<div class="area-wrap">
 								<div class="col-md-4 area-item">
-									<img src="assets/images/area_1.png" alt="地图" width="60%" />
+									<img src="assets/images/area_1.png" alt="地图" width="40%" />
 									<div class="watch-info">
 										<div class="media">
 											<div class="media-body">
 												<h4 class="media-heading">成都市监测站个数</h4>
 												<div class="item-num">
-													<span>{{MeteorologicalObservationStation.chengdu}}</span> </div>
+													<span>{{MeteorologicalObservationStation.chengdu|number}}</span> </div>
 												</div>
 											</div>
 											<div class="media">
 												<div class="media-body">
 													<h4 class="media-heading">崇州市监测站个数</h4>
 													<div class="item-num">
-														<span>{{MeteorologicalObservationStation.chongzhou}}</span>
+														<span>{{MeteorologicalObservationStation.chongzhou|number}}</span>
 													</div>
 												</div>
 											</div>
@@ -329,7 +329,7 @@
 												<div class="media-body">
 													<h4 class="media-heading">前一天新增监测个数</h4>
 													<div class="item-num">
-														<span>{{MeteorologicalObservationStation.yesterday}}</span>
+														<span>{{MeteorologicalObservationStation.yesterday|number}}</span>
 													</div>
 												</div>
 											</div>
@@ -375,7 +375,7 @@
 												</div>
 												<div class="media-body">
 													<h4 class="media-heading">最近一小时最大降水</h4>
-													<div class="item-num"><span>{{Mos_maxRainfall.yxsyl}}mm</span> </div>
+													<div class="item-num"><span>{{Mos_maxRainfall.yxsyl|number}}mm</span> </div>
 												</div>
 												<p class="info-label">监测站名：{{Mos_maxRainfall.zm}}</p>
 												<p class="info-label">出现时间：{{Mos_maxRainfall.rksj}}</p>
@@ -437,28 +437,28 @@
 											</div>
 											<div class="media-body">
 												<h4 class="media-heading">全市市场主体个数</h4>
-												<div class="item-num"><span>{{CreditWebOne.marketSubject}}</span> </div>
+												<div class="item-num"><span>{{CreditWebOne.marketSubject|number}}</span> </div>
 											</div>
 										</div>
 									</div>
 									<div class="col-md-3 honor-item corner" style="width:23%">
 										<div class="item-inner">
-											<div class="item-detail">全市受表彰市场主体个数：<span class="item-number">{{CreditWebThree.commendation}}</span></div>
-											<div class="item-detail ">全市缴纳公积金企业数：<span class="item-number">{{CreditWebThree.fund}}</span></div>
-											<div class="item-detail">全市获得专利企业数：<span class="item-number">{{CreditWebThree.patent}}</span></div>
+											<div class="item-detail">全市受表彰市场主体个数：<span class="item-number">{{CreditWebThree.commendation|number}}</span></div>
+											<div class="item-detail ">全市缴纳公积金企业数：<span class="item-number">{{CreditWebThree.fund|number}}</span></div>
+											<div class="item-detail">全市获得专利企业数：<span class="item-number">{{CreditWebThree.patent|number}}</span></div>
 										</div>
 									</div>
 									<div class="col-md-3 honor-item corner center" style="width: 25%;">
 										<div class="item-inner ">
-											<div class="item-detail">全市受行政表彰市场主体个数：<span class="item-number">{{CreditWebThree.administrationCommend}}</span></div>
-											<div class="item-detail">全市上年度拖欠水电费市场主体个数：<span class="item-number">{{CreditWebThree.waterAndElectricity}}</span></div>
-											<div class="item-detail">全市上月企业诉讼案件个数：<span class="item-number">{{CreditWebOne.litigation}}</span></div>
-											<div class="item-detail ">最近一月新准入市场主体个数：<span class="item-number">{{CreditWebTwo.admittance}}</span></div>
+											<div class="item-detail">全市受行政表彰市场主体个数：<span class="item-number">{{CreditWebThree.administrationCommend|number}}</span></div>
+											<div class="item-detail">全市上年度拖欠水电费市场主体个数：<span class="item-number">{{CreditWebThree.waterAndElectricity|number}}</span></div>
+											<div class="item-detail">全市上月企业诉讼案件个数：<span class="item-number">{{CreditWebOne.litigation|number}}</span></div>
+											<div class="item-detail ">最近一月新准入市场主体个数：<span class="item-number">{{CreditWebTwo.admittance|number}}</span></div>
 										</div>
 									</div>
 									<div class="col-md-3 honor-item  last" style="width:26%">
 									 	<div id="myCanvasContainer">
-											<canvas width="760" height="480" id="myCanvas">
+											<canvas width="600" height="300" id="myCanvas">
 											</canvas>
 										</div>
 										<div id="tags">
