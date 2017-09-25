@@ -522,12 +522,7 @@
 
       //定时刷新数据
       $interval(function() { // 按天更新的数据
-        getCarSystem(); // 车载
-        getCivilServant(); //公务员系统
-        getGovernmentApprovalSystem(); // 政务系统
-        getCreditWeb(); // 信用网
-        getDataCount(); // 信息资源目录和共享情况
-        getIndustrialPolicy(); //大数据产业政策
+        
         $scope.update_day_date = new Date();
       }, 86400000);
 
@@ -537,6 +532,12 @@
 
       $interval(function() { // 按1小时更新的数据
         getAreaObservation(); // 区域检测
+        getCarSystem(); // 车载
+        getCivilServant(); //公务员系统
+        getGovernmentApprovalSystem(); // 政务系统
+        getCreditWeb(); // 信用网
+        getDataCount(); // 信息资源目录和共享情况
+        getIndustrialPolicy(); //大数据产业政策
         $scope.update_date = new Date();
       }, 3600000);
 
@@ -1369,7 +1370,7 @@
                       shadowBlur: 10
                     }
                   },
-                  data: formtGCData(geoCoordMap, data, '崇州政务大数据平台', false)
+                  data: formtGCData(geoCoordMap, data, '崇州市数据共享交换平台', false)
                 }, {
 
                   type: 'effectScatter',
@@ -1404,7 +1405,7 @@
                     }
                   },
 
-                  data: formtVData(geoCoordMap, data, '崇州政务大数据平台')
+                  data: formtVData(geoCoordMap, data, '崇州市数据共享交换平台')
                 }]
               };
 
@@ -1413,7 +1414,7 @@
             // var geoCoordMap = {
             //   '长春': [129.8154, 50.2584],
             //   '长沙': [135.0823, 25.2568],
-            //   '崇州政务大数据平台': [108.6992, 32.7682],
+            //   '崇州市数据共享交换平台': [108.6992, 32.7682],
             //   '西安': [134.1162, 34.2004],
             //   '深圳': [124.5435, 22.5439],
             //   '济南': [127.1582, 36.8701],
