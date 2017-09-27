@@ -93,12 +93,37 @@
         })
       }
 
+      function CivilServantGenerator(){
+        $scope.CivilServant = {};
+        $scope.CivilServant.all = Math.round(Math.random()*(3141-3042)+3042);// 全市公务员注册人数
+        $scope.CivilServant.careerPersonnel = 1000;// 全市事业单位注册人数
+        $scope.CivilServant.onTheJob = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 前一天在岗
+        $scope.CivilServant.beLate = Math.round(Math.random()*(50-30)+30); // 前一天迟到
+        $scope.CivilServant.leaveEarly = Math.round(Math.random()*(50-30)+30); // 前一天早退
+        $scope.CivilServant.daily = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 前一天提交工作日志
+        $scope.CivilServant.weekly = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 最近一周提交工作周报
+        $scope.CivilServant.quarter = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(700-500)+500);// 最近一季度考核成绩优秀
+
+      }
+
       // 中间系统公务员考核系统
       var getCivilServant = function() {
         dashboardService.getCivilServant().then(function(result) {
-          $scope.CivilServant = result.data.body[0];
+          //$scope.CivilServant = result.data.body[0]; 
+          // 以下操作单纯为了临时演示，按给的逻辑造的假数据，需要切换时再使用实时数据
+          CivilServantGenerator();
         })
       }
+      // 临时增加定时器模拟公务员系统的假数据，真实环境需删除
+      $interval(function() { // 按天更新
+         $scope.CivilServant.onTheJob = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 前一天在岗
+         $scope.CivilServant.beLate = Math.round(Math.random()*(50-30)+30); // 前一天迟到
+         $scope.CivilServant.leaveEarly = Math.round(Math.random()*(50-30)+30); // 前一天早退
+         $scope.CivilServant.daily = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 前一天提交工作日志
+      }, 86400000);
+      $interval(function() { // 按周更新
+        $scope.CivilServant.weekly = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 最近一周提交工作周报
+      }, 604800000);
 
       // 中间系统政务审批服务
       var getGovernmentApprovalSystem = function() {
@@ -492,33 +517,6 @@
       $scope.mouseLeave = function(){
         $scope.allow_toggle = true;
       }
-
-      // center 系统切换
-      // var stop = $interval(function() {
-      //   if ($scope.current_tab == 6) {
-      //     $scope.current_tab = 1;
-      //   } else if ($scope.current_tab == 4) {
-      //     $scope.current_tab = $scope.current_tab + 1;
-      //     // 成都市公共气象服务平台天气滚动播放
-      //     $timeout(function() {
-      //       $(".weather-scroll").slick({
-      //         slidesToShow: 2,
-      //         slidesToScroll: 1,
-      //         cssEase: 'linear',
-      //         autoplay: true,
-      //         centerMode: true,
-      //         autoplaySpeed: 0,
-      //         speed: 7000,
-      //         vertical: true,
-      //         verticalSwiping: true
-      //       });
-      //     }, 300)
-      //   } else {
-      //     $scope.current_tab = $scope.current_tab + 1;
-      //   }
-      // }, 15000)
-
-
 
       //定时刷新数据
       $interval(function() { // 按天更新的数据
