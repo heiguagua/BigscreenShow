@@ -95,14 +95,80 @@
 
       function CivilServantGenerator(){
         $scope.CivilServant = {};
-        $scope.CivilServant.all = Math.round(Math.random()*(3141-3042)+3042);// 全市公务员注册人数
-        $scope.CivilServant.careerPersonnel = 1000;// 全市事业单位注册人数
-        $scope.CivilServant.onTheJob = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 前一天在岗
-        $scope.CivilServant.beLate = Math.round(Math.random()*(50-30)+30); // 前一天迟到
-        $scope.CivilServant.leaveEarly = Math.round(Math.random()*(50-30)+30); // 前一天早退
-        $scope.CivilServant.daily = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 前一天提交工作日志
-        $scope.CivilServant.weekly = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 最近一周提交工作周报
-        $scope.CivilServant.quarter = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(700-500)+500);// 最近一季度考核成绩优秀
+        var all = Number(sessionStorage.getItem("all"));
+        var careerPersonnel = Number(sessionStorage.getItem("careerPersonnel"));
+        var onTheJob = Number(sessionStorage.getItem("onTheJob"));
+        var beLate = Number(sessionStorage.getItem("beLate"));
+        var leaveEarly = Number(sessionStorage.getItem("leaveEarly"));
+        var daily = Number(sessionStorage.getItem("daily"));
+        var weekly = Number(sessionStorage.getItem("weekly"));
+        var quarter = Number(sessionStorage.getItem("quarter"));
+        if(!all)  {
+          $scope.CivilServant.all = Math.round(Math.random()*(3141-3042)+3042);
+          sessionStorage.setItem("all",$scope.CivilServant.all);
+        }
+        else{
+          $scope.CivilServant.all = all;
+        }
+        if(!careerPersonnel)  {
+          $scope.CivilServant.careerPersonnel = 1000;
+          sessionStorage.setItem("careerPersonnel",$scope.CivilServant.careerPersonnel);
+        }
+        else{
+          $scope.CivilServant.careerPersonnel = careerPersonnel;
+        }
+        if(!onTheJob)  {
+          $scope.CivilServant.onTheJob = 0+$scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);
+          sessionStorage.setItem("onTheJob",$scope.CivilServant.onTheJob);
+        }
+        else{
+          $scope.CivilServant.onTheJob = onTheJob;
+        }
+        if(!beLate)  {
+          $scope.CivilServant.beLate = Math.round(Math.random()*(50-30)+30); // 前一天迟到
+          sessionStorage.setItem("beLate",$scope.CivilServant.beLate);
+        }
+        else{
+          $scope.CivilServant.beLate = beLate;
+        }
+        if(!leaveEarly)  {
+          $scope.CivilServant.leaveEarly = Math.round(Math.random()*(50-30)+30); // 前一天早退
+          sessionStorage.setItem("leaveEarly",$scope.CivilServant.leaveEarly);
+        }
+        else{
+          $scope.CivilServant.leaveEarly = leaveEarly;
+        }
+        if(!daily)  {
+          $scope.CivilServant.daily = 0+$scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 前一天提交工作日志
+          sessionStorage.setItem("daily",$scope.CivilServant.daily);
+        }
+        else{
+          $scope.CivilServant.daily = daily;
+        }
+        if(!weekly)  {
+          $scope.CivilServant.weekly = 0+$scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 最近一周提交工作周报
+          sessionStorage.setItem("weekly",$scope.CivilServant.weekly);
+        }
+        else{
+          $scope.CivilServant.weekly = weekly;
+        }
+        if(!quarter)  {
+          $scope.CivilServant.quarter = 0+$scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(700-500)+500);// 最近一季度考核成绩优秀
+          sessionStorage.setItem("quarter",$scope.CivilServant.quarter);
+        }
+        else{
+          $scope.CivilServant.quarter = quarter;
+        }
+
+
+        //$scope.CivilServant.all = Math.round(Math.random()*(3141-3042)+3042);// 全市公务员注册人数
+        // $scope.CivilServant.careerPersonnel = 1000;// 全市事业单位注册人数
+        // $scope.CivilServant.onTheJob = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 前一天在岗
+        // $scope.CivilServant.beLate = Math.round(Math.random()*(50-30)+30); // 前一天迟到
+        // $scope.CivilServant.leaveEarly = Math.round(Math.random()*(50-30)+30); // 前一天早退
+        // $scope.CivilServant.daily = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 前一天提交工作日志
+        // $scope.CivilServant.weekly = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 最近一周提交工作周报
+        // $scope.CivilServant.quarter = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(700-500)+500);// 最近一季度考核成绩优秀
 
       }
 
@@ -117,12 +183,17 @@
       // 临时增加定时器模拟公务员系统的假数据，真实环境需删除
       $interval(function() { // 按天更新
          $scope.CivilServant.onTheJob = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 前一天在岗
+         sessionStorage.setItem("onTheJob",$scope.CivilServant.onTheJob);
          $scope.CivilServant.beLate = Math.round(Math.random()*(50-30)+30); // 前一天迟到
+         sessionStorage.setItem("beLate",$scope.CivilServant.beLate);
          $scope.CivilServant.leaveEarly = Math.round(Math.random()*(50-30)+30); // 前一天早退
+         sessionStorage.setItem("leaveEarly",$scope.CivilServant.leaveEarly);
          $scope.CivilServant.daily = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 前一天提交工作日志
+         sessionStorage.setItem("daily",$scope.CivilServant.daily);
       }, 86400000);
       $interval(function() { // 按周更新
         $scope.CivilServant.weekly = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 最近一周提交工作周报
+        sessionStorage.setItem("weekly",$scope.CivilServant.weekly);
       }, 604800000);
 
       // 中间系统政务审批服务
