@@ -89,7 +89,11 @@
       var getCarSystem = function() {
         // 交易情况
         dashboardService.getVehicle().then(function(result) {
-          $scope.Vehicle = result.data.body[0];
+          var data = result.data.body[0];
+          if($scope.Vehicle && $scope.Vehicle.yesterday && (!data.yesterday || data.yesterday == '' || data.yesterday == 0)) {
+            data.yesterday = angular.copy($scope.Vehicle.yesterday);
+          }
+          $scope.Vehicle = data;
         })
       }
 
@@ -212,17 +216,29 @@
 
         // 最高温度
         dashboardService.getMos_maxTemperature().then(function(result) {
-          $scope.Mos_maxTemperature = result.data.body[0];
+          var data = result.data.body[0];
+          if($scope.Mos_maxTemperature && $scope.Mos_maxTemperature.zgqw && (!data.zgqw || data.zgqw =='')) {
+            data.zgqw = angular.copy($scope.Mos_maxTemperature.zgqw);
+          }
+          $scope.Mos_maxTemperature = data;
         })
 
         // 最低温度
         dashboardService.getMos_minTemperature().then(function(result) {
-          $scope.Mos_minTemperature = result.data.body[0];
+          var data = result.data.body[0];
+          if($scope.Mos_minTemperature && $scope.Mos_minTemperature.zdqw && (!data.zdqw || data.zdqw =='')) {
+            data.zdqw = angular.copy($scope.Mos_minTemperature.zdqw);
+          }
+          $scope.Mos_minTemperature = data;
         })
 
         // 最大降水
         dashboardService.getMos_maxRainfall().then(function(result) {
-          $scope.Mos_maxRainfall = result.data.body[0];
+          var data = result.data.body[0];
+          if($scope.Mos_maxRainfall && $scope.Mos_maxRainfall.yxsyl && (!data.yxsyl || data.yxsyl =='')) {
+            data.yxsyl = angular.copy($scope.Mos_maxRainfall.yxsyl);
+          }
+          $scope.Mos_maxRainfall = data;
         })
 
 
@@ -1727,12 +1743,16 @@
               var values = [];
 
               var x_data = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"];
+              var null_flag = true;
               _.forEach(x_data,function(item,index){
                 var obj = {};
                 obj.name = item;
                 var date_index = _.indexOf(x_values, item);
                 if(date_index > -1) {
                   obj.value = data[date_index].count;
+                  if(obj.value != 0) {
+                    null_flag = false;
+                  }
                 }
                 else{
                   obj.value = 0;
@@ -1824,8 +1844,12 @@
                   }
                 }]
               };
-              chartInstance.clear();
-              chartInstance.setOption(option);
+
+              if(!null_flag) {// 数据都为0 ，则不重绘，保持上次的数据
+                chartInstance.clear();
+                chartInstance.setOption(option);
+              }
+              
             })
           }
 
