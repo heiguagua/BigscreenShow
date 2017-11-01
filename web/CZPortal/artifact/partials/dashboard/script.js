@@ -79,7 +79,7 @@
                   vertical: true,
                   verticalSwiping: true
                 });
-          }, 100);
+          }, 10);
           
 
         })
@@ -1735,6 +1735,7 @@
         template: "<div id='carData' style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance = echarts.init((element.find('#carData'))[0]);
+          var draw_flag = false; // 是否绘制过
 
           function draw() {
             dashboardService.getVehicleView().then(function(result) {
@@ -1845,7 +1846,8 @@
                 }]
               };
 
-              if(!null_flag) {// 数据都为0 ，则不重绘，保持上次的数据
+              if(!draw_flag || !null_flag) {// 数据都为0 ，则不重绘，保持上次的数据
+                draw_flag = true;
                 chartInstance.clear();
                 chartInstance.setOption(option);
               }
