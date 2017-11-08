@@ -4,15 +4,14 @@
   <div class='section dept active' ng-class="{true:'active',false:'inactive'}[toggleMap]">
     <h1>崇州市政务信息资源目录和共享情况</h1>
     <div class='content dept-data'>
-      <div class='chart-full' >
+      <div class='chart-full'>
         <div class='col-md-7' style="height:100%;">
           <div wiserv-chart-migrate style="height:100%;" id="migrate-wrap"></div>
         </div>
         <div class='col-md-5 dept-access-data'  >
           <h3 class="access-title">部门已接入数据资源（集）个数Top10</h3>
           <!-- <div wiserv-chart-access-data class="access-chart"></div> -->
-          <div class="dept-access-rank" style="    max-height: 450px;
-    overflow: hidden;">
+          <div class="dept-access-rank" style="max-height: 450px;overflow: hidden;">
             <div class="progress-wrap  rank_{{$index+1}}" ng-repeat='item in deptAccessData track by $index'>
             <label class="dept-name" title={{item.DEP_NAME}}>{{item.DEP_NAME}}</label>
             <div class="progress dept-rank" >
@@ -115,6 +114,33 @@
         <div class="update-time text-right">数据更新时间：<span>{{update_date | date:"yyyy-MM-dd HH:mm:ss"}}</span></div>
       </div>
       
+    </div>
+  </div>
+  <!--崇信签约-->
+  <div class="section dept contract">
+    <h1>应用催生数据 数据支撑业务</h1>
+    <div class="content dept-data">
+      <div class="chart-full">
+        <div class="col-md-8" style="height:100%;">
+          <div wiserv-chart-contract style="height:100%;" id="contract-wrap">
+            
+          </div>
+        </div>
+        <div class="col-md-4 accessing-wrap">
+          <div class="accessing-bus">
+            <div class="access-bg">接入中</div>
+            <p class="access-item">四川省中药材数据</p>
+          </div>
+          <div class="accessing-bus">
+            <div class="access-bg">接入中</div>
+            <p class="access-item">成都审计数据</p>
+          </div>
+          <div class="accessing-bus">
+            <div class="access-bg">接入中</div>
+            <p class="access-item">公共资源交易数据</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

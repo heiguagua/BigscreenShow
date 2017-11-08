@@ -683,6 +683,7 @@
         getDataCount: getDataCount,
         getAccessDataNum: getAccessDataNum,
         getDeptCoords: getDeptCoords,
+        getDeptContract:getDeptContract,//崇信签约或者意向签约的数据资源
         getVehicle: getVehicle, // 车载前置系统数据
         getVehicleView: getVehicleView, //  车载前置管理系统折线图
         getCivilServant: getCivilServant, // 公务员考核系统
@@ -766,6 +767,12 @@
       function getDeptCoords() {
         return $http.get(
           'assets/file/depts_coord.json'
+        )
+      }
+
+      function getDeptContract(){
+        return $http.get(
+          'assets/file/dept_contract.json'
         )
       }
 
@@ -1525,6 +1532,311 @@
             //   '上海': [135.4648, 31.2891]
             // };
 
+
+
+        }
+      }
+    }
+  ]);
+
+ dashboard.directive('wiservChartContract', ['dashboardService',
+    function(dashboardService) {
+      return {
+        restrict: 'ACE',
+        template: "<div id='deptData' style='width:100%;height:100%'></div>",
+        link: function(scope, element, attrs) {
+          var chartInstance = echarts.init((element.find('#deptData'))[0]);
+          dashboardService.getDeptContract().then(function(result) {
+              var geoCoordMap = result.data.coords;
+              var data = result.data.data;
+
+
+              function formtGCData(geoData, data, srcNam, dest) {
+                var tGeoDt = [];
+                if (dest) {
+                  for (var i = 0, len = data.length; i < len; i++) {
+                    if (srcNam != data[i].name) {
+                      tGeoDt.push({
+                        coords: [geoData[srcNam], geoData[data[i].name]]
+                      });
+                    }
+                  }
+                } else {
+                  for (var i = 0, len = data.length; i < len; i++) {
+                    if (srcNam != data[i].name) {
+                      tGeoDt.push({
+                          coords: [geoData[data[i].name], geoData[srcNam]]
+                        });
+
+                    }
+                  }
+                }
+                return tGeoDt;
+              }
+
+              function formtVData(geoData, data, srcNam) {
+                var tGeoDt = [];
+                for (var i = 0, len = data.length; i < len; i++) {
+                  var tNam = data[i].name
+                  if (srcNam != tNam) {
+                    if (tNam == '国家资源卫星数据\n1000 T') {
+                        tGeoDt.push({
+                          name: tNam,
+                          value: geoData[tNam],
+                          symbol:'circle',
+                          symbolSize: 6,
+                          label: {
+                            normal: {
+                              position: [-90, -90]
+                            }
+                          }
+                        });
+                      } else if (tNam == '成都工商数据\n1800\n万条') {
+                        tGeoDt.push({
+                          name: tNam,
+                          value: geoData[tNam],
+                          symbolSize: 6,
+                          label: {
+                            normal: {
+                              align:'right',
+                              position: [-50, -10],
+                              rich: {
+                                  b: {
+                                    align:'right',
+                                  },
+                                  c:{
+                                    align:'right',
+                                  }
+                              }
+                            }
+                          }
+                        });
+                      } else if(tNam == '社会信用数据\n8000\n家企业') {
+                        tGeoDt.push({
+                          name: tNam,
+                          value: geoData[tNam],
+                          symbolSize: 6,
+                          label: {
+                            normal: {
+                              align:'right',
+                              position: [-10, 25]
+                            }
+                          }
+                        });
+                      } else if(tNam == '行政审批数据\n48\n万条'){
+                        tGeoDt.push({
+                          name: tNam,
+                          value: geoData[tNam],
+                          symbolSize: 6,
+                          label: {
+                            normal: {
+                              position: [-18, 25]
+                            }
+                          }
+                        });
+                      }else if(tNam == '知识产权数据\n200 T'){
+                        tGeoDt.push({
+                          name: tNam,
+                          value: geoData[tNam],
+                          symbolSize: 6,
+                          label: {
+                            normal: {
+                              position: [30, -60]
+                            }
+                          }
+                        });
+                      }
+                      else {
+                        tGeoDt.push({
+                          name: tNam,
+                          value: geoData[tNam],
+                          symbolSize: 6,
+                          label: {
+                            normal: {
+                              position: [30, -30]
+                            }
+                          }
+                        });
+                      }
+
+                  }
+
+                }
+                tGeoDt.push({
+                  name: srcNam,
+                  value: geoData[srcNam],
+                  symbolSize: 16,
+                  label: {
+                    normal: {
+                      position: [40, -60],
+                      rich:{
+                        a:{
+                          color:'#edfc02',
+                          fontSize:20
+                        }
+                      }
+                    }
+                  },
+                  itemStyle: {
+                    normal: {
+                      color: 'rgb(255,234,1)'
+                    }
+                  }
+                });
+                return tGeoDt;
+              }
+
+              var planePath = 'circle';
+
+              var zoom = 0.8;
+              var layoutCenter = ['38%', '45%'];
+              var fontSize = 20;
+              var cd_pos = [60, -5]; // 成都市政府部门子集position
+              var screen_width = screen.width;
+              var screen_height = screen.height;
+
+              if (screen_width < 1600) {
+                zoom = 0.6;
+                layoutCenter = ['29%', '35%'];
+                fontSize = 14;
+                cd_pos = [15, -8];
+              }
+
+              var option = {
+                backgroundColor: 'transparent',
+                title: {
+                  text: '',
+                  left: '5',
+                  top: '10px',
+                  itemStyle: {
+                    normal: {
+                      borderColor: 'rgba(100,149,237,1)',
+                      borderWidth: 0.5,
+                      areaStyle: {
+                        color: '#1b1b1b'
+                      }
+                    }
+                  }
+                },
+                tooltip: {
+                  trigger: 'item',
+                },
+                geo: {
+                  map: 'china',
+                  show: false,
+                  zoom: zoom,
+                  layoutCenter: layoutCenter,
+                  layoutSize: '100%',
+                  left: '2%',
+                  label: {
+                    emphasis: {
+                      show: false
+                    }
+                  },
+                  roam: true,
+                  silent: true,
+                  itemStyle: {
+                    normal: {
+                      areaColor: 'transparent',
+                      borderColor: '#000'
+                    },
+                    emphasis: {
+                      areaColor: '#2a333d'
+                    }
+                  }
+                },
+                series: [{
+
+                  type: 'lines',
+                  zlevel: 2,
+                  silent: true,
+                  effect: {
+                    show: true,
+                    period: 6,
+                    trailLength: 0.005,
+                    color: 'rgba(255,255,255,.8)',
+                    symbol: planePath,
+                    symbolSize: 4
+                  },
+                  lineStyle: {
+                    normal: {
+                      color: 'rgb(18,236,252)',
+                      width: 1,
+                      opacity: 0.4,
+                      curveness: 0.3,
+                      shadowColor: 'rgb(18,236,252)',
+                      shadowBlur: 10
+                    }
+                  },
+                  data: formtGCData(geoCoordMap, data, '崇州市数据共享交换平台', false)
+                }, {
+
+                  type: 'effectScatter',
+                  coordinateSystem: 'geo',
+                  zlevel: 2,
+                  silent: true,
+                  rippleEffect: {
+                    period: 10,
+                    scale: 5,
+                    brushType: 'stroke'
+                  },
+                  label: {
+                    normal: {
+                      show: true,
+                      position: [24, -5],
+                      formatter: function(params){
+                        var data_arra = params.name.split('\n');
+                        if(data_arra.length>1) {
+                          if(data_arra.length>2){
+                            return '{a|' +data_arra[0]+'}\n{b|'+data_arra[1]+'}{c|' + data_arra[2]+'}';
+                          }
+                          return '{a|' +data_arra[0]+'}\n{b|'+data_arra[1]+'}';
+                        }
+                        return '{a|' +data_arra[0]+'}';
+                      },
+                       rich: {
+                          a: {
+                              color:'#3dbff5',
+                              fontSize:fontSize,
+                              lineHeight: 40,
+                          },
+                          b: {
+                            color:'#3dbff5',
+                            fontSize:fontSize,
+                             fontFamily: 'digiFont',
+                             verticalAlign:'bottom',
+                             padding:[0,10,0,0]
+                          },
+                          c:{
+                            color:'#3dbff5',
+                            fontSize:12,
+                            verticalAlign:'bottom',
+                          }
+                      },
+                      textStyle: {
+                        color: '#3dbff5',
+                        fontSize: fontSize,
+                        fontFamily: 'digiFont',
+                        fontWeight: 100
+                      }
+                    }
+                  },
+                  symbolSize: 4,
+                  itemStyle: {
+                    normal: {
+                      color: 'rgb(18,236,252)',
+                      shadowBlur: 35,
+                      shadowColor: 'rgba(2,255,29,1)',
+                      opacity: 0.6
+                    }
+                  },
+
+                  data: formtVData(geoCoordMap, data, '崇州市数据共享交换平台')
+                }]
+              };
+
+              chartInstance.setOption(option);
+            })
 
 
         }

@@ -1,20 +1,218 @@
+@font-face {
+  font-family: digiFont;
+  src: url(../libraries/fonts/digifaw.ttf);
+}
+
 #dashboard {
   width: 7680px;
   height: 2160px;
   overflow: hidden;
   position: relative;
 }
-.dept-data-box-wrap{
+
+.dept-data-box-wrap {
   position: relative;
-  .toggle-tag{
+
+  .toggle-tag {
     position: absolute;
-    top:2rem;
-    right:4rem;
-        font-size: 30px;
+    top: 2rem;
+    right: 4rem;
+    font-size: 30px;
     color: rgba(0, 142, 189, 0.8);
     cursor: pointer;
   }
+
 }
+
+.bigdata-box-wrap {
+  position: relative;
+
+  >.section {
+    &.active {
+      display: block;
+    }
+
+    &.inactive {
+      display: none;
+    }
+
+    .solar-system {
+      position: relative;
+      width: 884px;
+      height: 884px;
+      padding: 50px 0;
+      margin: 0 auto;
+      background: url(../assets/images/circle.png) no-repeat center;
+      background-size: 100%;
+      .earth-bg{
+        position: absolute;
+        top:215px;
+        left:215px;
+        width:454px;
+        height:454px;
+        background: url(../assets/images/earth.png) no-repeat center;
+        background-size: 100%;
+      }
+      @keyframes orbitrotate {
+        0% {
+          transform: rotateX(64deg) rotateY(-12deg) rotateZ(0deg);
+        }
+
+        100% {
+          transform: rotateX(64deg) rotateY(-12deg) rotateZ(-360deg);
+        }
+
+      }
+
+      @keyframes invert {
+        0% {
+          transform: rotateX(-90deg) rotateY(360deg) rotateZ(12deg);
+        }
+
+        100% {
+          transform: rotateX(-90deg) rotateY(0deg) rotateZ(12deg);
+        }
+
+      }
+
+      .inner-circle {
+        width: 500px;
+        height: 500px;
+        position: absolute;
+        top: 166px;
+        left: 196px;
+        border-radius: 50%;
+        transform-style: preserve-3d !important;
+        animation: orbitrotate 30.00021s linear 0s normal none infinite;
+        .pos{
+          width:100px !important;
+        }
+      }
+
+      .outer-circle {
+        width: 860px;
+        height: 860px;
+        position: absolute;
+        border-radius: 50%;
+        transform-style: preserve-3d !important;
+        top: -12px;
+        left: 12px;
+        transform-style: preserve-3d !important;
+        animation: orbitrotate 30.00021s linear 0s normal none infinite;
+      }
+      .pos {
+          position: absolute;
+          width: 160px;
+          height: 30px;
+          transform-style: preserve-3d;
+          animation-name: invert;
+          animation-iteration-count: infinite;
+          animation-timing-function: linear;
+          transition-property: top, left;
+          transition-delay: 1s;
+          animation-duration: 30.00021s;
+          transition-timing-function: ease-in-out;
+
+          &.tel-main {
+            top: 10px;
+            right: 20px;
+          }
+
+          &.tel-sub {
+            top: 180px;
+            right: -80px;
+          }
+
+          &.mob-main {
+            top: 400px;
+            right: 0;
+          }
+
+          &.mob-sub {
+            bottom: -15px;
+            left: 100px;
+          }
+
+          &.uni-main {
+            top: 240px;
+            left: -80px;
+          }
+
+          &.uni-sub {
+            top: 20px;
+            left: 10px;
+          }
+          &.wanguo{
+            right: 110px;
+            top: 10px;
+          }
+          &.edu{
+            right: -80px;
+            top: 30%;
+          }
+          &.keqing{
+            right: -20px;
+            top: 80%;
+          }
+          &.govin{
+            bottom: -60px;
+            left: 40%;
+          }
+          &.govout{
+            bottom: 10%;
+            left: 0;
+          }
+          &.broad{
+            top: 50%;
+            left: -80px;
+          }
+          &.yuntao{
+            top: 10%;
+            left: 4%;
+          }
+        }
+
+        .data-item {
+          color: rgb(14, 156, 237);
+          font-size: 26px;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          transition-duration: .8s;
+          transition-timing-function: ease-in-out;
+          transform-origin: 100% 100%;
+          transform-style: preserve-3d;
+          transform: rotateX(0deg);
+        }
+    }
+    
+    .ipc-infos{
+      color:#1caace;
+      padding: 2.5rem;
+      margin-top: 34%;
+      background-image: linear-gradient(-90deg, rgba(96, 173, 251, 0.022) 5%, rgba(96, 173, 251, 0.22) 95%);
+      .info-items{
+        margin-top:40px;
+        p{
+              font-size: .8rem;
+        }
+      }
+      h3{
+        font-size:1.2rem;
+        .emphasis{
+          color:rgb(13,209,245);
+          font-weight: 500;
+        }
+      }
+      .sub-title{
+        opacity:.5;
+        margin-top: 10px;
+      }
+    }
+  }
+
+}
+
 .section-center {
   width: 3840px;
   height: 1080px;
@@ -375,17 +573,21 @@
           padding: 2rem 4rem;
           overflow: hidden;
           border-bottom: 0;
-          .no-weather{
-              display: block;
-              text-align: center;
-              position: relative;
-              top: -2rem;
-            img{
-                width: 350px;
-                margin: 0 auto;
-                cursor: pointer;
+
+          .no-weather {
+            display: block;
+            text-align: center;
+            position: relative;
+            top: -2rem;
+
+            img {
+              width: 350px;
+              margin: 0 auto;
+              cursor: pointer;
             }
+
           }
+
           h3.weather-title {
             color: #edfc02;
             font-size: 2rem;
@@ -406,6 +608,7 @@
             line-height: 2rem;
             min-height: 2rem;
             width: 100% !important;
+
             &:nth-child(3) {
             }
 
@@ -429,10 +632,11 @@
 
         .weather-scroll {
           overflow: hidden;
-          &.mask{
+
+          &.mask {
             -webkit-mask-image: -webkit-gradient(linear, 0 45%, 0 52%, from(#33a1d2), to(rgba(0, 0, 255, 0)));
           }
-          
+
         }
 
         .no-disaster {
@@ -767,10 +971,9 @@
       }
 
       .menu-item {
-            text-align: center;
-    overflow: hidden;
-    padding: 1rem 0 0 .8rem;
-        
+        text-align: center;
+        overflow: hidden;
+        padding: 1rem 0 0 .8rem;
 
         a {
           display: block;
@@ -779,7 +982,7 @@
           font-size: 1.5rem;
           text-decoration: none;
           background: rgba(0, 216, 255, .12);
-        border: 1px solid transparent;
+          border: 1px solid transparent;
         }
 
         @media screen and (max-width:1600px) {
@@ -794,7 +997,7 @@
 
           a {
             color: rgb(4, 219, 224);
-            border:1px solid rgb(4, 219, 224);
+            border: 1px solid rgb(4, 219, 224);
           }
 
         }
@@ -1292,6 +1495,10 @@
         background: url(../assets/images/map.png) no-repeat center;
       }
 
+      #contract-wrap {
+        background: url(../assets/images/bg_contract.png) no-repeat center;
+      }
+
       .dept-access-data {
         height: 100%;
         padding-left: 1rem;
@@ -1495,6 +1702,32 @@
         width: 100%;
         height: 100%;
         padding: 10px 10px 0 10px;
+      }
+
+      .accessing-wrap {
+        padding: 6rem 0;
+        height: 100%;
+      }
+
+      .accessing-bus {
+        padding: 1rem;
+        margin-top: .4rem;
+
+        .access-bg {
+          height: 90px;
+          color: rgba(255, 255, 255, .6);
+          font-size: .8rem;
+          text-align: center;
+          padding: 35px 0;
+          background: url(../assets/images/cloud.png) no-repeat center;
+        }
+
+        .access-item {
+          font-size: 1rem;
+          color: #41b3c3;
+          text-align: center;
+        }
+
       }
 
     }
