@@ -565,12 +565,11 @@
       // 信息资源目录和共享情况内容切换
       $scope.toggleDept = function(){
         if($scope.allow_toggle) {// 鼠标在视图内，禁止自动切换
-          if ($scope.toggleMap) {
-          $scope.toggleMap = false;
-        } else {
-
-          $scope.toggleMap = true;
-          _.forEach($scope.deptAccessData, function(item) {
+         
+          var temp = angular.copy($scope.toggleMap);
+          $scope.toggleMap = (temp+1)%3;
+          if($scope.toggleMap == 1) {
+            _.forEach($scope.deptAccessData, function(item) {
             item.i_width = '0%';
           })
           $timeout(function() {
@@ -579,30 +578,66 @@
             })
             $('.dept-access-rank').slick('slickGoTo', 0);
           }, 100)
+          }
+          
+        
+        }
+        
+      }
+
+      // 大数据产业综合指数与IPC切换
+      $scope.toggleBigdata = function(){
+        if($scope.allow_ipc_toggle) {// 鼠标在视图内，禁止自动切换
+          if ($scope.toggleIPC) {
+          $scope.toggleIPC = false;
+        } else {
+
+          $scope.toggleIPC = true;
         }
         }
         
       }
 
-      $scope.deptToggleClick = function(){
+      $scope.deptToggleClick = function(){// 部门视图切换
         $scope.allow_toggle = true;
         $scope.toggleDept();
       }
 
-      $scope.toggleMap = true;
+      $scope.bigdataToggleClick = function(){// bigdata视图切换
+        $scope.allow_ipc_toggle = true;
+        $scope.toggleBigdata();
+      }
+
+      $scope.toggleMap = 0;
+      $scope.toggleIPC = true;
       $scope.deptViewTitle = "切换视图";
       $interval(function() {
         $scope.toggleDept();
+        $scope.toggleBigdata();
       }, 30000)
 
       //部门视图鼠标进入
       $scope.allow_toggle = true;
       $scope.mouseEnter = function(){
+        console.log('mouse enter....');
         $scope.allow_toggle = false;
       }
       //部门视图鼠标移除
       $scope.mouseLeave = function(){
+        console.log('mouse leave....');
         $scope.allow_toggle = true;
+
+      }
+
+      //bigdata视图鼠标进入
+      $scope.allow_ipc_toggle = true;
+      $scope.mouseIPCEnter = function(){
+        $scope.allow_ipc_toggle = false;
+
+      }
+      //部门视图鼠标移除
+      $scope.mouseIPCLeave = function(){
+        $scope.allow_ipc_toggle = true;
       }
 
       //定时刷新数据
@@ -1564,9 +1599,31 @@
                 } else {
                   for (var i = 0, len = data.length; i < len; i++) {
                     if (srcNam != data[i].name) {
-                      tGeoDt.push({
+                      if(data[i].name == "成都医保数据" || data[i].name == "舆情数据" || data[i].name == "行政审批数据") {
+                        if(data[i].name == "行政审批数据"){
+                          tGeoDt.push({
+                          coords: [geoData[srcNam], geoData[data[i].name]],
+                          lineStyle: {
+                            normal: {
+                              curveness: 0.18,
+                            }
+                          }
+                        });
+                          
+                        }
+                        else{
+                          tGeoDt.push({
+                          coords: [geoData[srcNam], geoData[data[i].name]],
+                        });
+                        }
+                        
+                      }
+                      else{
+                        tGeoDt.push({
                           coords: [geoData[data[i].name], geoData[srcNam]]
                         });
+                      }
+                      
 
                     }
                   }
@@ -1579,23 +1636,23 @@
                 for (var i = 0, len = data.length; i < len; i++) {
                   var tNam = data[i].name
                   if (srcNam != tNam) {
-                    if (tNam == '国家资源卫星数据\n1000 T') {
+                    if (tNam == '国家资源卫星数据') {
                         tGeoDt.push({
                           name: tNam,
                           value: geoData[tNam],
                           symbol:'circle',
-                          symbolSize: 6,
+                          symbolSize: 14,
                           label: {
                             normal: {
                               position: [-90, -90]
                             }
                           }
                         });
-                      } else if (tNam == '成都工商数据\n1800\n万条') {
+                      } else if (tNam == '成都工商数据') {
                         tGeoDt.push({
                           name: tNam,
                           value: geoData[tNam],
-                          symbolSize: 6,
+                          symbolSize: 14,
                           label: {
                             normal: {
                               align:'right',
@@ -1611,11 +1668,11 @@
                             }
                           }
                         });
-                      } else if(tNam == '社会信用数据\n8000\n家企业') {
+                      } else if(tNam == '社会信用数据') {
                         tGeoDt.push({
                           name: tNam,
                           value: geoData[tNam],
-                          symbolSize: 6,
+                          symbolSize: 14,
                           label: {
                             normal: {
                               align:'right',
@@ -1623,22 +1680,22 @@
                             }
                           }
                         });
-                      } else if(tNam == '行政审批数据\n48\n万条'){
+                      } else if(tNam == '行政审批数据'){
                         tGeoDt.push({
                           name: tNam,
                           value: geoData[tNam],
-                          symbolSize: 6,
+                          symbolSize: 14,
                           label: {
                             normal: {
                               position: [-18, 25]
                             }
                           }
                         });
-                      }else if(tNam == '知识产权数据\n200 T'){
+                      }else if(tNam == '知识产权数据'){
                         tGeoDt.push({
                           name: tNam,
                           value: geoData[tNam],
-                          symbolSize: 6,
+                          symbolSize: 14,
                           label: {
                             normal: {
                               position: [30, -60]
@@ -1650,7 +1707,7 @@
                         tGeoDt.push({
                           name: tNam,
                           value: geoData[tNam],
-                          symbolSize: 6,
+                          symbolSize: 14,
                           label: {
                             normal: {
                               position: [30, -30]
@@ -1665,7 +1722,8 @@
                 tGeoDt.push({
                   name: srcNam,
                   value: geoData[srcNam],
-                  symbolSize: 16,
+                  symbol:'image://../assets/images/sign.png',
+                  symbolSize: 26,
                   label: {
                     normal: {
                       position: [40, -60],
@@ -1751,7 +1809,7 @@
                   zlevel: 2,
                   silent: true,
                   effect: {
-                    show: true,
+                    show: false,
                     period: 6,
                     trailLength: 0.005,
                     color: 'rgba(255,255,255,.8)',
@@ -1761,9 +1819,9 @@
                   lineStyle: {
                     normal: {
                       color: 'rgb(18,236,252)',
-                      width: 1,
-                      opacity: 0.4,
-                      curveness: 0.3,
+                      width: 2,
+                      opacity: 1,
+                      curveness: 0.35,
                       shadowColor: 'rgb(18,236,252)',
                       shadowBlur: 10
                     }
@@ -1777,7 +1835,7 @@
                   silent: true,
                   rippleEffect: {
                     period: 10,
-                    scale: 5,
+                    scale: 3,
                     brushType: 'stroke'
                   },
                   label: {
@@ -1796,25 +1854,25 @@
                       },
                        rich: {
                           a: {
-                              color:'#3dbff5',
+                              color:'#3bbbf0',
                               fontSize:fontSize,
                               lineHeight: 40,
                           },
                           b: {
-                            color:'#3dbff5',
+                            color:'#3bbbf0',
                             fontSize:fontSize,
                              fontFamily: 'digiFont',
                              verticalAlign:'bottom',
                              padding:[0,10,0,0]
                           },
                           c:{
-                            color:'#3dbff5',
+                            color:'#3bbbf0',
                             fontSize:12,
                             verticalAlign:'bottom',
                           }
                       },
                       textStyle: {
-                        color: '#3dbff5',
+                        color: '#3bbbf0',
                         fontSize: fontSize,
                         fontFamily: 'digiFont',
                         fontWeight: 100
@@ -1827,7 +1885,7 @@
                       color: 'rgb(18,236,252)',
                       shadowBlur: 35,
                       shadowColor: 'rgba(2,255,29,1)',
-                      opacity: 0.6
+                      opacity: 1
                     }
                   },
 

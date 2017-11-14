@@ -1,7 +1,7 @@
 <div class="dept-data-box-wrap" ng-mouseleave="mouseLeave()" ng-mouseenter="mouseEnter()">
   <a ng-click="deptToggleClick()" title="{{deptViewTitle}}" class="toggle-tag"><i class="glyphicon glyphicon-transfer"></i></a>
   <!--迁徙图-->
-  <div class='section dept active' ng-class="{true:'active',false:'inactive'}[toggleMap]">
+  <div class='section dept active' ng-class="{true:'active',false:'inactive'}[toggleMap == 1]">
     <h1>崇州市政务信息资源目录和共享情况</h1>
     <div class='content dept-data'>
       <div class='chart-full'>
@@ -29,7 +29,7 @@
     </div>
   </div>
   <!--概览-->
-  <div class='section dept profile' ng-class="{true:'active',false:'inactive'}[!toggleMap]">
+  <div class='section dept profile' ng-class="{true:'active',false:'inactive'}[toggleMap ==2]">
     <h1>崇州市政务信息资源目录和共享情况</h1>
     <div class='content dept-data'>
       <div class='chart-full profile-wrap' >
@@ -117,11 +117,24 @@
     </div>
   </div>
   <!--崇信签约-->
-  <div class="section dept contract">
+  <div class="section dept contract" ng-class="{true:'active',false:'inactive'}[toggleMap ==0]">
     <h1>应用催生数据 数据支撑业务</h1>
     <div class="content dept-data">
       <div class="chart-full">
         <div class="col-md-8" style="height:100%;">
+          <div class="dot-wrap yb"><div class="dot-item"></div></div>
+          <div class="dot-wrap yq"><div class="dot-item"></div></div>
+          <div class="dot-wrap xz"><div class="dot-item"></div></div>
+          <div class="dot-wrap sh"><div class="dot-item"></div></div>
+          <div class="dot-wrap gs"><div class="dot-item"></div></div>
+          <div class="dot-wrap zy"><div class="dot-item"></div></div>
+          <div class="dot-wrap zs"><div class="dot-item"></div></div>
+          <div class="item-data cq"><span class="number">200</span> T</div>
+          <div class="item-data zy"><span class="number">1000</span> T</div>
+          <div class="item-data gs"><span class="number">1800</span> <span class="unit">万条</span></div>
+          <div class="item-data sh"><span class="number">8000</span><p class="unit">家企业</p></div>
+          <div class="item-data xz"><span class="number">49</span> <span class="unit">万条</span></div>
+          <div class="item-data yq"><span class="number">300</span> T</div>
           <div wiserv-chart-contract style="height:100%;" id="contract-wrap">
             
           </div>
@@ -140,6 +153,7 @@
             <p class="access-item">公共资源交易数据</p>
           </div>
         </div>
+        <div class="update-time text-right">数据更新时间：<span>{{update_date | date:"yyyy-MM-dd HH:mm:ss"}}</span></div>
       </div>
     </div>
   </div>
