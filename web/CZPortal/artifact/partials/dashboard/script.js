@@ -217,17 +217,34 @@
         // 最高温度
         dashboardService.getMos_maxTemperature().then(function(result) {
           var data = result.data.body[0];
-          if($scope.Mos_maxTemperature && $scope.Mos_maxTemperature.zgqw && (!data.zgqw || data.zgqw =='')) {
-            data.zgqw = angular.copy($scope.Mos_maxTemperature.zgqw);
+          if(data && data.zgqw != undefined) {
+            sessionStorage.setItem("zgqw",data.zgqw);// 最高气温
+            sessionStorage.setItem("zgqw_zm",data.zm);// 最高气温站名
+            sessionStorage.setItem("zgqw_rksj",data.rksj);// 最高气温出现时间
+          }
+          else{
+            data = {};
+            data.zgqw = sessionStorage.getItem("zgqw");
+            data.zm = sessionStorage.getItem("zgqw_zm");
+            data.rksj = sessionStorage.getItem("zgqw_rksj");
           }
           $scope.Mos_maxTemperature = data;
+          
         })
 
         // 最低温度
         dashboardService.getMos_minTemperature().then(function(result) {
           var data = result.data.body[0];
-          if($scope.Mos_minTemperature && $scope.Mos_minTemperature.zdqw && (!data.zdqw || data.zdqw =='')) {
-            data.zdqw = angular.copy($scope.Mos_minTemperature.zdqw);
+          if(data && data.zdqw != undefined) {
+            sessionStorage.setItem("zdqw",data.zdqw);// 最低温度
+            sessionStorage.setItem("zdqw_zm",data.zm);// 最低温度站名
+            sessionStorage.setItem("zdqw_rksj",data.rksj);// 最低温度出现时间
+          }
+          else{
+            data = {};
+            data.zdqw = sessionStorage.getItem("zdqw");
+            data.zm = sessionStorage.getItem("zdqw_zm");
+            data.rksj = sessionStorage.getItem("zdqw_rksj");
           }
           $scope.Mos_minTemperature = data;
         })
@@ -235,8 +252,16 @@
         // 最大降水
         dashboardService.getMos_maxRainfall().then(function(result) {
           var data = result.data.body[0];
-          if($scope.Mos_maxRainfall && $scope.Mos_maxRainfall.yxsyl && (!data.yxsyl || data.yxsyl =='')) {
-            data.yxsyl = angular.copy($scope.Mos_maxRainfall.yxsyl);
+          if(data && data.yxsyl != undefined) {
+            sessionStorage.setItem("yxsyl",data.yxsyl);// 最近一小时最大降水
+            sessionStorage.setItem("yxsyl_zm",data.zm);// 最近一小时最大降水站名
+            sessionStorage.setItem("yxsyl_rksj",data.rksj);// 最近一小时最大降水出现时间
+          }
+          else{
+            data = {};
+            data.yxsyl = sessionStorage.getItem("yxsyl");
+            data.zm = sessionStorage.getItem("yxsyl_zm");
+            data.rksj = sessionStorage.getItem("yxsyl_rksj");
           }
           $scope.Mos_maxRainfall = data;
         })
@@ -609,11 +634,11 @@
       }
 
       $scope.toggleMap = 0;
-      $scope.toggleIPC = true;
+      $scope.toggleIPC = false;
       $scope.deptViewTitle = "切换视图";
       $interval(function() {
-        $scope.toggleDept();
-        $scope.toggleBigdata();
+        //$scope.toggleDept();
+        //$scope.toggleBigdata();
       }, 30000)
 
       //部门视图鼠标进入
@@ -1600,7 +1625,7 @@
                   for (var i = 0, len = data.length; i < len; i++) {
                     if (srcNam != data[i].name) {
                       if(data[i].name == "成都医保数据" || data[i].name == "舆情数据" || data[i].name == "行政审批数据") {
-                        if(data[i].name == "行政审批数据"){
+                        if(data[i].name == "行政审批数据" ){
                           tGeoDt.push({
                           coords: [geoData[srcNam], geoData[data[i].name]],
                           lineStyle: {
@@ -1610,6 +1635,16 @@
                           }
                         });
                           
+                        }
+                        else if(data[i].name == "成都医保数据") {
+                          tGeoDt.push({
+                          coords: [geoData[srcNam], geoData[data[i].name]],
+                          lineStyle: {
+                            normal: {
+                              curveness: 0.3,
+                            }
+                          }
+                          });
                         }
                         else{
                           tGeoDt.push({
@@ -1644,7 +1679,7 @@
                           symbolSize: 14,
                           label: {
                             normal: {
-                              position: [-90, -90]
+                              position: [-80, -100]
                             }
                           }
                         });
@@ -1656,7 +1691,7 @@
                           label: {
                             normal: {
                               align:'right',
-                              position: [-50, -10],
+                              position: [-30, 30],
                               rich: {
                                   b: {
                                     align:'right',
@@ -1676,7 +1711,7 @@
                           label: {
                             normal: {
                               align:'right',
-                              position: [-10, 25]
+                              position: [-0, 25]
                             }
                           }
                         });
@@ -1687,7 +1722,7 @@
                           symbolSize: 14,
                           label: {
                             normal: {
-                              position: [-18, 25]
+                              position: [-20, 35]
                             }
                           }
                         });
@@ -1698,7 +1733,19 @@
                           symbolSize: 14,
                           label: {
                             normal: {
-                              position: [30, -60]
+                              position: [40, -70]
+                            }
+                          }
+                        });
+                      }
+                      else if(tNam == '成都医保数据'){
+                        tGeoDt.push({
+                          name: tNam,
+                          value: geoData[tNam],
+                          symbolSize: 14,
+                          label: {
+                            normal: {
+                              position: [25, -10]
                             }
                           }
                         });
@@ -1722,15 +1769,15 @@
                 tGeoDt.push({
                   name: srcNam,
                   value: geoData[srcNam],
-                  symbol:'image://../assets/images/sign.png',
-                  symbolSize: 26,
+                  symbol:'image://'+location.protocol + '//' + location.host +'/CZPortal/assets/images/sign.png',
+                  symbolSize: 50,
                   label: {
                     normal: {
-                      position: [40, -60],
+                      position: [20, -80],
                       rich:{
                         a:{
                           color:'#edfc02',
-                          fontSize:20
+                          fontSize:26
                         }
                       }
                     }
@@ -1740,6 +1787,7 @@
                       color: 'rgb(255,234,1)'
                     }
                   }
+                  
                 });
                 return tGeoDt;
               }
@@ -1756,7 +1804,7 @@
               if (screen_width < 1600) {
                 zoom = 0.6;
                 layoutCenter = ['29%', '35%'];
-                fontSize = 14;
+                fontSize = 18;
                 cd_pos = [15, -8];
               }
 
@@ -1855,25 +1903,25 @@
                        rich: {
                           a: {
                               color:'#3bbbf0',
-                              fontSize:fontSize,
+                              fontSize:26,
                               lineHeight: 40,
                           },
                           b: {
                             color:'#3bbbf0',
-                            fontSize:fontSize,
+                            fontSize:26,
                              fontFamily: 'digiFont',
                              verticalAlign:'bottom',
                              padding:[0,10,0,0]
                           },
                           c:{
                             color:'#3bbbf0',
-                            fontSize:12,
+                            fontSize:20,
                             verticalAlign:'bottom',
                           }
                       },
                       textStyle: {
                         color: '#3bbbf0',
-                        fontSize: fontSize,
+                        fontSize: 20,
                         fontFamily: 'digiFont',
                         fontWeight: 100
                       }

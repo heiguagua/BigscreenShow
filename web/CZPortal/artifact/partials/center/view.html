@@ -345,7 +345,7 @@
 												</div>
 												<div class="media-body">
 													<h4 class="media-heading">最近一小时最高温度<br/>（大成都范围内）</h4>
-													<div class="item-num"><span>{{Mos_maxTemperature.zgqw/10}}°C</span> </div>
+													<div class="item-num"><span>{{(Mos_maxTemperature.zgqw!=null) ? (Mos_maxTemperature.zgqw/10):'--'}}°C</span> </div>
 												</div>
 												<p class="info-label">监测站名：{{Mos_maxTemperature.zm}}</p>
 												<p class="info-label">出现时间：{{Mos_maxTemperature.rksj}}</p>
@@ -360,7 +360,7 @@
 												</div>
 												<div class="media-body">
 													<h4 class="media-heading">最近一小时最低温度<br/>（大成都范围内）</h4>
-													<div class="item-num"><span>{{Mos_minTemperature.zdqw/10}}°C</span> </div>
+													<div class="item-num"><span>{{(Mos_minTemperature.zdqw!=null)?(Mos_minTemperature.zdqw/10):'--'}}°C</span> </div>
 												</div>
 												<p class="info-label">监测站名：{{Mos_minTemperature.zm}}</p>
 												<p class="info-label">出现时间：{{Mos_minTemperature.rksj}}</p>
@@ -375,7 +375,7 @@
 												</div>
 												<div class="media-body">
 													<h4 class="media-heading">最近一小时最大降水<br/>（大成都范围内）</h4>
-													<div class="item-num"><span>{{Mos_maxRainfall.yxsyl|number}}mm</span> </div>
+													<div class="item-num"><span>{{(Mos_maxRainfall.yxsyl != null)?(Mos_maxRainfall.yxsyl|number):'--'}}mm</span> </div>
 												</div>
 												<p class="info-label">监测站名：{{Mos_maxRainfall.zm}}</p>
 												<p class="info-label">出现时间：{{Mos_maxRainfall.rksj}}</p>
