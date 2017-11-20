@@ -99,66 +99,66 @@
 
       function CivilServantGenerator(){
         $scope.CivilServant = {};
-        var all = Number(sessionStorage.getItem("all"));
-        var careerPersonnel = Number(sessionStorage.getItem("careerPersonnel"));
-        var onTheJob = Number(sessionStorage.getItem("onTheJob"));
-        var beLate = Number(sessionStorage.getItem("beLate"));
-        var leaveEarly = Number(sessionStorage.getItem("leaveEarly"));
-        var daily = Number(sessionStorage.getItem("daily"));
-        var weekly = Number(sessionStorage.getItem("weekly"));
-        var quarter = Number(sessionStorage.getItem("quarter"));
+        var all = Number(localStorage.getItem("all"));
+        var careerPersonnel = Number(localStorage.getItem("careerPersonnel"));
+        var onTheJob = Number(localStorage.getItem("onTheJob"));
+        var beLate = Number(localStorage.getItem("beLate"));
+        var leaveEarly = Number(localStorage.getItem("leaveEarly"));
+        var daily = Number(localStorage.getItem("daily"));
+        var weekly = Number(localStorage.getItem("weekly"));
+        var quarter = Number(localStorage.getItem("quarter"));
         if(!all)  {
           $scope.CivilServant.all = Math.round(Math.random()*(3141-3042)+3042);
-          sessionStorage.setItem("all",$scope.CivilServant.all);
+          localStorage.setItem("all",$scope.CivilServant.all);
         }
         else{
           $scope.CivilServant.all = all;
         }
         if(!careerPersonnel)  {
           $scope.CivilServant.careerPersonnel = 1000;
-          sessionStorage.setItem("careerPersonnel",$scope.CivilServant.careerPersonnel);
+          localStorage.setItem("careerPersonnel",$scope.CivilServant.careerPersonnel);
         }
         else{
           $scope.CivilServant.careerPersonnel = careerPersonnel;
         }
         if(!onTheJob)  {
           $scope.CivilServant.onTheJob = 0+$scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);
-          sessionStorage.setItem("onTheJob",$scope.CivilServant.onTheJob);
+          localStorage.setItem("onTheJob",$scope.CivilServant.onTheJob);
         }
         else{
           $scope.CivilServant.onTheJob = onTheJob;
         }
         if(!beLate)  {
           $scope.CivilServant.beLate = Math.round(Math.random()*(50-30)+30); // 前一天迟到
-          sessionStorage.setItem("beLate",$scope.CivilServant.beLate);
+          localStorage.setItem("beLate",$scope.CivilServant.beLate);
         }
         else{
           $scope.CivilServant.beLate = beLate;
         }
         if(!leaveEarly)  {
           $scope.CivilServant.leaveEarly = Math.round(Math.random()*(50-30)+30); // 前一天早退
-          sessionStorage.setItem("leaveEarly",$scope.CivilServant.leaveEarly);
+          localStorage.setItem("leaveEarly",$scope.CivilServant.leaveEarly);
         }
         else{
           $scope.CivilServant.leaveEarly = leaveEarly;
         }
         if(!daily)  {
           $scope.CivilServant.daily = 0+$scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 前一天提交工作日志
-          sessionStorage.setItem("daily",$scope.CivilServant.daily);
+          localStorage.setItem("daily",$scope.CivilServant.daily);
         }
         else{
           $scope.CivilServant.daily = daily;
         }
         if(!weekly)  {
           $scope.CivilServant.weekly = 0+$scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 最近一周提交工作周报
-          sessionStorage.setItem("weekly",$scope.CivilServant.weekly);
+          localStorage.setItem("weekly",$scope.CivilServant.weekly);
         }
         else{
           $scope.CivilServant.weekly = weekly;
         }
         if(!quarter)  {
           $scope.CivilServant.quarter = 0+$scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(700-500)+500);// 最近一季度考核成绩优秀
-          sessionStorage.setItem("quarter",$scope.CivilServant.quarter);
+          localStorage.setItem("quarter",$scope.CivilServant.quarter);
         }
         else{
           $scope.CivilServant.quarter = quarter;
@@ -187,17 +187,17 @@
       // 临时增加定时器模拟公务员系统的假数据，真实环境需删除
       $interval(function() { // 按天更新
          $scope.CivilServant.onTheJob = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 前一天在岗
-         sessionStorage.setItem("onTheJob",$scope.CivilServant.onTheJob);
+         localStorage.setItem("onTheJob",$scope.CivilServant.onTheJob);
          $scope.CivilServant.beLate = Math.round(Math.random()*(50-30)+30); // 前一天迟到
-         sessionStorage.setItem("beLate",$scope.CivilServant.beLate);
+         localStorage.setItem("beLate",$scope.CivilServant.beLate);
          $scope.CivilServant.leaveEarly = Math.round(Math.random()*(50-30)+30); // 前一天早退
-         sessionStorage.setItem("leaveEarly",$scope.CivilServant.leaveEarly);
+         localStorage.setItem("leaveEarly",$scope.CivilServant.leaveEarly);
          $scope.CivilServant.daily = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 前一天提交工作日志
-         sessionStorage.setItem("daily",$scope.CivilServant.daily);
+         localStorage.setItem("daily",$scope.CivilServant.daily);
       }, 86400000);
       $interval(function() { // 按周更新
         $scope.CivilServant.weekly = $scope.CivilServant.all+$scope.CivilServant.careerPersonnel-Math.round(Math.random()*(50-30)+30);// 最近一周提交工作周报
-        sessionStorage.setItem("weekly",$scope.CivilServant.weekly);
+        localStorage.setItem("weekly",$scope.CivilServant.weekly);
       }, 604800000);
 
       // 中间系统政务审批服务
@@ -218,15 +218,15 @@
         dashboardService.getMos_maxTemperature().then(function(result) {
           var data = result.data.body[0];
           if(data && data.zgqw != undefined) {
-            sessionStorage.setItem("zgqw",data.zgqw);// 最高气温
-            sessionStorage.setItem("zgqw_zm",data.zm);// 最高气温站名
-            sessionStorage.setItem("zgqw_rksj",data.rksj);// 最高气温出现时间
+            localStorage.setItem("zgqw",data.zgqw);// 最高气温
+            localStorage.setItem("zgqw_zm",data.zm);// 最高气温站名
+            localStorage.setItem("zgqw_rksj",data.rksj);// 最高气温出现时间
           }
           else{
             data = {};
-            data.zgqw = sessionStorage.getItem("zgqw");
-            data.zm = sessionStorage.getItem("zgqw_zm");
-            data.rksj = sessionStorage.getItem("zgqw_rksj");
+            data.zgqw = localStorage.getItem("zgqw");
+            data.zm = localStorage.getItem("zgqw_zm");
+            data.rksj = localStorage.getItem("zgqw_rksj");
           }
           $scope.Mos_maxTemperature = data;
           
@@ -236,15 +236,15 @@
         dashboardService.getMos_minTemperature().then(function(result) {
           var data = result.data.body[0];
           if(data && data.zdqw != undefined) {
-            sessionStorage.setItem("zdqw",data.zdqw);// 最低温度
-            sessionStorage.setItem("zdqw_zm",data.zm);// 最低温度站名
-            sessionStorage.setItem("zdqw_rksj",data.rksj);// 最低温度出现时间
+            localStorage.setItem("zdqw",data.zdqw);// 最低温度
+            localStorage.setItem("zdqw_zm",data.zm);// 最低温度站名
+            localStorage.setItem("zdqw_rksj",data.rksj);// 最低温度出现时间
           }
           else{
             data = {};
-            data.zdqw = sessionStorage.getItem("zdqw");
-            data.zm = sessionStorage.getItem("zdqw_zm");
-            data.rksj = sessionStorage.getItem("zdqw_rksj");
+            data.zdqw = localStorage.getItem("zdqw");
+            data.zm = localStorage.getItem("zdqw_zm");
+            data.rksj = localStorage.getItem("zdqw_rksj");
           }
           $scope.Mos_minTemperature = data;
         })
@@ -253,15 +253,15 @@
         dashboardService.getMos_maxRainfall().then(function(result) {
           var data = result.data.body[0];
           if(data && data.yxsyl != undefined) {
-            sessionStorage.setItem("yxsyl",data.yxsyl);// 最近一小时最大降水
-            sessionStorage.setItem("yxsyl_zm",data.zm);// 最近一小时最大降水站名
-            sessionStorage.setItem("yxsyl_rksj",data.rksj);// 最近一小时最大降水出现时间
+            localStorage.setItem("yxsyl",data.yxsyl);// 最近一小时最大降水
+            localStorage.setItem("yxsyl_zm",data.zm);// 最近一小时最大降水站名
+            localStorage.setItem("yxsyl_rksj",data.rksj);// 最近一小时最大降水出现时间
           }
           else{
             data = {};
-            data.yxsyl = sessionStorage.getItem("yxsyl");
-            data.zm = sessionStorage.getItem("yxsyl_zm");
-            data.rksj = sessionStorage.getItem("yxsyl_rksj");
+            data.yxsyl = localStorage.getItem("yxsyl");
+            data.zm = localStorage.getItem("yxsyl_zm");
+            data.rksj = localStorage.getItem("yxsyl_rksj");
           }
           $scope.Mos_maxRainfall = data;
         })
