@@ -90,8 +90,18 @@
         // 交易情况
         dashboardService.getVehicle().then(function(result) {
           var data = result.data.body[0];
-          if($scope.Vehicle && $scope.Vehicle.yesterday && (!data.yesterday || data.yesterday == '' || data.yesterday == 0)) {
-            data.yesterday = angular.copy($scope.Vehicle.yesterday);
+          if(data && data.yesterday != undefined && data.week != undefined && data.month != undefined && data.all != undefined) {
+            localStorage.setItem("veh_yesterday",data.yesterday);
+            localStorage.setItem("veh_week",data.week);
+            localStorage.setItem("veh_month",data.month);
+            localStorage.setItem("veh_all",data.all);
+          }
+          else{
+            data = {};
+            data.yesterday = localStorage.getItem("veh_yesterday");
+            data.week = localStorage.getItem("veh_week");
+            data.month = localStorage.getItem("veh_month");
+            data.all = localStorage.getItem("veh_all");
           }
           $scope.Vehicle = data;
         })
@@ -2158,6 +2168,13 @@
           function draw() {
             dashboardService.getVehicleView().then(function(result) {
               var data = result.data.body;
+              if(data && data.length != 0) {
+                localStorage.setItem('vehicleView',JSON.stringify(data));
+              }
+              else{
+                data = JSON.parse(localStorage.getItem('vehicleView'));
+                draw_flag = false;
+              }
               var x_values = _.map(data, "_id");
               var values = [];
 
