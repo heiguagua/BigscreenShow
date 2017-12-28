@@ -326,8 +326,8 @@
 
         p {
           font-size: .8rem;
-              padding-left: 16px;
-              background:url(../assets/images/dot-2.png) no-repeat left;
+          padding-left: 16px;
+          background: url(../assets/images/dot-2.png) no-repeat left;
         }
 
       }
@@ -1154,6 +1154,185 @@
   width: 3840px;
   height: 2160px;
   overflow: hidden;
+
+  .catalog-main {
+    width: 100%;
+    height: 100%;
+    padding-top: 210px;
+    background: url(../assets/images/bg_main.png) no-repeat center;
+    background-size: 100%;
+
+    .cata-side {
+      .flex-column;
+      height: 100%;
+      width: 29%;
+
+      .side-box {
+        padding: 3rem 0 2rem 2rem;
+        font-size: 26px;
+        height: 100%;
+      }
+
+      .cata-title {
+        color: #09a1df;
+        background: url(../assets/images/cata_ico.png) no-repeat left;
+        padding-left: 80px;
+        font-size: 40px;
+
+        &.sub {
+          font-size: 30px;
+        }
+
+      }
+
+      .side-up {
+        height: 40%;
+        background: url(../assets/images/bg_catalog.png) no-repeat center;
+        background-size: 100% 100%;
+        width: 100%;
+        margin: 0 auto;
+        margin-top: 1rem;
+
+        .cata-data-wrap {
+          color: #09a1df;
+          font-size: 26px;
+          overflow: hidden;
+          padding: 3rem 0 2rem 3rem;
+
+          @media screen and(min-width:1400px) {
+            padding: 2rem 0 1rem 3rem;
+          }
+
+          .item-name {
+            font-weight: 100;
+            margin-bottom: 0;
+          }
+
+          .item-number {
+            font-size: 42px;
+            display: inline-block;
+                min-width: 125px;
+    min-height: 49px;
+          }
+
+          .number_line_1 {
+            background: url(../assets/images/cata_item_1.png) no-repeat left bottom;
+            background-size: auto 6px;
+            padding-bottom: 6px;
+          }
+
+          .number_line_2 {
+            background: url(../assets/images/cata_item_2.png) no-repeat left bottom;
+            background-size: auto 6px;
+            padding-bottom: 6px;
+          }
+
+          .number_line_3 {
+            background: url(../assets/images/cata_item_3.png) no-repeat left bottom;
+            background-size: auto 6px;
+            padding-bottom: 6px;
+          }
+
+          .number_line_4 {
+            background: url(../assets/images/cata_item_4.png) no-repeat left bottom;
+            background-size: auto 6px;
+            padding-bottom: 6px;
+          }
+
+        }
+
+      }
+
+      .side-down {
+        height: 48%;
+        background: url(../assets/images/bg_cata_down.png) no-repeat center;
+        background-size: 100% 100%;
+        width: 100%;
+        margin: 0 auto;
+        margin-top: 6rem;
+
+        #themeRankChart {
+          width: 100%;
+          height: 70%;
+          margin-top:50px;
+          background:url(../assets/images/bar_line.png) no-repeat top center;
+        }
+
+      }
+
+    }
+
+    .cata-center {
+      height: 100%;
+      width: 42%;
+      // padding: 170px 0px;
+
+      .cata-center-bg {
+        //width: 440px;
+        //height: 440px;
+        margin: 0 auto;
+        height: 100%;
+        background: url(../assets/images/bg_circle.png) no-repeat center;
+        background-size: 580px 580px;
+        .cata-map{
+          position: absolute;
+          width:100%;
+          height:230px;
+          background: url(../assets/images/cata_map.png) no-repeat bottom center;
+          background-size: 100% 100%;
+          bottom:0;
+        }
+        .cata-center-data {
+          position: absolute;
+          left: 37%;
+          top: 43%;
+          width: 300px;
+          height: 280px;
+          color: #09a1df;
+          font-size: 18px;
+          text-align: center;
+
+          .cata-visit-total {
+            color: #c8cbd7;
+            font-size: 58px;
+            display: block;
+            background: url(../assets/images/num_line.png) no-repeat bottom center;
+            background-size: 100%;
+          }
+
+          .visit-item {
+            padding: 10px 0 0 0;
+
+            .visit-num {
+              color: #c8eb24;
+            }
+
+          }
+
+        }
+        .line-left{
+          position: absolute;
+          width:221px;
+          height:138px;
+          top:39.6%;
+          left: -12%;
+          background: url(../assets/images/line_left.png) no-repeat center;
+        }
+        .line-right{
+          position: absolute;
+          width:221px;
+          height:138px;
+          top:39.6%;
+          right:-12%;
+          background: url(../assets/images/line_right.png) no-repeat center;
+        }
+
+      }
+
+    }
+
+  }
+
 }
 
 .section {
@@ -1538,7 +1717,11 @@
           }
 
         }
-
+        .profile-right-wrap{
+          .slick-prev,.slick-next{
+            display:none !important;
+          }
+        }
       }
 
       .profile-item {
@@ -1658,6 +1841,7 @@
         }
 
       }
+
       @-moz-keyframes yq-h-animation {
         0% {
           transform: translateX(245px);
@@ -1679,6 +1863,7 @@
         }
 
       }
+
       @-moz-keyframes yq-v-animation {
         0% {
           transform: translateY(215px);
@@ -1925,6 +2110,19 @@
         position: absolute;
         right: 36%;
         top: 40%;
+        webkit-transform: translate3d(0, 0, 0);
+        -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+        -o-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+
+        .dot-item {
+          webkit-transform: translate3d(0, 0, 0);
+          -moz-transform: translate3d(0, 0, 0);
+          -ms-transform: translate3d(0, 0, 0);
+          -o-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+        }
 
         &.yb {
           animation: yb-v-animation 10s cubic-bezier(0.21, 0.65, 0.34, 1.01) 1s infinite;
@@ -2018,23 +2216,25 @@
         }
 
       }
-      .center-ico{
-          position: absolute;
-          left: 61.7%;
-          top: 36.4%;
-          width:78px;
-          height:78px;
-          //background:url(../assets/images/sign.png) no-repeat center;
 
-        }
+      .center-ico {
+        position: absolute;
+        left: 61.7%;
+        top: 36.4%;
+        width: 78px;
+        height: 78px;
+        //background: url(../assets/images/sign.png) no-repeat center;
+      }
+
       .item-data {
         position: absolute;
         color: #3bbbf0;
         font-size: 26px;
         font-family: 'digiFont';
+
         .unit {
           font-size: 18px;
-              text-align: right;
+          text-align: right;
         }
 
         &.cq {

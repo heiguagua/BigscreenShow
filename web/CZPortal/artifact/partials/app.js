@@ -6,7 +6,9 @@
     'ngAnimate',
     'ui.router',
     'common.http',
-    'app.dashboard'
+    'app.dashboard',
+    'app.dept',
+    'app.catalog'
   ])
   .config(config);
 
@@ -76,8 +78,10 @@
         url: '/dept',
         templateUrl: 'partials/dept/view.html',
         //templateUrl: 'circle/qzc.html',
-        controller: 'dashboardController',
-        controllerAs: 'dashboard',
+        // controller: 'dashboardController',
+        // controllerAs: 'dashboard',
+        controller: 'deptController',
+        controllerAs: 'dept',
       });
 
       /** HTTP Interceptor */

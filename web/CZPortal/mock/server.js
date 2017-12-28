@@ -32,4 +32,5 @@ App.use('/', require('./deptdata/api'));
 App.use('/', require('./serverMonitor/api'));
 App.use('/', require('./status/api'));
 App.use('/', require('./center/api'));
+App.use('/', require('./catalog/api'));
 // App.use('/', require('./repository/api'));
