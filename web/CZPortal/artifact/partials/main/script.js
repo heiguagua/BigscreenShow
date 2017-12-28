@@ -27,101 +27,68 @@
 				num_active_bg: "rgb(62,136,236)",
 				num_active: "#FFF"
 			};
+			$scope.data1 = ["市安监局", "市财政局", "市城管局", "市地税局", "市发改局", "市法制办", "市公安局", "市规划局", "市国税局", "市国土局",
+				"市环保局", "市交通局", "市教育局", "市经信局", "市民政局", "市农发局", "市气象局", "市人社局", "市商投局", "市审计局",
+				"市市场监管", "市水务局", "市司法局", "市统计局", "市卫计局", "市文旅局", "市政务中心", "市住建局", "市综合执法",
+				"崇信大数据", "市供电分公司"
+			];
+			$scope.data2 = ["崇阳街道", "羊马镇", "崇平镇", "梓潼镇", "廖家镇", "三江镇", "江源镇", "大划镇", "王场镇", "白头镇",
+				"道明镇", "济协乡", "隆兴镇", "桤泉镇", "集贤乡", "燎原乡", "元通镇", "观胜镇", "锦江乡", "公议乡",
+				"怀远镇", "街子镇", "三郎镇", "文井江镇", "鸡冠山乡"
+			];
+			$scope.data_number1 = ["256", "301", "145", "344", "53", "256", "301", "145", "344", "53",
+				"301", "145", "344", "53", "256", "53", "256", "301", "145", "344",
+				"53", "256", "53", "256", "301", "145", "344", "145", "344", "53",
+				"45"
+			];
+			$scope.data_number2 = ["301", "145", "344", "53", "256", "53", "256", "301", "145", "344",
+				"53", "256", "53", "256", "301", "145", "344", "145", "344", "53",
+				"53", "256", "301", "145", "344"
+			];
+
+			$scope.data_code1 = [];
+			$scope.data_code2 = [];
+
+			$scope.DeptCataData = {}; // 单个市级部门目录数据信息
+			$scope.TownCataData = {}; // 单个乡镇目录数据时信息
+
+			var active_index = 16;
+			var active_index_down = 13;
+
+			var canvas = null;
 
 			catalogService.getDeptCatalog().then(function(res) {
-
-				$scope.data1 = ["市安监局", "市财政局", "市城管局", "市地税局", "市发改局", "市法制办", "市公安局", "市规划局", "市国税局", "市国土局",
-					"市环保局", "市交通局", "市教育局", "市经信局", "市民政局", "市农发局", "市气象局", "市人社局", "市商投局", "市审计局",
-					"市市场监管", "市水务局", "市司法局", "市统计局", "市卫计局", "市文旅局", "市政务中心", "市住建局", "市综合执法",
-					"崇信大数据", "市供电分公司"
-				];
-				$scope.data2 = ["崇阳街道", "羊马镇", "崇平镇", "梓潼镇", "廖家镇", "三江镇", "江源镇", "大划镇", "王场镇", "白头镇",
-					"道明镇", "济协乡", "隆兴镇", "桤泉镇", "集贤乡", "燎原乡", "元通镇", "观胜镇", "锦江乡", "公议乡",
-					"怀远镇", "街子镇", "三郎镇", "文井江镇", "鸡冠山乡"
-				];
-				$scope.data_number1 = ["256", "301", "145", "344", "53", "256", "301", "145", "344", "53",
-					"301", "145", "344", "53", "256", "53", "256", "301", "145", "344",
-					"53", "256", "53", "256", "301", "145", "344", "145", "344", "53",
-					"45"
-				];
-				$scope.data_number2 = ["301", "145", "344", "53", "256", "53", "256", "301", "145", "344",
-					"53", "256", "53", "256", "301", "145", "344", "145", "344", "53",
-					"53", "256", "301", "145", "344"
-				];
-
-				$scope.data_code1 = [];
-				$scope.data_code2 = [];
-
 				if (res && res.data) {
-					var result = res.data.body;
-					var grouped_data = _.groupBy(result, function(n) {
-						return n.dept_type;
-					});
-					var data1_temp = grouped_data["C"];
-					var data_ent = grouped_data["Z"];
-					var union_data = _.union(data1_temp, data_ent);
-					$scope.data1 = _.map(union_data, "dept_short_name");
-					$scope.data2 = _.map(grouped_data["X"], "dept_short_name");
+					circleDataFormat(res);
 
-					$scope.data_number1 = _.map(union_data, "num");
-					$scope.data_number2 = _.map(grouped_data["X"], "num");
-
-					$scope.data_code1 = _.map(union_data, "dept_code");
-					$scope.data_code2 = _.map(grouped_data["X"], "dept_code");
-
-					$scope.DeptCataData = {};
-					$scope.TownCataData = {};
-
-					var lens = $scope.data1.length;
-					var len2 = $scope.data2.length;
-
-
-					var data_total_length = $scope.data1.length + $scope.data2.length;
-
-					var active_index = 16;
-					var active_index_down = 13;
-
-					var canvas = null;
 					setTimeout(function() {
 						canvas = this.__canvas = new fabric.Canvas('mycanvas');
-						var each_degree = 360 / data_total_length;
-						for (var i = 0; i < data_total_length; i++) {
-							if (!$scope.data1[i]) {
-								$scope.data1.push('');
-								$scope.data_number1.push('');
-								$scope.data_code1.push('');
-							}
-							if (!$scope.data2[i]) {
-								$scope.data2.push('');
-								$scope.data_number2.push('');
-								$scope.data_code2.push('');
-							}
-
-						}
+						var each_degree = 360 / $scope.data_total_length;
 
 						function splice_arr(type) {
+							console.log($scope.lens);
 							if (type == 1) {
-								$scope.data1.splice(0, 0, $scope.data1[lens - 1]);
-								$scope.data1.splice(lens, 1);
-								$scope.data_number1.splice(0, 0, $scope.data_number1[lens - 1]);
-								$scope.data_number1.splice(lens, 1);
-								$scope.data_code1.splice(0, 0, $scope.data_code1[lens - 1]);
-								$scope.data_code1.splice(lens, 1);
+								$scope.data1.splice(0, 0, $scope.data1[$scope.lens - 1]);
+								$scope.data1.splice($scope.lens, 1);
+								$scope.data_number1.splice(0, 0, $scope.data_number1[$scope.lens - 1]);
+								$scope.data_number1.splice($scope.lens, 1);
+								$scope.data_code1.splice(0, 0, $scope.data_code1[$scope.lens - 1]);
+								$scope.data_code1.splice($scope.lens, 1);
 							}
 							if (type == 2) {
-								$scope.data2.splice(0, 0, $scope.data2[len2 - 1]);
-								$scope.data2.splice(len2, 1);
-								$scope.data_number2.splice(0, 0, $scope.data_number2[len2 - 1]);
-								$scope.data_number2.splice(len2, 1);
-								$scope.data_code2.splice(0, 0, $scope.data_code2[len2 - 1]);
-								$scope.data_code2.splice(len2, 1);
+								$scope.data2.splice(0, 0, $scope.data2[$scope.len2 - 1]);
+								$scope.data2.splice($scope.len2, 1);
+								$scope.data_number2.splice(0, 0, $scope.data_number2[$scope.len2 - 1]);
+								$scope.data_number2.splice($scope.len2, 1);
+								$scope.data_code2.splice(0, 0, $scope.data_code2[$scope.len2 - 1]);
+								$scope.data_code2.splice($scope.len2, 1);
 							}
 						}
 
 
 						$scope.draw = function() {
 							canvas.clear();
-							for (var i = data_total_length - 1; i >= 0; i--) {
+							for (var i = $scope.data_total_length - 1; i >= 0; i--) {
 
 								// 得出每个圆点需要变换的弧度
 								var corner = (i + 10.5) * each_degree;
@@ -157,11 +124,11 @@
 								}
 								var group1 = groupMaker(1, i, $scope.data_number1[i], $scope.data1[i], $scope.data_code1[i], text_origin_x, text_angle, corner, radian);
 								canvas.add(group1);
-								animatePlanet(group1, i, each_degree, corner, lens);
+								animatePlanet(group1, i, each_degree, corner, $scope.lens);
 
 								var group2 = groupMaker(2, i, $scope.data_number2[i], $scope.data2[i], $scope.data_code2[i], text_origin_x_town, text_angle_town, corner_town, radian_town);
 								canvas.add(group2);
-								animatePlanet(group2, i, each_degree, corner_town, len2);
+								animatePlanet(group2, i, each_degree, corner_town, $scope.len2);
 
 							}
 
@@ -178,7 +145,6 @@
 
 						canvas.on('mouse:over', function(e) {
 							var n = e.target;
-							console.log(n);
 							if ((n && n.dept_data) || (n && n.dept_number)) {
 								$interval.cancel($scope.timer1);
 								$scope.timer1 = null;
@@ -323,7 +289,7 @@
 											});
 										}
 										// only render once
-										if (planetIndex === data_total_length - 1) {
+										if (planetIndex === $scope.data_total_length - 1) {
 
 											if (angle_temp == endAngle) {
 												if (oImg.g_type == 1) {
@@ -502,190 +468,54 @@
 						}
 					}, 500)
 				}
-
-
-
 			})
 
+			function circleDataFormat(res) {
+				$scope.DeptCataData = {};
+				$scope.TownCataData = {};
+				var result = res.data.body;
+				var grouped_data = _.groupBy(result, function(n) {
+					return n.dept_type;
+				});
+				var data1_temp = grouped_data["C"];
+				var data_ent = grouped_data["Z"];
+				var union_data = _.union(data1_temp, data_ent);
+				$scope.data1 = _.map(union_data, "dept_short_name");
+				$scope.data2 = _.map(grouped_data["X"], "dept_short_name");
 
+				$scope.data_number1 = _.map(union_data, "num");
+				$scope.data_number2 = _.map(grouped_data["X"], "num");
 
-			var bubblecanvas = null;
-			var groups = [];
-			var index = 0;
-			setTimeout(function() {
+				$scope.data_code1 = _.map(union_data, "dept_code");
+				$scope.data_code2 = _.map(grouped_data["X"], "dept_code");
 
-				catalogService.getThemeData().then(function(res) {
-					var bubblecanvas = new fabric.Canvas('bubblecanvas');
-					var res_data = res.data.body;
-					var sub_str = "";
-					_.forEach(res_data, function(n) {
-						if (n.subjectName.length > 11) {
+				$scope.lens = $scope.data1.length;
+				$scope.len2 = $scope.data2.length;
 
-							sub_str = n.subjectName.substring(0, 6);
-							n.subjectName = sub_str + "\n" + n.subjectName.substring(6, 15);
-						} else {
-							sub_str = n.subjectName.substring(0, 4);
-							n.subjectName = sub_str + "\n" + n.subjectName.substring(4, 10);
-						}
-
-					})
-					console.log(res_data);
-					var group1 = circleGroupMaker(80, 50, 30, res_data[0].subjectName, ' 专题个数：' + res_data[0].num, 14, 86, 83);
-					var group2 = circleGroupMaker(75, 240, 100, res_data[1].subjectName, '  专题个数：' + res_data[1].num, 13, 275, 153);
-					var group3 = circleGroupMaker(103, 410, 0, res_data[2].subjectName, '   专题个数：' + res_data[2].num, 18, 452, 73);
-					var group4 = circleGroupMaker(64, 120, 260, res_data[3].subjectName, '  专题个数：' + res_data[3].num, 10, 150, 305);
-					var group5 = circleGroupMaker(86, 320, 260, res_data[4].subjectName, ' 专题个数：' + res_data[4].num, 16, 358, 315);
-					var group6 = circleGroupMaker(72, 540, 200, res_data[5].subjectName, '        专题个数：' + res_data[5].num, 10, 552, 250);
-					groups.push(group1);
-					groups.push(group2);
-					groups.push(group3);
-					groups.push(group4);
-					groups.push(group5);
-					groups.push(group6);
-					bubblecanvas.add(group1);
-					bubblecanvas.add(group2);
-					bubblecanvas.add(group3);
-					bubblecanvas.add(group4);
-					bubblecanvas.add(group5);
-					bubblecanvas.add(group6);
-
-					bubblecanvas.on('mouse:over', function(e) {
-
-					});
-
-					bubblecanvas.on('mouse:out', function(e) {
-
-					});
-					bubblecanvas.on('mouse:down', function(e) {
-
-					})
-
-					setInterval(function() {
-						animateCircle(groups[index % 6]);
-						index++;
-					}, 4500);
-
-					function animateCircle(group) {
-						fabric.util.animateColor('rgb(9,161,223)', 'rgb(200,235,36,1)', 1500, {
-							onChange: function(value) {
-								group.text_label.set('fill', value);
-								group.text_number.set('fill', value);
-								bubblecanvas.renderAll.bind(bubblecanvas);
-							}
-						})
-						group.text_label.animate({
-							'top': group.text_label.top - 18
-						}, {
-							duration: 1500,
-							onChange: bubblecanvas.renderAll.bind(bubblecanvas),
-							onComplete: function() {
-
-							},
-							easing: function(t, b, c, d) {
-								return c * t / d + b;
-							},
-							//easing:fabric.util.ease.easeOutQuart
-						});
-
-						group.text_number.animate({
-							'top': group.text_number.top - 15,
-							'opacity': 1
-						}, {
-							duration: 1500,
-							onChange: bubblecanvas.renderAll.bind(bubblecanvas),
-							onComplete: function() {
-								setTimeout(function() {
-									group.text_label.animate({
-										'top': group.text_label.top + 18
-									}, {
-										duration: 1500,
-										onChange: bubblecanvas.renderAll.bind(bubblecanvas),
-										easing: function(t, b, c, d) {
-											return c * t / d + b;
-										},
-									});
-									group.text_number.animate({
-										'top': group.text_number.top + 15,
-										'opacity': 0
-									}, {
-										duration: 1500,
-										onChange: bubblecanvas.renderAll.bind(bubblecanvas),
-										easing: function(t, b, c, d) {
-											return c * t / d + b;
-										},
-									});
-
-									fabric.util.animateColor('rgb(200,235,36,1)', 'rgb(9,161,223)', 1500, {
-										onChange: function(value) {
-											group.text_label.set('fill', value);
-											group.text_number.set('fill', value);
-										}
-									});
-									bubblecanvas.renderAll();
-								}, 1500)
-
-
-							},
-							easing: function(t, b, c, d) {
-								return c * t / d + b;
-							}
-						});
-
+				$scope.data_total_length = $scope.data1.length + $scope.data2.length;
+				for (var i = 0; i < $scope.data_total_length; i++) {
+					if (!$scope.data1[i]) {
+						$scope.data1.push('');
+						$scope.data_number1.push('');
+						$scope.data_code1.push('');
+					}
+					if (!$scope.data2[i]) {
+						$scope.data2.push('');
+						$scope.data_number2.push('');
+						$scope.data_code2.push('');
 					}
 
-					function circleGroupMaker(radius, c_left, c_top, text_label, text_number, fontSize, text_x, text_y) {
-						var circle = new fabric.Circle({
-							left: c_left,
-							top: c_top,
-							radius: radius,
-							fill: '#FFF'
-						});
-						circle.setGradient('fill', {
-							type: 'radial',
-							x1: radius,
-							y1: radius,
-							x2: radius,
-							y2: radius,
-							r1: circle.width / 2,
-							r2: 0,
-							colorStops: {
-								0: 'rgb(6,88,127)',
-								0.05: 'rgba(16,52,75,.8)',
-								1: 'rgba(16,52,75,1)'
-							}
-						});
-						var text = new fabric.Text(text_label, {
-							textAlign: 'center',
-							left: text_x,
-							top: text_y,
-							fill: 'rgb(9,161,223)',
-							fontSize: fontSize + 8,
-							opacity: 1
-						});
-						var text_number = new fabric.Text(text_number, {
-							left: text.left - 5,
-							top: text.top + 45 + fontSize,
-							fill: 'transparent',
-							fontSize: fontSize,
-							opacity: 0
-						});
-						var group = new fabric.Group([circle, text, text_number], {
-							centeredRotation: true,
-							selectable: false,
-							hasControls: false,
-							hoverCursor: 'pointer',
-							originX: 'left'
-						});
-						group.text_label = text;
-						group.text_number = text_number;
-						return group;
-					}
+				}
+			}
+
+			// 定时器，每天更新数据
+			$interval(function() {
+				// 市级部门及乡镇统计数据
+				catalogService.getDeptCatalog().then(function(res) {
+					circleDataFormat(res);
 				})
-
-
-			}, 500);
-
-
+				// 
+			}, 86400000)
 
 		}
 	]);
@@ -790,7 +620,6 @@
 						var res_data = _.sortBy(result.data.body, function(n) {
 							return -n.num;
 						});
-						console.log(res_data);
 						//var themeNameAll = ['交通运输', '住宿旅游', '餐饮美食', '医疗健康', '生活服务', '文娱娱乐', '消费购物', '房屋土地', '环境资源', '企业服务', '农业农村', '经济发展', '政法监察', '生活安全'];
 						//var themeDataAll = [189, 182, 166, 127, 76, 64, 60, 52, 47, 45, 39, 31, 16, 5];
 						var themeNameAll = _.map(res_data, 'themeName');
@@ -905,4 +734,206 @@
 			}
 		}
 	]);
+
+	catalog.directive('wiservChartTheme', ['catalogService','$interval',
+		function(catalogService,$interval) {
+			return {
+				restrict: 'ACE',
+				template: '<canvas id="bubblecanvas" width="780" height="710" ></canvas>',
+				link: function(scope, element, attrs) {
+					// 数据专题
+					var bubblecanvas = null;
+					var groups = [];
+					var index = 0;
+					catalogService.getThemeData().then(function(res) {
+						var bubblecanvas = new fabric.Canvas('bubblecanvas');
+						
+						if(res && res.data.body){
+							bubbleDataFormat(res);
+						}
+
+						scope.timer_theme = $interval(function() {
+							animateCircle(groups[index % 6]);
+							index++;
+						}, 4500);
+
+						function animateCircle(group) {
+							fabric.util.animateColor('rgb(9,161,223)', 'rgb(200,235,36,1)', 1500, {
+								onChange: function(value) {
+									group.text_label.set('fill', value);
+									group.text_number.set('fill', value);
+									bubblecanvas.renderAll.bind(bubblecanvas);
+								}
+							})
+							group.text_label.animate({
+								'top': group.text_label.top - 18
+							}, {
+								duration: 1500,
+								onChange: bubblecanvas.renderAll.bind(bubblecanvas),
+								onComplete: function() {
+
+								},
+								easing: function(t, b, c, d) {
+									return c * t / d + b;
+								},
+								//easing:fabric.util.ease.easeOutQuart
+							});
+
+							group.text_number.animate({
+								'top': group.text_number.top - 15,
+								'opacity': 1
+							}, {
+								duration: 1500,
+								onChange: bubblecanvas.renderAll.bind(bubblecanvas),
+								onComplete: function() {
+									setTimeout(function() {
+										group.text_label.animate({
+											'top': group.text_label.top + 18
+										}, {
+											duration: 1500,
+											onChange: bubblecanvas.renderAll.bind(bubblecanvas),
+											easing: function(t, b, c, d) {
+												return c * t / d + b;
+											},
+										});
+										group.text_number.animate({
+											'top': group.text_number.top + 15,
+											'opacity': 0
+										}, {
+											duration: 1500,
+											onChange: bubblecanvas.renderAll.bind(bubblecanvas),
+											easing: function(t, b, c, d) {
+												return c * t / d + b;
+											},
+										});
+
+										fabric.util.animateColor('rgb(200,235,36,1)', 'rgb(9,161,223)', 1500, {
+											onChange: function(value) {
+												group.text_label.set('fill', value);
+												group.text_number.set('fill', value);
+											}
+										});
+										bubblecanvas.renderAll();
+									}, 1500)
+
+
+								},
+								easing: function(t, b, c, d) {
+									return c * t / d + b;
+								}
+							});
+
+						}
+
+						function circleGroupMaker(radius, c_left, c_top, text_label, text_number, fontSize, text_x, text_y) {
+							var circle = new fabric.Circle({
+								left: c_left,
+								top: c_top,
+								radius: radius,
+								fill: '#FFF'
+							});
+							circle.setGradient('fill', {
+								type: 'radial',
+								x1: radius,
+								y1: radius,
+								x2: radius,
+								y2: radius,
+								r1: circle.width / 2,
+								r2: 0,
+								colorStops: {
+									0: 'rgb(6,88,127)',
+									0.05: 'rgba(16,52,75,.8)',
+									1: 'rgba(16,52,75,1)'
+								}
+							});
+							var text = new fabric.Text(text_label, {
+								textAlign: 'center',
+								left: text_x,
+								top: text_y,
+								fill: 'rgb(9,161,223)',
+								fontSize: fontSize + 8,
+								opacity: 1
+							});
+							var text_number = new fabric.Text(text_number, {
+								left: text.left - 5,
+								top: text.top + 45 + fontSize,
+								fill: 'transparent',
+								fontSize: fontSize,
+								opacity: 0
+							});
+							var group = new fabric.Group([circle, text, text_number], {
+								centeredRotation: true,
+								selectable: false,
+								hasControls: false,
+								hoverCursor: 'pointer',
+								originX: 'left'
+							});
+							group.text_label = text;
+							group.text_number = text_number;
+							return group;
+						}
+
+						function bubbleDataFormat(res){
+							var res_data = res.data.body;
+							groups = [];
+								var sub_str = "";
+								_.forEach(res_data, function(n) {
+									if (n.subjectName.length > 11) {
+										sub_str = n.subjectName.substring(0, 6);
+										n.subjectName = sub_str + "\n" + n.subjectName.substring(6, 15);
+									} else {
+										sub_str = n.subjectName.substring(0, 4);
+										n.subjectName = sub_str + "\n" + n.subjectName.substring(4, 10);
+									}
+
+								})
+								var group1 = circleGroupMaker(80, 50, 30, res_data[0].subjectName, ' 专题个数：' + res_data[0].num, 14, 86, 83);
+								var group2 = circleGroupMaker(75, 240, 100, res_data[1].subjectName, '  专题个数：' + res_data[1].num, 13, 275, 153);
+								var group3 = circleGroupMaker(103, 410, 0, res_data[2].subjectName, '   专题个数：' + res_data[2].num, 18, 452, 73);
+								var group4 = circleGroupMaker(64, 120, 260, res_data[3].subjectName, '  专题个数：' + res_data[3].num, 10, 150, 305);
+								var group5 = circleGroupMaker(86, 320, 260, res_data[4].subjectName, ' 专题个数：' + res_data[4].num, 16, 358, 315);
+								var group6 = circleGroupMaker(72, 540, 200, res_data[5].subjectName, '        专题个数：' + res_data[5].num, 10, 552, 250);
+								groups.push(group1);
+								groups.push(group2);
+								groups.push(group3);
+								groups.push(group4);
+								groups.push(group5);
+								groups.push(group6);
+								bubblecanvas.add(group1);
+								bubblecanvas.add(group2);
+								bubblecanvas.add(group3);
+								bubblecanvas.add(group4);
+								bubblecanvas.add(group5);
+								bubblecanvas.add(group6);
+						}
+
+						// 定时器，每天更新数据
+						$interval(function() {
+							// 市级部门及乡镇统计数据
+							catalogService.getThemeData().then(function(res) {
+
+								bubblecanvas.clear();
+								bubbleDataFormat(res);
+								index = 0;
+								$interval.cancel(scope.timer_theme);
+								scope.timer_theme = $interval(function() {
+									animateCircle(groups[index % 6]);
+									index++;
+								}, 4500);
+							})
+							// 
+						}, 86400000)
+
+					})
+
+					
+
+					
+
+				}
+			}
+		}
+	]);
+
+
 })();

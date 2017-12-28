@@ -70,6 +70,16 @@
 				// 获取其他数据
 				deptService.getResourceCombing().then(function(result) {
 					$scope.ResourceCombing = result.data.body[0];
+					$timeout(function() {
+						$scope.reqDone = true;
+						$(".profile-right-wrap").slick({
+							slidesToShow: 2,
+							slidesToScroll: 1,
+							autoplay: true,
+							autoplaySpeed: 2500
+						});
+
+					}, 100);
 				})
 
 				// 部门已接入数据总量
@@ -93,16 +103,7 @@
 
 				})
 
-				$timeout(function() {
-					$scope.reqDone = true;
-					$(".profile-right-wrap").slick({
-						slidesToShow: 2,
-						slidesToScroll: 1,
-						autoplay: true,
-						autoplaySpeed: 2500
-					});
 
-				}, 100);
 			}
 
 			function init() {
