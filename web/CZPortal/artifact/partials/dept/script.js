@@ -14,7 +14,6 @@
 			//部门视图鼠标进入
 			$scope.allow_toggle = true;
 			$scope.mouseEnter = function() {
-				console.log('mouse enter....');
 				$scope.allow_toggle = false;
 			}
 			//部门视图鼠标移除

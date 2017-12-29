@@ -66,7 +66,6 @@
 						var each_degree = 360 / $scope.data_total_length;
 
 						function splice_arr(type) {
-							console.log($scope.lens);
 							if (type == 1) {
 								$scope.data1.splice(0, 0, $scope.data1[$scope.lens - 1]);
 								$scope.data1.splice($scope.lens, 1);
@@ -605,8 +604,8 @@
 		}
 	])
 
-	catalog.directive('wiservThemeRank', ['catalogService',
-		function(catalogService) {
+	catalog.directive('wiservThemeRank', ['catalogService', '$interval',
+		function(catalogService, $interval) {
 			return {
 				restrict: 'ACE',
 				template: "<div id='themeRank' style='width:700px;height:500px'></div>",
@@ -617,117 +616,130 @@
 						var fillImg = 'image://data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAlCAYAAACONvPuAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpjMzk2MzljYy1hMzRkLTU3NDktODM4Yy05Y2U4YjYxOGYwNmQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QTJEQzNBQ0ZFOUUwMTFFN0I0ODhBMUJCODhGRTI5MTEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QTJEQzNBQ0VFOUUwMTFFN0I0ODhBMUJCODhGRTI5MTEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6ODc1NWY5ZjctZTA1Zi0yYzQ5LThmNTAtODQ0NjVkMGIzMWRhIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6YTUyODk2ODgtYTBhYy0xMWU2LWI3OWUtYTEyZjM3MGIwZTM1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+GjlvQQAAAGpJREFUeNpi5Fx4n5WBgUEGiMWA+D8QfwHiOyA2E5AQhUqAACMQ8wKxJIgDkhRnwAQSQMzFxIAbsOKTZBiVHFaS//BJ/h8NIdpK/sYn+RAUPWjiH4D4K0jyBxA/AuJfQPwXiL9DNfwHCDAAj8ITzGkC6NsAAAAASUVORK5CYII=';
 						// bar.png 的base64
 						var spirit = 'image://data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAlCAYAAACONvPuAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpjMzk2MzljYy1hMzRkLTU3NDktODM4Yy05Y2U4YjYxOGYwNmQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NURGNjAzQUZFOUVBMTFFN0I1N0FFMDc2OTQ1RjMzOTAiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NURGNjAzQUVFOUVBMTFFN0I1N0FFMDc2OTQ1RjMzOTAiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6ODc1NWY5ZjctZTA1Zi0yYzQ5LThmNTAtODQ0NjVkMGIzMWRhIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6YTUyODk2ODgtYTBhYy0xMWU2LWI3OWUtYTEyZjM3MGIwZTM1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+PWpIUgAAAG5JREFUeNpi5Fx4n5WBgUEaiE8CsRgQfwbiVCBexwQkeIF4M1SCAcqfCcSKIEkvINZhQAX8QDwNJMnIgB2IMzHgAaOSo5KjklSSfArE/7HI/QVJHgbiqegSQFwBM7YCiHcD8Qsg/gnEBUC8FyDAABIrEZcHojQvAAAAAElFTkSuQmCC'
-						var res_data = _.sortBy(result.data.body, function(n) {
-							return -n.num;
-						});
-						//var themeNameAll = ['交通运输', '住宿旅游', '餐饮美食', '医疗健康', '生活服务', '文娱娱乐', '消费购物', '房屋土地', '环境资源', '企业服务', '农业农村', '经济发展', '政法监察', '生活安全'];
-						//var themeDataAll = [189, 182, 166, 127, 76, 64, 60, 52, 47, 45, 39, 31, 16, 5];
-						var themeNameAll = _.map(res_data, 'themeName');
-						var themeDataAll = _.map(res_data, 'num');
-
-						var maxData = _.max(themeDataAll) + 10; // 最大值
-						var data_length = themeNameAll.length;
-						var themeNameTemp = angular.copy(themeNameAll);
-						var themeDataTemp = angular.copy(themeDataAll);
-
-						themeNameTemp.splice(6, themeNameAll.length - 6);
-						themeDataTemp.splice(6, themeDataTemp.length - 6);
-						var option = {
-							tooltip: {},
-							xAxis: {
-								max: maxData,
-								splitLine: {
-									show: false
-								},
-								axisTick: {
-									show: false
-								},
-								axisLine: {
-									show: false
-								},
-							},
-							yAxis: {
-								data: themeNameTemp,
-								inverse: true,
-								axisTick: {
-									show: false
-								},
-								axisLine: {
-									show: false
-								},
-								axisLabel: {
-									margin: 25,
-									textStyle: {
-										color: '#09a1df',
-										fontSize: 22
-									}
-								}
-							},
-							grid: {
-								top: -15,
-								left: 160,
-								right: 160,
-								bottom: 80
-							},
-							series: [{
-								// 当前数据
-								type: 'pictorialBar',
-								symbol: spirit,
-								symbolRepeat: 'fixed',
-								symbolMargin: '50%',
-								symbolClip: true,
-								symbolSize: [5, 32],
-								symbolBoundingData: maxData,
-								data: themeDataTemp,
-
-								z: 10
-							}, {
-								// 全部数据
-								type: 'pictorialBar',
-								label: {
-									normal: {
-										show: true,
-										formatter: function(params) {
-											return params.value;
-										},
-										position: 'right',
-										offset: [20, 0],
-										textStyle: {
-											color: '#c8cbd7',
-											fontSize: 22,
-											align: 'left',
-											fontFamily: 'digiFont'
-										}
-									}
-								},
-								animationDuration: 0,
-								symbolRepeat: 'fixed',
-								symbolMargin: '50%',
-								symbol: fillImg,
-								symbolSize: [5, 32],
-								symbolBoundingData: maxData,
-								data: themeDataTemp,
-								z: 5
-							}]
-						};
-						chartInstance.setOption(option);
+						themeRankDataFormat(result);
+						chartInstance.setOption(scope.option);
 
 
 						var k = 0; // 定时器计时器
-						var timeTicket = setInterval(function() {
-							var data0 = option.series[0].data;
+						var timeTicket = $interval(function() {
+							var data0 = scope.option.series[0].data;
 							var p2 = data0.splice(0, 1);
-							var kl = option.yAxis.data.splice(0, 1);
+							var kl = scope.option.yAxis.data.splice(0, 1);
 
 							var data_add = [];
 							var name_add = [];
 							for (var i = 0; i < 1; i++) {
-								data0.push(themeDataAll[(i + 1 * k + 6) % data_length]);
-								option.yAxis.data.push(themeNameAll[(i + 1 * k + 6) % data_length]);
+								data0.push(scope.themeDataAll[(i + 1 * k + 6) % scope.data_length]);
+								scope.option.yAxis.data.push(scope.themeNameAll[(i + 1 * k + 6) % scope.data_length]);
 							}
 							k++;
-							chartInstance.setOption(option);
+							chartInstance.setOption(scope.option);
 						}, 3000);
+
+						function themeRankDataFormat(result) {
+
+								var res_data = _.sortBy(result.data.body, function(n) {
+									return -n.num;
+								});
+								//var themeNameAll = ['交通运输', '住宿旅游', '餐饮美食', '医疗健康', '生活服务', '文娱娱乐', '消费购物', '房屋土地', '环境资源', '企业服务', '农业农村', '经济发展', '政法监察', '生活安全'];
+								//var themeDataAll = [189, 182, 166, 127, 76, 64, 60, 52, 47, 45, 39, 31, 16, 5];
+								scope.themeNameAll = _.map(res_data, 'themeName');
+								scope.themeDataAll = _.map(res_data, 'num');
+
+								var maxData = _.max(scope.themeDataAll) + 10; // 最大值
+								scope.data_length = scope.themeNameAll.length;
+								var themeNameTemp = angular.copy(scope.themeNameAll);
+								var themeDataTemp = angular.copy(scope.themeDataAll);
+
+								themeNameTemp.splice(6, scope.themeNameAll.length - 6);
+								themeDataTemp.splice(6, themeDataTemp.length - 6);
+								scope.option = {
+									tooltip: {},
+									xAxis: {
+										max: maxData,
+										splitLine: {
+											show: false
+										},
+										axisTick: {
+											show: false
+										},
+										axisLine: {
+											show: false
+										},
+									},
+									yAxis: {
+										data: themeNameTemp,
+										inverse: true,
+										axisTick: {
+											show: false
+										},
+										axisLine: {
+											show: false
+										},
+										axisLabel: {
+											margin: 25,
+											textStyle: {
+												color: '#09a1df',
+												fontSize: 22
+											}
+										}
+									},
+									grid: {
+										top: -15,
+										left: 160,
+										right: 160,
+										bottom: 80
+									},
+									series: [{
+										// 当前数据
+										type: 'pictorialBar',
+										symbol: spirit,
+										symbolRepeat: 'fixed',
+										symbolMargin: '50%',
+										symbolClip: true,
+										symbolSize: [5, 32],
+										symbolBoundingData: maxData,
+										data: themeDataTemp,
+
+										z: 10
+									}, {
+										// 全部数据
+										type: 'pictorialBar',
+										label: {
+											normal: {
+												show: true,
+												formatter: function(params) {
+													return params.value;
+												},
+												position: 'right',
+												offset: [20, 0],
+												textStyle: {
+													color: '#c8cbd7',
+													fontSize: 22,
+													align: 'left',
+													fontFamily: 'digiFont'
+												}
+											}
+										},
+										animationDuration: 0,
+										symbolRepeat: 'fixed',
+										symbolMargin: '50%',
+										symbol: fillImg,
+										symbolSize: [5, 32],
+										symbolBoundingData: maxData,
+										data: themeDataTemp,
+										z: 5
+									}]
+								};
+
+						}
+
+						// 定时器，每天更新数据
+						$interval(function() {
+							catalogService.getThemeRank().then(function(result) {
+								themeRankDataFormat(result);
+							})
+						}, 86400000)
 					})
 
 				}
@@ -735,8 +747,8 @@
 		}
 	]);
 
-	catalog.directive('wiservChartTheme', ['catalogService','$interval',
-		function(catalogService,$interval) {
+	catalog.directive('wiservChartTheme', ['catalogService', '$interval',
+		function(catalogService, $interval) {
 			return {
 				restrict: 'ACE',
 				template: '<canvas id="bubblecanvas" width="780" height="710" ></canvas>',
@@ -747,8 +759,8 @@
 					var index = 0;
 					catalogService.getThemeData().then(function(res) {
 						var bubblecanvas = new fabric.Canvas('bubblecanvas');
-						
-						if(res && res.data.body){
+
+						if (res && res.data.body) {
 							bubbleDataFormat(res);
 						}
 
@@ -873,38 +885,38 @@
 							return group;
 						}
 
-						function bubbleDataFormat(res){
+						function bubbleDataFormat(res) {
 							var res_data = res.data.body;
 							groups = [];
-								var sub_str = "";
-								_.forEach(res_data, function(n) {
-									if (n.subjectName.length > 11) {
-										sub_str = n.subjectName.substring(0, 6);
-										n.subjectName = sub_str + "\n" + n.subjectName.substring(6, 15);
-									} else {
-										sub_str = n.subjectName.substring(0, 4);
-										n.subjectName = sub_str + "\n" + n.subjectName.substring(4, 10);
-									}
+							var sub_str = "";
+							_.forEach(res_data, function(n) {
+								if (n.subjectName.length > 11) {
+									sub_str = n.subjectName.substring(0, 6);
+									n.subjectName = sub_str + "\n" + n.subjectName.substring(6, 15);
+								} else {
+									sub_str = n.subjectName.substring(0, 4);
+									n.subjectName = sub_str + "\n" + n.subjectName.substring(4, 10);
+								}
 
-								})
-								var group1 = circleGroupMaker(80, 50, 30, res_data[0].subjectName, ' 专题个数：' + res_data[0].num, 14, 86, 83);
-								var group2 = circleGroupMaker(75, 240, 100, res_data[1].subjectName, '  专题个数：' + res_data[1].num, 13, 275, 153);
-								var group3 = circleGroupMaker(103, 410, 0, res_data[2].subjectName, '   专题个数：' + res_data[2].num, 18, 452, 73);
-								var group4 = circleGroupMaker(64, 120, 260, res_data[3].subjectName, '  专题个数：' + res_data[3].num, 10, 150, 305);
-								var group5 = circleGroupMaker(86, 320, 260, res_data[4].subjectName, ' 专题个数：' + res_data[4].num, 16, 358, 315);
-								var group6 = circleGroupMaker(72, 540, 200, res_data[5].subjectName, '        专题个数：' + res_data[5].num, 10, 552, 250);
-								groups.push(group1);
-								groups.push(group2);
-								groups.push(group3);
-								groups.push(group4);
-								groups.push(group5);
-								groups.push(group6);
-								bubblecanvas.add(group1);
-								bubblecanvas.add(group2);
-								bubblecanvas.add(group3);
-								bubblecanvas.add(group4);
-								bubblecanvas.add(group5);
-								bubblecanvas.add(group6);
+							})
+							var group1 = circleGroupMaker(80, 50, 30, res_data[0].subjectName, ' 专题个数：' + res_data[0].num, 14, 86, 83);
+							var group2 = circleGroupMaker(75, 240, 100, res_data[1].subjectName, '  专题个数：' + res_data[1].num, 13, 275, 153);
+							var group3 = circleGroupMaker(103, 410, 0, res_data[2].subjectName, '   专题个数：' + res_data[2].num, 18, 452, 73);
+							var group4 = circleGroupMaker(64, 120, 260, res_data[3].subjectName, '  专题个数：' + res_data[3].num, 10, 150, 305);
+							var group5 = circleGroupMaker(86, 320, 260, res_data[4].subjectName, ' 专题个数：' + res_data[4].num, 16, 358, 315);
+							var group6 = circleGroupMaker(72, 540, 200, res_data[5].subjectName, '        专题个数：' + res_data[5].num, 10, 552, 250);
+							groups.push(group1);
+							groups.push(group2);
+							groups.push(group3);
+							groups.push(group4);
+							groups.push(group5);
+							groups.push(group6);
+							bubblecanvas.add(group1);
+							bubblecanvas.add(group2);
+							bubblecanvas.add(group3);
+							bubblecanvas.add(group4);
+							bubblecanvas.add(group5);
+							bubblecanvas.add(group6);
 						}
 
 						// 定时器，每天更新数据
@@ -926,9 +938,7 @@
 
 					})
 
-					
 
-					
 
 				}
 			}
