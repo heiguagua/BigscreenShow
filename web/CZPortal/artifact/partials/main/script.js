@@ -52,15 +52,16 @@
 			$scope.DeptCataData = {}; // 单个市级部门目录数据信息
 			$scope.TownCataData = {}; // 单个乡镇目录数据时信息
 
-			var active_index = 16;
-			var active_index_down = 13;
+			$scope.active_index = 0;		// 高亮显示的部门序号
+			$scope.active_index_down = 0; // 高亮显示的乡镇序号
 
 			var canvas = null;
 
 			catalogService.getDeptCatalog().then(function(res) {
 				if (res && res.data) {
 					circleDataFormat(res);
-
+					console.log($scope.active_index);
+					console.log($scope.active_index_down);
 					setTimeout(function() {
 						canvas = this.__canvas = new fabric.Canvas('mycanvas');
 						var each_degree = 360 / $scope.data_total_length;
@@ -84,17 +85,17 @@
 							}
 						}
 
-
 						$scope.draw = function() {
 							canvas.clear();
 							for (var i = $scope.data_total_length - 1; i >= 0; i--) {
 
 								// 得出每个圆点需要变换的弧度
-								var corner = (i + 10.5) * each_degree;
-								var radian = ((i + 10.5) * each_degree) * Math.PI / 180;
+								var data1_start_num = Math.ceil($scope.data_total_length/4)+0.5;
+								var corner = (i + ($scope.len2-data1_start_num)) * each_degree;
+								var radian = ((i + ($scope.len2-data1_start_num)) * each_degree) * Math.PI / 180;
 
-								var corner_town = (i - 14.5) * each_degree;
-								var radian_town = ((i - 14.5) * each_degree) * Math.PI / 180;
+								var corner_town = (i - data1_start_num) * each_degree;
+								var radian_town = ((i - data1_start_num) * each_degree) * Math.PI / 180;
 
 								var text_angle = 0;
 								var text_angle_town = 2;
@@ -130,16 +131,13 @@
 								animatePlanet(group2, i, each_degree, corner_town, $scope.len2);
 
 							}
-
-
 						}
 
 						init();
 						$scope.timer1 = $interval(function() {
-
 							$scope.draw();
-							getDataByDept(1, $scope.data_code1[active_index], $scope.data1[active_index]);
-							getDataByDept(2, $scope.data_code2[active_index_down], $scope.data2[active_index_down]);
+							getDataByDept(1, $scope.data_code1[$scope.active_index], $scope.data1[$scope.active_index]);
+							getDataByDept(2, $scope.data_code2[$scope.active_index_down], $scope.data2[$scope.active_index_down]);
 						}, 5000)
 
 						canvas.on('mouse:over', function(e) {
@@ -180,7 +178,7 @@
 							var n = e.target;
 							if ((n && n.dept_data) || (n && n.dept_number)) {
 
-								if (n.g_type == 1 && n.dept_data.text != '' && active_index != n.g_index) {
+								if (n.g_type == 1 && n.dept_data.text != '' && $scope.active_index != n.g_index) {
 									if ("崇信大数据" != n.dept_data.text && "市供电分公司" != n.dept_data.text) {
 										n.dept_data.set({
 											'fill': dept_text_color.normal
@@ -194,7 +192,7 @@
 										'fill': dept_text_color.num_bg
 									});
 								}
-								if (n.g_type == 2 && n.dept_data.text != '' && active_index_down != n.g_index) {
+								if (n.g_type == 2 && n.dept_data.text != '' && $scope.active_index_down != n.g_index) {
 									n.dept_data.set({
 										'fill': town_text_color.normal
 									});
@@ -208,8 +206,8 @@
 								$interval.cancel($scope.timer1);
 								$scope.timer1 = $interval(function() {
 									$scope.draw();
-									getDataByDept(1, $scope.data_code1[active_index], $scope.data1[active_index]);
-									getDataByDept(2, $scope.data_code2[active_index_down], $scope.data2[active_index_down]);
+									getDataByDept(1, $scope.data_code1[$scope.active_index], $scope.data1[$scope.active_index]);
+									getDataByDept(2, $scope.data_code2[$scope.active_index_down], $scope.data2[$scope.active_index_down]);
 								}, 5000)
 							}
 							canvas.renderAll();
@@ -260,7 +258,7 @@
 											top: y,
 											angle: corner + each_degree
 										}).setCoords();
-										if (active_index == planetIndex && oImg.g_type == 1) {
+										if ($scope.active_index == planetIndex && oImg.g_type == 1) {
 											oImg.dept_data.set({
 												'fill': dept_text_color.num_active
 											});
@@ -271,7 +269,7 @@
 												'fill': dept_text_color.num_active
 											});
 										}
-										if (active_index_down == planetIndex && oImg.g_type == 2) {
+										if ($scope.active_index_down == planetIndex && oImg.g_type == 2) {
 											oImg.dept_data.set({
 												'fill': town_text_color.num_active
 											});
@@ -381,10 +379,7 @@
 							return group2;
 						}
 
-
-
 						function getDataByDept(dataType, deptCode, deptName) {
-
 							if (dataType == 1) {
 								$scope.DeptCataData.deptName = deptName;
 							} else {
@@ -401,8 +396,6 @@
 										$scope.TownCataData.catalog = data;
 									}
 								}
-
-
 							})
 							catalogService.getDataItemByDept({
 								"dept_code": deptCode
@@ -415,8 +408,6 @@
 										$scope.TownCataData.dataItem = data;
 									}
 								}
-
-
 							})
 							catalogService.getSystemByDept({
 								"dept_code": deptCode
@@ -429,8 +420,6 @@
 										$scope.TownCataData.system = data;
 									}
 								}
-
-
 							})
 							catalogService.getResByDept({
 								"dept_code": deptCode
@@ -443,8 +432,6 @@
 										$scope.TownCataData.resource = data;
 									}
 								}
-
-
 							})
 						}
 
@@ -461,8 +448,8 @@
 
 						function init() {
 							$scope.draw();
-							getDataByDept(1, $scope.data_code1[active_index], $scope.data1[active_index]);
-							getDataByDept(2, $scope.data_code2[active_index_down], $scope.data2[active_index_down]);
+							getDataByDept(1, $scope.data_code1[$scope.active_index], $scope.data1[$scope.active_index]);
+							getDataByDept(2, $scope.data_code2[$scope.active_index_down], $scope.data2[$scope.active_index_down]);
 							getDataCount();
 						}
 					}, 500)
@@ -492,6 +479,11 @@
 				$scope.len2 = $scope.data2.length;
 
 				$scope.data_total_length = $scope.data1.length + $scope.data2.length;
+
+				$scope.active_index = Math.floor($scope.lens-$scope.data_total_length/4);		// 高亮显示的部门序号
+				$scope.active_index_down = Math.floor($scope.data_total_length/4); // 高亮显示的乡镇序号
+
+
 				for (var i = 0; i < $scope.data_total_length; i++) {
 					if (!$scope.data1[i]) {
 						$scope.data1.push('');
@@ -513,7 +505,6 @@
 				catalogService.getDeptCatalog().then(function(res) {
 					circleDataFormat(res);
 				})
-				// 
 			}, 86400000)
 
 		}
@@ -618,7 +609,6 @@
 						var spirit = 'image://data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAlCAYAAACONvPuAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpjMzk2MzljYy1hMzRkLTU3NDktODM4Yy05Y2U4YjYxOGYwNmQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NURGNjAzQUZFOUVBMTFFN0I1N0FFMDc2OTQ1RjMzOTAiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NURGNjAzQUVFOUVBMTFFN0I1N0FFMDc2OTQ1RjMzOTAiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6ODc1NWY5ZjctZTA1Zi0yYzQ5LThmNTAtODQ0NjVkMGIzMWRhIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6YTUyODk2ODgtYTBhYy0xMWU2LWI3OWUtYTEyZjM3MGIwZTM1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+PWpIUgAAAG5JREFUeNpi5Fx4n5WBgUEaiE8CsRgQfwbiVCBexwQkeIF4M1SCAcqfCcSKIEkvINZhQAX8QDwNJMnIgB2IMzHgAaOSo5KjklSSfArE/7HI/QVJHgbiqegSQFwBM7YCiHcD8Qsg/gnEBUC8FyDAABIrEZcHojQvAAAAAElFTkSuQmCC'
 						themeRankDataFormat(result);
 						chartInstance.setOption(scope.option);
-
 
 						var k = 0; // 定时器计时器
 						var timeTicket = $interval(function() {
@@ -731,7 +721,6 @@
 										z: 5
 									}]
 								};
-
 						}
 
 						// 定时器，每天更新数据
@@ -834,7 +823,6 @@
 									return c * t / d + b;
 								}
 							});
-
 						}
 
 						function circleGroupMaker(radius, c_left, c_top, text_label, text_number, fontSize, text_x, text_y) {
@@ -933,13 +921,8 @@
 									index++;
 								}, 4500);
 							})
-							// 
 						}, 86400000)
-
 					})
-
-
-
 				}
 			}
 		}
