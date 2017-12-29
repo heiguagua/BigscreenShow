@@ -8,6 +8,8 @@ const Gulp = require("gulp"),
       MinHtml = require('gulp-htmlmin'),
       Replace = require('gulp-replace'),
       Delete = require('del');
+        archiver = require("archiver");
+      fs = require("fs");
 
 /** gulp */
 Gulp.task('pack', () => {
@@ -53,7 +55,7 @@ Gulp.task('default', ['pack'], () => {
 /** gulp build */
 Gulp.task('build', () => {
   const source = './artifact/';
-  const target = './release/';
+  const target = './build/';
   // html
   Gulp.src([source + 'partials/**/*.html'])
     .pipe(MinHtml({collapseWhitespace: true}))
@@ -84,7 +86,18 @@ Gulp.task('build', () => {
 
 /** gulp clean */
 Gulp.task('clean', () => {
-  Delete([
-    './release/**/*'
-  ]);
+  Delete(["./release/**/*", './build/**/*']);
+});
+
+/** gulp release */
+Gulp.task("release", () => {
+  !fs.existsSync("release") ? fs.mkdirSync("release") : {};
+  //const output = fs.createWriteStream("./release/release " + timestamp + ".zip");
+  const output = fs.createWriteStream("./release/CZPortal" + ".zip");
+  const archive = archiver("zip", {
+    prefix: "release"
+  });
+  archive.pipe(output);
+  archive.directory("./build", 'CZPortal');
+  archive.finalize();
 });
