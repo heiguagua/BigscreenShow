@@ -60,30 +60,9 @@
 			catalogService.getDeptCatalog().then(function(res) {
 				if (res && res.data) {
 					circleDataFormat(res);
-					console.log($scope.active_index);
-					console.log($scope.active_index_down);
 					setTimeout(function() {
 						canvas = this.__canvas = new fabric.Canvas('mycanvas');
 						var each_degree = 360 / $scope.data_total_length;
-
-						function splice_arr(type) {
-							if (type == 1) {
-								$scope.data1.splice(0, 0, $scope.data1[$scope.lens - 1]);
-								$scope.data1.splice($scope.lens, 1);
-								$scope.data_number1.splice(0, 0, $scope.data_number1[$scope.lens - 1]);
-								$scope.data_number1.splice($scope.lens, 1);
-								$scope.data_code1.splice(0, 0, $scope.data_code1[$scope.lens - 1]);
-								$scope.data_code1.splice($scope.lens, 1);
-							}
-							if (type == 2) {
-								$scope.data2.splice(0, 0, $scope.data2[$scope.len2 - 1]);
-								$scope.data2.splice($scope.len2, 1);
-								$scope.data_number2.splice(0, 0, $scope.data_number2[$scope.len2 - 1]);
-								$scope.data_number2.splice($scope.len2, 1);
-								$scope.data_code2.splice(0, 0, $scope.data_code2[$scope.len2 - 1]);
-								$scope.data_code2.splice($scope.len2, 1);
-							}
-						}
 
 						$scope.draw = function() {
 							canvas.clear();
@@ -122,11 +101,11 @@
 									text_angle = 180;
 									text_origin_x = 'right';
 								}
-								var group1 = groupMaker(1, i, $scope.data_number1[i], $scope.data1[i], $scope.data_code1[i], text_origin_x, text_angle, corner, radian);
+								var group1 = groupMaker(1, i, $scope.data1[i],  text_origin_x, text_angle, corner, radian);
 								canvas.add(group1);
 								animatePlanet(group1, i, each_degree, corner, $scope.lens);
 
-								var group2 = groupMaker(2, i, $scope.data_number2[i], $scope.data2[i], $scope.data_code2[i], text_origin_x_town, text_angle_town, corner_town, radian_town);
+								var group2 = groupMaker(2, i,  $scope.data2[i],  text_origin_x_town, text_angle_town, corner_town, radian_town);
 								canvas.add(group2);
 								animatePlanet(group2, i, each_degree, corner_town, $scope.len2);
 
@@ -134,11 +113,7 @@
 						}
 
 						init();
-						$scope.timer1 = $interval(function() {
-							$scope.draw();
-							getDataByDept(1, $scope.data_code1[$scope.active_index], $scope.data1[$scope.active_index]);
-							getDataByDept(2, $scope.data_code2[$scope.active_index_down], $scope.data2[$scope.active_index_down]);
-						}, 5000)
+						
 
 						canvas.on('mouse:over', function(e) {
 							var n = e.target;
@@ -146,7 +121,7 @@
 								$interval.cancel($scope.timer1);
 								$scope.timer1 = null;
 								if (n.g_type == 1 && n.dept_data.text != '') {
-									if ("崇信大数据" != n.dept_data.text && "市供电分公司" != n.dept_data.text) {
+									if ("Z" != n.dept_data.dept_type) {
 										n.dept_data.set({
 											'fill': dept_text_color.num_active
 										});
@@ -179,7 +154,7 @@
 							if ((n && n.dept_data) || (n && n.dept_number)) {
 
 								if (n.g_type == 1 && n.dept_data.text != '' && $scope.active_index != n.g_index) {
-									if ("崇信大数据" != n.dept_data.text && "市供电分公司" != n.dept_data.text) {
+									if ("Z" != n.dept_data.dept_type) {
 										n.dept_data.set({
 											'fill': dept_text_color.normal
 										});
@@ -206,8 +181,8 @@
 								$interval.cancel($scope.timer1);
 								$scope.timer1 = $interval(function() {
 									$scope.draw();
-									getDataByDept(1, $scope.data_code1[$scope.active_index], $scope.data1[$scope.active_index]);
-									getDataByDept(2, $scope.data_code2[$scope.active_index_down], $scope.data2[$scope.active_index_down]);
+									getDataByDept(1, _.map($scope.data1,"dept_code")[$scope.active_index], _.map($scope.data1,"dept_short_name")[$scope.active_index]);
+									getDataByDept(2, _.map($scope.data2,"dept_code")[$scope.active_index_down], _.map($scope.data2,"dept_short_name")[$scope.active_index_down]);
 								}, 5000)
 							}
 							canvas.renderAll();
@@ -222,6 +197,17 @@
 
 							}
 						})
+
+						function splice_arr(type) {
+							if (type == 1) {
+								$scope.data1.splice(0, 0, $scope.data1[$scope.lens - 1]);
+								$scope.data1.splice($scope.lens, 1);
+							}
+							if (type == 2) {
+								$scope.data2.splice(0, 0, $scope.data2[$scope.len2 - 1]);
+								$scope.data2.splice($scope.len2, 1);
+							}
+						}
 
 						function animatePlanet(oImg, planetIndex, each_degree, corner, lens) {
 
@@ -280,7 +266,7 @@
 												'fill': town_text_color.num_active
 											});
 										}
-										if ("崇信大数据" == oImg.dept_data.text || "市供电分公司" == oImg.dept_data.text) {
+										if ("Z" == oImg.dept_data.dept_type) {
 											oImg.dept_data.set({
 												'fill': "#c8eb24"
 											});
@@ -307,17 +293,17 @@
 							})();
 						}
 
-						function groupMaker(type, index, text_number, text_dept, dept_code, origin_x, text_angle, corner, radian) {
+						function groupMaker(type, index,  obj_dept,  origin_x, text_angle, corner, radian) {
 							var bg_rect = dept_text_color.num_bg;
 							var text_color = dept_text_color.normal;
 							var number_color = dept_text_color.num;
 							if (type == 2) {
 								text_color = town_text_color.normal;
 							}
-							if (text_number == "") {
+							if (obj_dept.num == "") {
 								bg_rect = 'transparent';
 							}
-							if (text_dept == "崇信大数据" || text_dept == "市供电分公司") {
+							if (obj_dept.dept_type == "Z" ) {
 								text_color = "#c8eb24";
 							}
 							var rect = new fabric.Rect({
@@ -331,7 +317,7 @@
 								centeredRotation: true,
 							});
 
-							var text = new fabric.Text("" + text_number, {
+							var text = new fabric.Text("" + obj_dept.num, {
 								fontSize: 20,
 								fill: number_color,
 								originX: origin_x,
@@ -351,10 +337,11 @@
 
 
 
-							var text2 = new fabric.Text(text_dept, {
+							var text2 = new fabric.Text(obj_dept.dept_short_name, {
 								centeredRotation: true,
 								fontSize: 23,
-								dept_code: dept_code,
+								dept_code: obj_dept.dept_code,
+								dept_type:obj_dept.dept_type,
 								fill: text_color,
 								originX: origin_x,
 								originY: 'center',
@@ -448,9 +435,16 @@
 
 						function init() {
 							$scope.draw();
-							getDataByDept(1, $scope.data_code1[$scope.active_index], $scope.data1[$scope.active_index]);
-							getDataByDept(2, $scope.data_code2[$scope.active_index_down], $scope.data2[$scope.active_index_down]);
+							getDataByDept(1, _.map($scope.data1,"dept_code")[$scope.active_index], _.map($scope.data1,"dept_short_name")[$scope.active_index]);
+							getDataByDept(2, _.map($scope.data2,"dept_code")[$scope.active_index_down], _.map($scope.data2,"dept_short_name")[$scope.active_index_down]);
 							getDataCount();
+
+							$scope.timer1 = $interval(function() {
+								$scope.draw();
+								getDataByDept(1, _.map($scope.data1,"dept_code")[$scope.active_index], _.map($scope.data1,"dept_short_name")[$scope.active_index]);
+								getDataByDept(2, _.map($scope.data2,"dept_code")[$scope.active_index_down], _.map($scope.data2,"dept_short_name")[$scope.active_index_down]);
+								
+							}, 5000)
 						}
 					}, 500)
 				}
@@ -466,14 +460,9 @@
 				var data1_temp = grouped_data["C"];
 				var data_ent = grouped_data["Z"];
 				var union_data = _.union(data1_temp, data_ent);
-				$scope.data1 = _.map(union_data, "dept_short_name");
-				$scope.data2 = _.map(grouped_data["X"], "dept_short_name");
 
-				$scope.data_number1 = _.map(union_data, "num");
-				$scope.data_number2 = _.map(grouped_data["X"], "num");
-
-				$scope.data_code1 = _.map(union_data, "dept_code");
-				$scope.data_code2 = _.map(grouped_data["X"], "dept_code");
+				$scope.data1 = union_data;
+				$scope.data2 = grouped_data["X"];
 
 				$scope.lens = $scope.data1.length;
 				$scope.len2 = $scope.data2.length;
@@ -483,17 +472,12 @@
 				$scope.active_index = Math.floor($scope.lens-$scope.data_total_length/4);		// 高亮显示的部门序号
 				$scope.active_index_down = Math.floor($scope.data_total_length/4); // 高亮显示的乡镇序号
 
-
 				for (var i = 0; i < $scope.data_total_length; i++) {
 					if (!$scope.data1[i]) {
-						$scope.data1.push('');
-						$scope.data_number1.push('');
-						$scope.data_code1.push('');
+						$scope.data1.push({"dept_short_name":"","dept_code":"","num":"","dept_type":""});
 					}
 					if (!$scope.data2[i]) {
-						$scope.data2.push('');
-						$scope.data_number2.push('');
-						$scope.data_code2.push('');
+						$scope.data2.push({"dept_short_name":"","dept_code":"","num":""});
 					}
 
 				}
