@@ -1162,6 +1162,12 @@
     background: url(../assets/images/bg_main.png) no-repeat center;
     background-size: 100%;
 
+    @media screen and(max-width:1921px) {
+      padding-top: 140px;
+    }
+    @media screen and(max-width:1400px) {
+      padding-top: 100px;
+    }
     .cata-side {
       .flex-column;
       height: 100%;
@@ -1171,6 +1177,11 @@
         padding: 3rem 0 2rem 2rem;
         font-size: 26px;
         height: 100%;
+
+        @media screen and(max-width:1921px) {
+          padding: 1rem 0 1rem .5rem;
+        }
+
       }
 
       .cata-title {
@@ -1181,6 +1192,25 @@
 
         &.sub {
           font-size: 30px;
+        }
+
+        @media screen and(max-width:1921px) {
+          padding-left: 52px;
+          background-size: 32px 32px;
+          font-size: 28px;
+
+          &.sub {
+            font-size: 22px;
+          }
+
+        }
+         @media screen and(max-width:1400px) {
+          background-size: 32px 32px;
+          font-size: 18px;
+          &.sub {
+            font-size: 14px;
+          }
+
         }
 
       }
@@ -1199,10 +1229,7 @@
           overflow: hidden;
           padding: 3rem 0 2rem 3rem;
 
-          @media screen and(min-width:1400px) {
-            padding: 2rem 0 1rem 3rem;
-          }
-
+          
           .item-name {
             font-weight: 100;
             margin-bottom: 0;
@@ -1211,8 +1238,8 @@
           .item-number {
             font-size: 42px;
             display: inline-block;
-                min-width: 125px;
-    min-height: 49px;
+            min-width: 125px;
+            min-height: 49px;
           }
 
           .number_line_1 {
@@ -1238,6 +1265,25 @@
             background-size: auto 6px;
             padding-bottom: 6px;
           }
+          @media screen and(min-width:1400px) {
+            padding: 2rem 0 1rem 3rem;
+          }
+
+          @media screen and(max-width:1921px) {
+            font-size: 20px;
+            padding: 1rem 0 1rem 1rem;
+          }
+          @media screen and(max-width:1400px) {
+            font-size: 14px;
+            .item-number{
+                  font-size: 28px;
+              min-width: 76px;
+              min-height: 40px;
+            }
+            .number_line_1,.number_line_2,.number_line_3,.number_line_4{
+                background-size: auto 4px;
+            }
+          }
 
         }
 
@@ -1251,11 +1297,23 @@
         margin: 0 auto;
         margin-top: 6rem;
 
+        @media screen and(max-width:1921px) {
+          margin-top: 2rem;
+        }
+
         #themeRankChart {
           width: 100%;
           height: 70%;
-          margin-top:50px;
-          background:url(../assets/images/bar_line.png) no-repeat top center;
+          margin-top: 50px;
+          background: url(../assets/images/bar_line.png) no-repeat top center;
+
+          @media screen and(max-width:1921px) {
+            background-size: 100%;
+          }
+          @media screen and(max-width:1400px) {
+          margin-top:30px;
+          }
+
         }
 
       }
@@ -1274,14 +1332,22 @@
         height: 100%;
         background: url(../assets/images/bg_circle.png) no-repeat center;
         background-size: 580px 580px;
-        .cata-map{
+
+        @media screen and(max-width:1921px) {
+          background-size: 380px 380px;
+        }
+        @media screen and(max-width:1400px) {
+          background-size: 300px 300px;
+        }
+        .cata-map {
           position: absolute;
-          width:100%;
-          height:230px;
+          width: 100%;
+          height: 230px;
           background: url(../assets/images/cata_map.png) no-repeat bottom center;
           background-size: 100% 100%;
-          bottom:0;
+          bottom: 0;
         }
+
         .cata-center-data {
           position: absolute;
           left: 37%;
@@ -1292,12 +1358,34 @@
           font-size: 18px;
           text-align: center;
 
+          @media screen and(max-width:1921px) {
+            left: 38%;
+            top: 44%;
+            width: 200px;
+            height: 200px;
+            font-size: 14px;
+          }
+          @media screen and(max-width:1400px) {
+          left: 32.5%;
+    top: 43%;
+                width: 200px;
+    height: 140px;
+    font-size: 10px;
+          }
           .cata-visit-total {
             color: #c8cbd7;
             font-size: 58px;
             display: block;
             background: url(../assets/images/num_line.png) no-repeat bottom center;
             background-size: 100%;
+
+            @media screen and(max-width:1921px) {
+              font-size: 32px;
+            }
+            @media screen and(max-width:1400px) {
+            font-size: 22px;
+          }
+
           }
 
           .visit-item {
@@ -1310,21 +1398,47 @@
           }
 
         }
-        .line-left{
+
+        .line-left {
           position: absolute;
-          width:221px;
-          height:138px;
-          top:39.6%;
+          width: 221px;
+          height: 138px;
+          top: 39.6%;
           left: -12%;
           background: url(../assets/images/line_left.png) no-repeat center;
+
+          @media screen and(max-width:1921px) {
+            width: 141px;
+            height: 78px;
+            top: 41%;
+            background-size: 100% 100%;
+          }
+          @media screen and(max-width:1400px) {
+               width: 105px;
+    height: 56px;
+          }
+
         }
-        .line-right{
+
+        .line-right {
           position: absolute;
-          width:221px;
-          height:138px;
-          top:39.6%;
-          right:-12%;
+          width: 221px;
+          height: 138px;
+          top: 39.6%;
+          right: -12%;
           background: url(../assets/images/line_right.png) no-repeat center;
+
+          @media screen and(max-width:1921px) {
+            width: 141px;
+            height: 78px;
+            top: 41%;
+            background-size: 100% 100%;
+          }
+          @media screen and(max-width:1400px) {
+               width: 105px;
+    height: 56px;
+          }
+
         }
 
       }
@@ -1717,11 +1831,14 @@
           }
 
         }
-        .profile-right-wrap{
-          .slick-prev,.slick-next{
-            display:none !important;
+
+        .profile-right-wrap {
+          .slick-prev, .slick-next {
+            display: none !important;
           }
+
         }
+
       }
 
       .profile-item {

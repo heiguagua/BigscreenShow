@@ -6,6 +6,9 @@
 	catalog.controller('catalogController', [
 		'$scope', 'catalogService', '$rootScope', '$interval', '$timeout',
 		function($scope, catalogService, $rootScope, $interval, $timeout) {
+			var screen_width = screen.width;
+            var screen_height = screen.height;
+
 			var rotationSpeed = 3000;
 			var wrap = {
 				x: 530,
@@ -13,6 +16,22 @@
 				radius: 320,
 				radius_inner: 310
 			};
+			$scope.center_canvas_width = "1060px";
+			$scope.center_canvas_height = "1360px";
+			setTimeout(function(){
+				if(screen_width<1921){
+							var cata_center_width = $(".cata-center").width();
+							var cata_center_height = $(".cata-center").height();
+							wrap.radius_inner = 200;
+							wrap.x = cata_center_width/2;
+							wrap.y = cata_center_height/2;
+							$scope.center_canvas_width = cata_center_width + "px";
+							$scope.center_canvas_height = cata_center_height + "px";;
+				}
+				if(screen_width<1400){
+							wrap.radius_inner = 145;
+				}
+			},500)
 			var dept_text_color = {
 				normal: "rgb(31,234,193)",
 				num_bg: "rgba(50,193,253,.23)",
@@ -61,6 +80,7 @@
 				if (res && res.data) {
 					circleDataFormat(res);
 					setTimeout(function() {
+
 						canvas = this.__canvas = new fabric.Canvas('mycanvas');
 						var each_degree = 360 / $scope.data_total_length;
 
@@ -297,6 +317,20 @@
 							var bg_rect = dept_text_color.num_bg;
 							var text_color = dept_text_color.normal;
 							var number_color = dept_text_color.num;
+							var fontSize = 20;
+							var dis_radius = 145;
+							var rect_width = 42;
+							var rect_height = 26;
+							if(screen_width<1921){
+								fontSize = 16;
+								dis_radius = 120;
+							}
+							if(screen_width<1400){
+								fontSize = 10;
+								dis_radius = 80;
+								rect_width = 26;
+								rect_height = 18;
+							}
 							if (type == 2) {
 								text_color = town_text_color.normal;
 							}
@@ -307,8 +341,8 @@
 								text_color = "#c8eb24";
 							}
 							var rect = new fabric.Rect({
-								width: 42,
-								height: 26,
+								width: rect_width,
+								height: rect_height,
 								fill: bg_rect,
 								originX: 'left',
 								originY: 'left',
@@ -318,7 +352,7 @@
 							});
 
 							var text = new fabric.Text("" + obj_dept.num, {
-								fontSize: 20,
+								fontSize: fontSize,
 								fill: number_color,
 								originX: origin_x,
 								originY: 'center',
@@ -332,14 +366,14 @@
 								selectable: false,
 								hasControls: false,
 								hoverCursor: 'pointer',
-								left: 145
+								left: dis_radius
 							});
 
 
 
 							var text2 = new fabric.Text(obj_dept.dept_short_name, {
 								centeredRotation: true,
-								fontSize: 23,
+								fontSize: fontSize+3,
 								dept_code: obj_dept.dept_code,
 								dept_type:obj_dept.dept_type,
 								fill: text_color,
@@ -585,8 +619,37 @@
 				restrict: 'ACE',
 				template: "<div id='themeRank' style='width:700px;height:500px'></div>",
 				link: function(scope, element, attrs) {
-					var chartInstance = echarts.init((element.find('#themeRank'))[0]);
+					var screen_width = screen.width;
+					scope.grid_bottom = 80;
+					scope.grid_top = -15;
+					scope.grid_left = 160;
+					scope.grid_right = 160;
+					scope.symbol_margin = '50%';
+					scope.fontSize = 22;
+					scope.symbolSize = [5,30];
 					catalogService.getThemeRank().then(function(result) {
+						if(screen_width < 1921){
+							(element.find('#themeRank'))[0].style.width = "500px";
+							scope.grid_bottom = 200;
+							scope.grid_top = -10;
+							scope.grid_left = 120;
+							scope.grid_right = 100;
+							scope.fontSize = 18;
+							scope.symbolSize = [3,18];
+							scope.symbol_margin = '60%';
+						}
+						if(screen_width < 1400){
+							(element.find('#themeRank'))[0].style.width = "360px";
+							scope.grid_bottom = 300;
+							scope.grid_top = -6;
+							scope.grid_left = 100;
+							scope.grid_right = 100;
+							scope.fontSize = 14;
+							scope.symbolSize = [2,14];
+							scope.symbol_margin = '70%';
+						}
+						
+						var chartInstance = echarts.init((element.find('#themeRank'))[0]);
 						// bar_bg.png 的base64
 						var fillImg = 'image://data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAlCAYAAACONvPuAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpjMzk2MzljYy1hMzRkLTU3NDktODM4Yy05Y2U4YjYxOGYwNmQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QTJEQzNBQ0ZFOUUwMTFFN0I0ODhBMUJCODhGRTI5MTEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QTJEQzNBQ0VFOUUwMTFFN0I0ODhBMUJCODhGRTI5MTEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6ODc1NWY5ZjctZTA1Zi0yYzQ5LThmNTAtODQ0NjVkMGIzMWRhIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6YTUyODk2ODgtYTBhYy0xMWU2LWI3OWUtYTEyZjM3MGIwZTM1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+GjlvQQAAAGpJREFUeNpi5Fx4n5WBgUEGiMWA+D8QfwHiOyA2E5AQhUqAACMQ8wKxJIgDkhRnwAQSQMzFxIAbsOKTZBiVHFaS//BJ/h8NIdpK/sYn+RAUPWjiH4D4K0jyBxA/AuJfQPwXiL9DNfwHCDAAj8ITzGkC6NsAAAAASUVORK5CYII=';
 						// bar.png 的base64
@@ -654,24 +717,24 @@
 											margin: 25,
 											textStyle: {
 												color: '#09a1df',
-												fontSize: 22
+												fontSize: scope.fontSize
 											}
 										}
 									},
 									grid: {
-										top: -15,
-										left: 160,
-										right: 160,
-										bottom: 80
+										top: scope.grid_top,
+										left: scope.grid_left,
+										right: scope.grid_right,
+										bottom: scope.grid_bottom
 									},
 									series: [{
 										// 当前数据
 										type: 'pictorialBar',
 										symbol: spirit,
 										symbolRepeat: 'fixed',
-										symbolMargin: '50%',
+										symbolMargin: scope.symbol_margin,
 										symbolClip: true,
-										symbolSize: [5, 32],
+										symbolSize: scope.symbolSize,
 										symbolBoundingData: maxData,
 										data: themeDataTemp,
 
@@ -689,7 +752,7 @@
 												offset: [20, 0],
 												textStyle: {
 													color: '#c8cbd7',
-													fontSize: 22,
+													fontSize: scope.fontSize,
 													align: 'left',
 													fontFamily: 'digiFont'
 												}
@@ -697,9 +760,9 @@
 										},
 										animationDuration: 0,
 										symbolRepeat: 'fixed',
-										symbolMargin: '50%',
+										symbolMargin: scope.symbol_margin,
 										symbol: fillImg,
-										symbolSize: [5, 32],
+										symbolSize: scope.symbolSize,
 										symbolBoundingData: maxData,
 										data: themeDataTemp,
 										z: 5
@@ -726,6 +789,7 @@
 				restrict: 'ACE',
 				template: '<canvas id="bubblecanvas" width="780" height="710" ></canvas>',
 				link: function(scope, element, attrs) {
+					var screen_width = screen.width;
 					// 数据专题
 					var bubblecanvas = null;
 					var groups = [];
@@ -810,6 +874,10 @@
 						}
 
 						function circleGroupMaker(radius, c_left, c_top, text_label, text_number, fontSize, text_x, text_y) {
+							var sub_margin_dis = 45;
+							if(screen_width<1400){
+								sub_margin_dis = 40;
+							}
 							var circle = new fabric.Circle({
 								left: c_left,
 								top: c_top,
@@ -840,7 +908,7 @@
 							});
 							var text_number = new fabric.Text(text_number, {
 								left: text.left - 5,
-								top: text.top + 45 + fontSize,
+								top: text.top + sub_margin_dis + fontSize,
 								fill: 'transparent',
 								fontSize: fontSize,
 								opacity: 0
@@ -863,20 +931,37 @@
 							var sub_str = "";
 							_.forEach(res_data, function(n) {
 								if (n.subjectName.length > 11) {
-									sub_str = n.subjectName.substring(0, 6);
-									n.subjectName = sub_str + "\n" + n.subjectName.substring(6, 15);
+									sub_str = n.subjectName.substring(0, 7);
+									n.subjectName = sub_str + "\n" + n.subjectName.substring(7, 15);
 								} else {
 									sub_str = n.subjectName.substring(0, 4);
 									n.subjectName = sub_str + "\n" + n.subjectName.substring(4, 10);
 								}
 
 							})
+							
 							var group1 = circleGroupMaker(80, 50, 30, res_data[0].subjectName, ' 专题个数：' + res_data[0].num, 14, 86, 83);
 							var group2 = circleGroupMaker(75, 240, 100, res_data[1].subjectName, '  专题个数：' + res_data[1].num, 13, 275, 153);
 							var group3 = circleGroupMaker(103, 410, 0, res_data[2].subjectName, '   专题个数：' + res_data[2].num, 18, 452, 73);
 							var group4 = circleGroupMaker(64, 120, 260, res_data[3].subjectName, '  专题个数：' + res_data[3].num, 10, 150, 305);
 							var group5 = circleGroupMaker(86, 320, 260, res_data[4].subjectName, ' 专题个数：' + res_data[4].num, 16, 358, 315);
 							var group6 = circleGroupMaker(72, 540, 200, res_data[5].subjectName, '        专题个数：' + res_data[5].num, 10, 552, 250);
+							if(screen_width<1921){
+								var group1 = circleGroupMaker(60, 20, 30, res_data[0].subjectName, ' 专题个数：' + res_data[0].num, 10, 43, 70);
+								var group2 = circleGroupMaker(55, 160, 95, res_data[1].subjectName, '  专题个数：' + res_data[1].num, 9, 180, 132);
+								var group3 = circleGroupMaker(70, 300, 0, res_data[2].subjectName, '    专题个数：' + res_data[2].num, 12, 318, 50);
+								var group4 = circleGroupMaker(48, 40, 210, res_data[3].subjectName, ' 专题个数：' + res_data[3].num, 6, 60, 240);
+								var group5 = circleGroupMaker(66, 220, 220, res_data[4].subjectName, '  专题个数：' + res_data[4].num, 12, 247, 262);
+								var group6 = circleGroupMaker(58, 370, 170, res_data[5].subjectName, '       专题个数：' + res_data[5].num, 6, 378, 217);
+							}
+							if(screen_width<1400){
+								var group1 = circleGroupMaker(42, 20, 30, res_data[0].subjectName, ' 专题个数：' + res_data[0].num, 6, 35, 50);
+								var group2 = circleGroupMaker(38, 115, 75, res_data[1].subjectName, '  专题个数：' + res_data[1].num, 5, 128, 100);
+								var group3 = circleGroupMaker(50, 200, 0, res_data[2].subjectName, '    专题个数：' + res_data[2].num, 8, 210, 35);
+								var group4 = circleGroupMaker(35, 40, 170, res_data[3].subjectName, ' 专题个数：' + res_data[3].num, 3, 52, 194);
+								var group5 = circleGroupMaker(46, 160, 150, res_data[4].subjectName, '  专题个数：' + res_data[4].num, 6, 178, 182);
+								var group6 = circleGroupMaker(42, 270, 120, res_data[5].subjectName, '       专题个数：' + res_data[5].num, 2, 268, 157);
+							}
 							groups.push(group1);
 							groups.push(group2);
 							groups.push(group3);
