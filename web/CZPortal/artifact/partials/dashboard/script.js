@@ -26,15 +26,7 @@
 
       // 中间屏main切换定时器
       $interval(function(){
-        if($scope.allow_main_toggle){
-          if($scope.catalogShow) {
-            $scope.catalogShow = false;
-          }
-          else{
-            $scope.catalogShow = true;
-          }
-        }
-        
+         $scope.toggleMain();
       },180000)
 
       //main视图鼠标进入
@@ -57,9 +49,11 @@
         if ($scope.allow_main_toggle) { // 鼠标在视图内，禁止自动切换
           if($scope.catalogShow){
             $scope.catalogShow = false;
+            $("#menu-scroll").slick('slickPlay');
           }
           else{
             $scope.catalogShow = true;
+            $("#menu-scroll").slick('slickPause');
           }
         }
       }

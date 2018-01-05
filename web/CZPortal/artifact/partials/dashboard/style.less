@@ -1882,6 +1882,10 @@
         }
 
         .profile-right-wrap {
+          visibility:hidden;
+          &.slick-initialized{
+            visibility:visible;
+          }
           .slick-prev, .slick-next {
             display: none !important;
           }
@@ -1916,13 +1920,11 @@
 
         h4 {
           font-size: 1.4rem;
-          animation: pRotate 4s linear infinite;
         }
 
         .item-num {
           color: rgb(61, 191, 245);
           font-size: 30px;
-          animation: pRotate 4s linear infinite;
 
           @keyframes pRotate {
             89% {
@@ -1945,7 +1947,6 @@
             display: block;
             min-height: 100px;
             top: 4px;
-            animation: pRotate 6s linear infinite;
           }
 
         }

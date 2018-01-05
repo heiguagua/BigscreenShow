@@ -8,9 +8,9 @@
 		'$scope', 'deptService', '$rootScope', '$interval', '$timeout',
 		function($scope, deptService, $rootScope, $interval, $timeout) {
 
-			$scope.toggleMap = 0;
+			$scope.toggleMap = 2;
 			$scope.update_date = new Date();
-			$scope.reqDone = 'hidden';
+			$scope.dept_rank_slicked = false;
 			//部门视图鼠标进入
 			$scope.allow_toggle = true;
 			$scope.mouseEnter = function() {
@@ -29,15 +29,36 @@
 					var temp = angular.copy($scope.toggleMap);
 					$scope.toggleMap = (temp + 1) % 3;
 					if ($scope.toggleMap == 1) {
-						_.forEach($scope.deptAccessData, function(item) {
-							item.i_width = '0%';
-						})
-						$timeout(function() {
-							_.forEach($scope.deptAccessData, function(item) {
-								item.i_width = item.dataNum / $scope.deptAccessMax * 100 + '%';
-							})
-							$('.dept-access-rank').slick('slickGoTo', 0);
-						}, 1000)
+						if(!$scope.dept_rank_slicked){
+							$timeout(function() {
+								$(".dept-access-rank").slick({
+									slidesToShow: 8,
+									slidesToScroll: 1,
+									autoplay: true,
+									autoplaySpeed: 2500,
+									vertical: true,
+									verticalSwiping: true
+								});
+							}, 100);
+							$scope.dept_rank_slicked = true;
+						}
+						else{
+							$('.dept-access-rank').slick('slickPlay');
+							
+						}
+						
+					}
+					else{
+						if($scope.dept_rank_slicked){
+							$('.dept-access-rank').slick('slickPause');
+						}
+						
+					}
+					if($scope.toggleMap != 2){
+						$('.profile-right-wrap').slick('slickPause');
+					}
+					else{
+						$('.profile-right-wrap').slick('slickPlay');
 					}
 
 
@@ -72,15 +93,13 @@
 					$timeout(function() {
 						
 						$(".profile-right-wrap").slick({
-							slidesToShow: 2,
+							slidesToShow: 3,
 							slidesToScroll: 1,
 							autoplay: true,
 							autoplaySpeed: 2500
 						});
-						$timeout(function() {
-						  $scope.reqDone = 'visible';
-						},500);
-					}, 500);
+						
+					}, 10);
 				})
 
 				// 部门已接入数据总量
@@ -90,16 +109,7 @@
 					_.forEach($scope.deptAccessData, function(item) {
 						item.i_width = item.dataNum / $scope.deptAccessMax * 100 + '%';
 					})
-					$timeout(function() {
-						$(".dept-access-rank").slick({
-							slidesToShow: 8,
-							slidesToScroll: 1,
-							autoplay: true,
-							autoplaySpeed: 2500,
-							vertical: true,
-							verticalSwiping: true
-						});
-					}, 10);
+					
 
 
 				})
