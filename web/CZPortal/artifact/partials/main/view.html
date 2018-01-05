@@ -1,6 +1,6 @@
 <div class='section-main main-center' ng-mouseleave="mouseMainLeave()" ng-mouseenter="mouseMainEnter()">
 	<a ng-click="mainToggleClick()" title="{{mainViewTitle}}" class="toggle-tag"><i class="glyphicon glyphicon-transfer"></i></a>
-	<div ng-show="catalogShow">
+	<div ng-show="!catalogShow">
 		  <section wiserv-center-section>
 
 		  </section>
@@ -14,7 +14,7 @@
 	</div>
 
 <!--部门数据目录可视化-->
-	<div class='catalog-main' ng-show="!catalogShow" ng-controller="catalogController" style="visibility:{{cataVisibility}}">
+	<div class='catalog-main' ng-show="catalogShow" ng-controller="catalogController" style="visibility:{{cataVisibility}}">
 		<div class="cata-side col-md-4">
 			<div class="side-up">
 				<div class="side-box">

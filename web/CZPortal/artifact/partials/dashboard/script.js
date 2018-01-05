@@ -52,7 +52,7 @@
         $scope.allow_main_toggle = true;
       }
       // main内容切换
-      $scope.catalogShow = true;
+      $scope.catalogShow = false;
       $scope.toggleMain = function() {
         if ($scope.allow_main_toggle) { // 鼠标在视图内，禁止自动切换
           if($scope.catalogShow){
@@ -581,9 +581,7 @@
         getIndustrialPolicy();
       }
 
-      if(!$scope.catalogShow){
-        init();
-      }
+      init();
 
       // 信息资源目录和共享情况内容切换
       $scope.toggleDept = function(){

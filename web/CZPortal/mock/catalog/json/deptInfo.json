@@ -171,11 +171,6 @@
 		"dept_type": "C",
 		"num": 99
 	}, {
-		"dept_code": "510184-B-22",
-		"dept_short_name": "市市场监管局",
-		"dept_type": "C",
-		"num": 18
-	}, {
 		"dept_code": "510184-B-10",
 		"dept_short_name": "市审计局",
 		"dept_type": "C",
@@ -272,7 +267,7 @@
 		"num": 422
 	}, {
 		"dept_code": "510184-F-01",
-		"dept_short_name": "成都崇信大数据服务有限公司",
+		"dept_short_name": "崇信公司",
 		"dept_type": "Z",
 		"num": 11
 	}, {

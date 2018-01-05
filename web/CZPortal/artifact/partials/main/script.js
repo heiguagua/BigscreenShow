@@ -90,7 +90,11 @@
 							for (var i = $scope.data_total_length - 1; i >= 0; i--) {
 
 								// 得出每个圆点需要变换的弧度
-								var data1_start_num = Math.ceil($scope.data_total_length / 4) + 0.5;
+								var added_num = 0.5;// 为了保证两边高亮的在水平线上
+								if($scope.data_total_length == 54){
+									added_num = 0.25;
+								}
+								var data1_start_num = Math.ceil($scope.data_total_length / 4) + added_num;
 								var corner = (i + ($scope.len2 - data1_start_num)) * each_degree;
 								var radian = ((i + ($scope.len2 - data1_start_num)) * each_degree) * Math.PI / 180;
 

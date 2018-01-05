@@ -52,7 +52,7 @@
 
 			$interval(function() {
 				$scope.toggleDept();
-			}, 30000)
+			}, 50000)
 
 			$interval(function() { // 按1小时更新的数据
 				getDataCount(); // 信息资源目录和共享情况
@@ -77,12 +77,10 @@
 							autoplay: true,
 							autoplaySpeed: 2500
 						});
-						$('.profile-right-wrap').on('afterChange', function () {
-						  $timeout(function(){
-						  	$scope.reqDone = 'visible';
-						  },2000)
-						});
-					}, 200);
+						$timeout(function() {
+						  $scope.reqDone = 'visible';
+						},500);
+					}, 500);
 				})
 
 				// 部门已接入数据总量
