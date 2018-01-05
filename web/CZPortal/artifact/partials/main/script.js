@@ -21,12 +21,16 @@
 			if (screen_width < 1921) {
 				$rootScope.center_canvas_width = "780";
 				$rootScope.center_canvas_height = "940";
-				wrap.radius_inner = 200;
-				wrap.x = $rootScope.center_canvas_width / 2;
 				wrap.y = 470;
+				wrap.radius_inner = 200;
 				if (screen_width < 1400) {
+					$rootScope.center_canvas_width = "540";
+					$rootScope.center_canvas_height = "670";
+
+					wrap.y = 335;
 					wrap.radius_inner = 145;
 				}
+				wrap.x = $rootScope.center_canvas_width / 2;
 			}
 
 			var dept_text_color = {
