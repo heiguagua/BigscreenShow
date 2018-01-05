@@ -10,7 +10,7 @@
 
 			$scope.toggleMap = 0;
 			$scope.update_date = new Date();
-			$scope.reqDone = false;
+			$scope.reqDone = 'hidden';
 			//部门视图鼠标进入
 			$scope.allow_toggle = true;
 			$scope.mouseEnter = function() {
@@ -70,15 +70,19 @@
 				deptService.getResourceCombing().then(function(result) {
 					$scope.ResourceCombing = result.data.body[0];
 					$timeout(function() {
-						$scope.reqDone = true;
+						
 						$(".profile-right-wrap").slick({
 							slidesToShow: 2,
 							slidesToScroll: 1,
 							autoplay: true,
 							autoplaySpeed: 2500
 						});
-
-					}, 100);
+						$('.profile-right-wrap').on('afterChange', function () {
+						  $timeout(function(){
+						  	$scope.reqDone = 'visible';
+						  },2000)
+						});
+					}, 200);
 				})
 
 				// 部门已接入数据总量

@@ -1154,7 +1154,18 @@
   width: 3840px;
   height: 2160px;
   overflow: hidden;
+  &.main-center{
+  position: relative;
 
+  .toggle-tag {
+    position: absolute;
+    top: 5rem;
+    right: 3rem;
+    font-size: 30px;
+    color: rgba(0, 142, 189, 0.8);
+    cursor: pointer;
+  }
+  }
   .catalog-main {
     width: 100%;
     height: 100%;
@@ -1295,7 +1306,7 @@
         background-size: 100% 100%;
         width: 100%;
         margin: 0 auto;
-        margin-top: 6rem;
+        margin-top: 4rem;
 
         @media screen and(max-width:1921px) {
           margin-top: 2rem;
@@ -1332,20 +1343,22 @@
         height: 100%;
         background: url(../assets/images/bg_circle.png) no-repeat center;
         background-size: 580px 580px;
-
+         position:relative;
+          top: -35px;
         @media screen and(max-width:1921px) {
           background-size: 380px 380px;
         }
         @media screen and(max-width:1400px) {
           background-size: 300px 300px;
         }
+
         .cata-map {
           position: absolute;
           width: 100%;
           height: 230px;
           background: url(../assets/images/cata_map.png) no-repeat bottom center;
           background-size: 100% 100%;
-          bottom: 0;
+          bottom: -35px;
         }
 
         .cata-center-data {
@@ -1401,17 +1414,17 @@
 
         .line-left {
           position: absolute;
-          width: 221px;
-          height: 138px;
-          top: 39.6%;
+          width: 198px;
+          height: 102px;
+          top: 42%;
           left: -12%;
           background: url(../assets/images/line_left.png) no-repeat center;
-
+          background-size: 100% 100%;
           @media screen and(max-width:1921px) {
             width: 141px;
             height: 78px;
             top: 41%;
-            background-size: 100% 100%;
+                
           }
           @media screen and(max-width:1400px) {
                width: 105px;
@@ -1422,17 +1435,17 @@
 
         .line-right {
           position: absolute;
-          width: 221px;
-          height: 138px;
-          top: 39.6%;
+          width: 198px;
+          height: 102px;
+          top: 42%;
           right: -12%;
           background: url(../assets/images/line_right.png) no-repeat center;
-
+          background-size: 100% 100%;
           @media screen and(max-width:1921px) {
             width: 141px;
             height: 78px;
             top: 41%;
-            background-size: 100% 100%;
+            
           }
           @media screen and(max-width:1400px) {
                width: 105px;
@@ -1824,7 +1837,7 @@
           font-size: 1.5rem;
           padding-right: 3rem;
           clear: left;
-          padding-top: 3rem;
+          padding-top: 6rem;
 
           span {
             color: rgb(65, 177, 195);
@@ -1833,6 +1846,7 @@
         }
 
         .profile-right-wrap {
+          
           .slick-prev, .slick-next {
             display: none !important;
           }
@@ -1893,6 +1907,8 @@
           span {
             font-size: 3rem;
             position: relative;
+            display:block;
+            min-height:100px;
             top: 4px;
             animation: pRotate 6s linear infinite;
           }

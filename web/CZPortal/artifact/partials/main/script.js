@@ -7,7 +7,7 @@
 		'$scope', 'catalogService', '$rootScope', '$interval', '$timeout',
 		function($scope, catalogService, $rootScope, $interval, $timeout) {
 			var screen_width = screen.width;
-            var screen_height = screen.height;
+			var screen_height = screen.height;
 
 			var rotationSpeed = 3000;
 			var wrap = {
@@ -16,22 +16,19 @@
 				radius: 320,
 				radius_inner: 310
 			};
-			$scope.center_canvas_width = "1060px";
-			$scope.center_canvas_height = "1360px";
-			setTimeout(function(){
-				if(screen_width<1921){
-							var cata_center_width = $(".cata-center").width();
-							var cata_center_height = $(".cata-center").height();
-							wrap.radius_inner = 200;
-							wrap.x = cata_center_width/2;
-							wrap.y = cata_center_height/2;
-							$scope.center_canvas_width = cata_center_width + "px";
-							$scope.center_canvas_height = cata_center_height + "px";;
+			$rootScope.center_canvas_width = "1060";
+			$rootScope.center_canvas_height = "1360";
+			if (screen_width < 1921) {
+				$rootScope.center_canvas_width = "780";
+				$rootScope.center_canvas_height = "940";
+				wrap.radius_inner = 200;
+				wrap.x = $rootScope.center_canvas_width / 2;
+				wrap.y = 470;
+				if (screen_width < 1400) {
+					wrap.radius_inner = 145;
 				}
-				if(screen_width<1400){
-							wrap.radius_inner = 145;
-				}
-			},500)
+			}
+
 			var dept_text_color = {
 				normal: "rgb(31,234,193)",
 				num_bg: "rgba(50,193,253,.23)",
@@ -71,7 +68,7 @@
 			$scope.DeptCataData = {}; // 单个市级部门目录数据信息
 			$scope.TownCataData = {}; // 单个乡镇目录数据时信息
 
-			$scope.active_index = 0;		// 高亮显示的部门序号
+			$scope.active_index = 0; // 高亮显示的部门序号
 			$scope.active_index_down = 0; // 高亮显示的乡镇序号
 
 			var canvas = null;
@@ -89,9 +86,9 @@
 							for (var i = $scope.data_total_length - 1; i >= 0; i--) {
 
 								// 得出每个圆点需要变换的弧度
-								var data1_start_num = Math.ceil($scope.data_total_length/4)+0.5;
-								var corner = (i + ($scope.len2-data1_start_num)) * each_degree;
-								var radian = ((i + ($scope.len2-data1_start_num)) * each_degree) * Math.PI / 180;
+								var data1_start_num = Math.ceil($scope.data_total_length / 4) + 0.5;
+								var corner = (i + ($scope.len2 - data1_start_num)) * each_degree;
+								var radian = ((i + ($scope.len2 - data1_start_num)) * each_degree) * Math.PI / 180;
 
 								var corner_town = (i - data1_start_num) * each_degree;
 								var radian_town = ((i - data1_start_num) * each_degree) * Math.PI / 180;
@@ -121,11 +118,11 @@
 									text_angle = 180;
 									text_origin_x = 'right';
 								}
-								var group1 = groupMaker(1, i, $scope.data1[i],  text_origin_x, text_angle, corner, radian);
+								var group1 = groupMaker(1, i, $scope.data1[i], text_origin_x, text_angle, corner, radian);
 								canvas.add(group1);
 								animatePlanet(group1, i, each_degree, corner, $scope.lens);
 
-								var group2 = groupMaker(2, i,  $scope.data2[i],  text_origin_x_town, text_angle_town, corner_town, radian_town);
+								var group2 = groupMaker(2, i, $scope.data2[i], text_origin_x_town, text_angle_town, corner_town, radian_town);
 								canvas.add(group2);
 								animatePlanet(group2, i, each_degree, corner_town, $scope.len2);
 
@@ -133,7 +130,7 @@
 						}
 
 						init();
-						
+
 
 						canvas.on('mouse:over', function(e) {
 							var n = e.target;
@@ -201,8 +198,8 @@
 								$interval.cancel($scope.timer1);
 								$scope.timer1 = $interval(function() {
 									$scope.draw();
-									getDataByDept(1, _.map($scope.data1,"dept_code")[$scope.active_index], _.map($scope.data1,"dept_short_name")[$scope.active_index]);
-									getDataByDept(2, _.map($scope.data2,"dept_code")[$scope.active_index_down], _.map($scope.data2,"dept_short_name")[$scope.active_index_down]);
+									getDataByDept(1, _.map($scope.data1, "dept_code")[$scope.active_index], _.map($scope.data1, "dept_short_name")[$scope.active_index]);
+									getDataByDept(2, _.map($scope.data2, "dept_code")[$scope.active_index_down], _.map($scope.data2, "dept_short_name")[$scope.active_index_down]);
 								}, 5000)
 							}
 							canvas.renderAll();
@@ -313,7 +310,7 @@
 							})();
 						}
 
-						function groupMaker(type, index,  obj_dept,  origin_x, text_angle, corner, radian) {
+						function groupMaker(type, index, obj_dept, origin_x, text_angle, corner, radian) {
 							var bg_rect = dept_text_color.num_bg;
 							var text_color = dept_text_color.normal;
 							var number_color = dept_text_color.num;
@@ -321,11 +318,11 @@
 							var dis_radius = 145;
 							var rect_width = 42;
 							var rect_height = 26;
-							if(screen_width<1921){
+							if (screen_width < 1921) {
 								fontSize = 16;
 								dis_radius = 120;
 							}
-							if(screen_width<1400){
+							if (screen_width < 1400) {
 								fontSize = 10;
 								dis_radius = 80;
 								rect_width = 26;
@@ -337,7 +334,7 @@
 							if (obj_dept.num == "") {
 								bg_rect = 'transparent';
 							}
-							if (obj_dept.dept_type == "Z" ) {
+							if (obj_dept.dept_type == "Z") {
 								text_color = "#c8eb24";
 							}
 							var rect = new fabric.Rect({
@@ -373,9 +370,9 @@
 
 							var text2 = new fabric.Text(obj_dept.dept_short_name, {
 								centeredRotation: true,
-								fontSize: fontSize+3,
+								fontSize: fontSize + 3,
 								dept_code: obj_dept.dept_code,
-								dept_type:obj_dept.dept_type,
+								dept_type: obj_dept.dept_type,
 								fill: text_color,
 								originX: origin_x,
 								originY: 'center',
@@ -469,15 +466,15 @@
 
 						function init() {
 							$scope.draw();
-							getDataByDept(1, _.map($scope.data1,"dept_code")[$scope.active_index], _.map($scope.data1,"dept_short_name")[$scope.active_index]);
-							getDataByDept(2, _.map($scope.data2,"dept_code")[$scope.active_index_down], _.map($scope.data2,"dept_short_name")[$scope.active_index_down]);
+							getDataByDept(1, _.map($scope.data1, "dept_code")[$scope.active_index], _.map($scope.data1, "dept_short_name")[$scope.active_index]);
+							getDataByDept(2, _.map($scope.data2, "dept_code")[$scope.active_index_down], _.map($scope.data2, "dept_short_name")[$scope.active_index_down]);
 							getDataCount();
 
 							$scope.timer1 = $interval(function() {
 								$scope.draw();
-								getDataByDept(1, _.map($scope.data1,"dept_code")[$scope.active_index], _.map($scope.data1,"dept_short_name")[$scope.active_index]);
-								getDataByDept(2, _.map($scope.data2,"dept_code")[$scope.active_index_down], _.map($scope.data2,"dept_short_name")[$scope.active_index_down]);
-								
+								getDataByDept(1, _.map($scope.data1, "dept_code")[$scope.active_index], _.map($scope.data1, "dept_short_name")[$scope.active_index]);
+								getDataByDept(2, _.map($scope.data2, "dept_code")[$scope.active_index_down], _.map($scope.data2, "dept_short_name")[$scope.active_index_down]);
+
 							}, 5000)
 						}
 					}, 500)
@@ -503,15 +500,24 @@
 
 				$scope.data_total_length = $scope.data1.length + $scope.data2.length;
 
-				$scope.active_index = Math.floor($scope.lens-$scope.data_total_length/4);		// 高亮显示的部门序号
-				$scope.active_index_down = Math.floor($scope.data_total_length/4); // 高亮显示的乡镇序号
+				$scope.active_index = Math.floor($scope.lens - $scope.data_total_length / 4); // 高亮显示的部门序号
+				$scope.active_index_down = Math.floor($scope.data_total_length / 4); // 高亮显示的乡镇序号
 
 				for (var i = 0; i < $scope.data_total_length; i++) {
 					if (!$scope.data1[i]) {
-						$scope.data1.push({"dept_short_name":"","dept_code":"","num":"","dept_type":""});
+						$scope.data1.push({
+							"dept_short_name": "",
+							"dept_code": "",
+							"num": "",
+							"dept_type": ""
+						});
 					}
 					if (!$scope.data2[i]) {
-						$scope.data2.push({"dept_short_name":"","dept_code":"","num":""});
+						$scope.data2.push({
+							"dept_short_name": "",
+							"dept_code": "",
+							"num": ""
+						});
 					}
 
 				}
@@ -626,29 +632,29 @@
 					scope.grid_right = 160;
 					scope.symbol_margin = '50%';
 					scope.fontSize = 22;
-					scope.symbolSize = [5,30];
+					scope.symbolSize = [5, 30];
 					catalogService.getThemeRank().then(function(result) {
-						if(screen_width < 1921){
+						if (screen_width < 1921) {
 							(element.find('#themeRank'))[0].style.width = "500px";
 							scope.grid_bottom = 200;
 							scope.grid_top = -10;
 							scope.grid_left = 120;
 							scope.grid_right = 100;
 							scope.fontSize = 18;
-							scope.symbolSize = [3,18];
+							scope.symbolSize = [3, 18];
 							scope.symbol_margin = '60%';
 						}
-						if(screen_width < 1400){
+						if (screen_width < 1400) {
 							(element.find('#themeRank'))[0].style.width = "360px";
 							scope.grid_bottom = 300;
 							scope.grid_top = -6;
 							scope.grid_left = 100;
 							scope.grid_right = 100;
 							scope.fontSize = 14;
-							scope.symbolSize = [2,14];
+							scope.symbolSize = [2, 14];
 							scope.symbol_margin = '70%';
 						}
-						
+
 						var chartInstance = echarts.init((element.find('#themeRank'))[0]);
 						// bar_bg.png 的base64
 						var fillImg = 'image://data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAlCAYAAACONvPuAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpjMzk2MzljYy1hMzRkLTU3NDktODM4Yy05Y2U4YjYxOGYwNmQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QTJEQzNBQ0ZFOUUwMTFFN0I0ODhBMUJCODhGRTI5MTEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QTJEQzNBQ0VFOUUwMTFFN0I0ODhBMUJCODhGRTI5MTEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6ODc1NWY5ZjctZTA1Zi0yYzQ5LThmNTAtODQ0NjVkMGIzMWRhIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6YTUyODk2ODgtYTBhYy0xMWU2LWI3OWUtYTEyZjM3MGIwZTM1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+GjlvQQAAAGpJREFUeNpi5Fx4n5WBgUEGiMWA+D8QfwHiOyA2E5AQhUqAACMQ8wKxJIgDkhRnwAQSQMzFxIAbsOKTZBiVHFaS//BJ/h8NIdpK/sYn+RAUPWjiH4D4K0jyBxA/AuJfQPwXiL9DNfwHCDAAj8ITzGkC6NsAAAAASUVORK5CYII=';
@@ -675,99 +681,99 @@
 
 						function themeRankDataFormat(result) {
 
-								var res_data = _.sortBy(result.data.body, function(n) {
-									return -n.num;
-								});
-								//var themeNameAll = ['交通运输', '住宿旅游', '餐饮美食', '医疗健康', '生活服务', '文娱娱乐', '消费购物', '房屋土地', '环境资源', '企业服务', '农业农村', '经济发展', '政法监察', '生活安全'];
-								//var themeDataAll = [189, 182, 166, 127, 76, 64, 60, 52, 47, 45, 39, 31, 16, 5];
-								scope.themeNameAll = _.map(res_data, 'themeName');
-								scope.themeDataAll = _.map(res_data, 'num');
+							var res_data = _.sortBy(result.data.body, function(n) {
+								return -n.num;
+							});
+							//var themeNameAll = ['交通运输', '住宿旅游', '餐饮美食', '医疗健康', '生活服务', '文娱娱乐', '消费购物', '房屋土地', '环境资源', '企业服务', '农业农村', '经济发展', '政法监察', '生活安全'];
+							//var themeDataAll = [189, 182, 166, 127, 76, 64, 60, 52, 47, 45, 39, 31, 16, 5];
+							scope.themeNameAll = _.map(res_data, 'themeName');
+							scope.themeDataAll = _.map(res_data, 'num');
 
-								var maxData = _.max(scope.themeDataAll) + 10; // 最大值
-								scope.data_length = scope.themeNameAll.length;
-								var themeNameTemp = angular.copy(scope.themeNameAll);
-								var themeDataTemp = angular.copy(scope.themeDataAll);
+							var maxData = _.max(scope.themeDataAll) + 10; // 最大值
+							scope.data_length = scope.themeNameAll.length;
+							var themeNameTemp = angular.copy(scope.themeNameAll);
+							var themeDataTemp = angular.copy(scope.themeDataAll);
 
-								themeNameTemp.splice(6, scope.themeNameAll.length - 6);
-								themeDataTemp.splice(6, themeDataTemp.length - 6);
-								scope.option = {
-									tooltip: {},
-									xAxis: {
-										max: maxData,
-										splitLine: {
-											show: false
-										},
-										axisTick: {
-											show: false
-										},
-										axisLine: {
-											show: false
-										},
+							themeNameTemp.splice(6, scope.themeNameAll.length - 6);
+							themeDataTemp.splice(6, themeDataTemp.length - 6);
+							scope.option = {
+								tooltip: {},
+								xAxis: {
+									max: maxData,
+									splitLine: {
+										show: false
 									},
-									yAxis: {
-										data: themeNameTemp,
-										inverse: true,
-										axisTick: {
-											show: false
-										},
-										axisLine: {
-											show: false
-										},
-										axisLabel: {
-											margin: 25,
+									axisTick: {
+										show: false
+									},
+									axisLine: {
+										show: false
+									},
+								},
+								yAxis: {
+									data: themeNameTemp,
+									inverse: true,
+									axisTick: {
+										show: false
+									},
+									axisLine: {
+										show: false
+									},
+									axisLabel: {
+										margin: 25,
+										textStyle: {
+											color: '#09a1df',
+											fontSize: scope.fontSize
+										}
+									}
+								},
+								grid: {
+									top: scope.grid_top,
+									left: scope.grid_left,
+									right: scope.grid_right,
+									bottom: scope.grid_bottom
+								},
+								series: [{
+									// 当前数据
+									type: 'pictorialBar',
+									symbol: spirit,
+									symbolRepeat: 'fixed',
+									symbolMargin: scope.symbol_margin,
+									symbolClip: true,
+									symbolSize: scope.symbolSize,
+									symbolBoundingData: maxData,
+									data: themeDataTemp,
+
+									z: 10
+								}, {
+									// 全部数据
+									type: 'pictorialBar',
+									label: {
+										normal: {
+											show: true,
+											formatter: function(params) {
+												return params.value;
+											},
+											position: 'right',
+											offset: [20, 0],
 											textStyle: {
-												color: '#09a1df',
-												fontSize: scope.fontSize
+												color: '#c8cbd7',
+												fontSize: scope.fontSize,
+												align: 'left',
+												fontFamily: 'digiFont'
 											}
 										}
 									},
-									grid: {
-										top: scope.grid_top,
-										left: scope.grid_left,
-										right: scope.grid_right,
-										bottom: scope.grid_bottom
-									},
-									series: [{
-										// 当前数据
-										type: 'pictorialBar',
-										symbol: spirit,
-										symbolRepeat: 'fixed',
-										symbolMargin: scope.symbol_margin,
-										symbolClip: true,
-										symbolSize: scope.symbolSize,
-										symbolBoundingData: maxData,
-										data: themeDataTemp,
-
-										z: 10
-									}, {
-										// 全部数据
-										type: 'pictorialBar',
-										label: {
-											normal: {
-												show: true,
-												formatter: function(params) {
-													return params.value;
-												},
-												position: 'right',
-												offset: [20, 0],
-												textStyle: {
-													color: '#c8cbd7',
-													fontSize: scope.fontSize,
-													align: 'left',
-													fontFamily: 'digiFont'
-												}
-											}
-										},
-										animationDuration: 0,
-										symbolRepeat: 'fixed',
-										symbolMargin: scope.symbol_margin,
-										symbol: fillImg,
-										symbolSize: scope.symbolSize,
-										symbolBoundingData: maxData,
-										data: themeDataTemp,
-										z: 5
-									}]
-								};
+									animationDuration: 0,
+									symbolRepeat: 'fixed',
+									symbolMargin: scope.symbol_margin,
+									symbol: fillImg,
+									symbolSize: scope.symbolSize,
+									symbolBoundingData: maxData,
+									data: themeDataTemp,
+									z: 5
+								}]
+							};
 						}
 
 						// 定时器，每天更新数据
@@ -875,7 +881,7 @@
 
 						function circleGroupMaker(radius, c_left, c_top, text_label, text_number, fontSize, text_x, text_y) {
 							var sub_margin_dis = 45;
-							if(screen_width<1400){
+							if (screen_width < 1400) {
 								sub_margin_dis = 40;
 							}
 							var circle = new fabric.Circle({
@@ -939,14 +945,14 @@
 								}
 
 							})
-							
+
 							var group1 = circleGroupMaker(80, 50, 30, res_data[0].subjectName, ' 专题个数：' + res_data[0].num, 14, 86, 83);
 							var group2 = circleGroupMaker(75, 240, 100, res_data[1].subjectName, '  专题个数：' + res_data[1].num, 13, 275, 153);
 							var group3 = circleGroupMaker(103, 410, 0, res_data[2].subjectName, '   专题个数：' + res_data[2].num, 18, 452, 73);
 							var group4 = circleGroupMaker(64, 120, 260, res_data[3].subjectName, '  专题个数：' + res_data[3].num, 10, 150, 305);
 							var group5 = circleGroupMaker(86, 320, 260, res_data[4].subjectName, ' 专题个数：' + res_data[4].num, 16, 358, 315);
 							var group6 = circleGroupMaker(72, 540, 200, res_data[5].subjectName, '        专题个数：' + res_data[5].num, 10, 552, 250);
-							if(screen_width<1921){
+							if (screen_width < 1921) {
 								var group1 = circleGroupMaker(60, 20, 30, res_data[0].subjectName, ' 专题个数：' + res_data[0].num, 10, 43, 70);
 								var group2 = circleGroupMaker(55, 160, 95, res_data[1].subjectName, '  专题个数：' + res_data[1].num, 9, 180, 132);
 								var group3 = circleGroupMaker(70, 300, 0, res_data[2].subjectName, '    专题个数：' + res_data[2].num, 12, 318, 50);
@@ -954,7 +960,7 @@
 								var group5 = circleGroupMaker(66, 220, 220, res_data[4].subjectName, '  专题个数：' + res_data[4].num, 12, 247, 262);
 								var group6 = circleGroupMaker(58, 370, 170, res_data[5].subjectName, '       专题个数：' + res_data[5].num, 6, 378, 217);
 							}
-							if(screen_width<1400){
+							if (screen_width < 1400) {
 								var group1 = circleGroupMaker(42, 20, 30, res_data[0].subjectName, ' 专题个数：' + res_data[0].num, 6, 35, 50);
 								var group2 = circleGroupMaker(38, 115, 75, res_data[1].subjectName, '  专题个数：' + res_data[1].num, 5, 128, 100);
 								var group3 = circleGroupMaker(50, 200, 0, res_data[2].subjectName, '    专题个数：' + res_data[2].num, 8, 210, 35);

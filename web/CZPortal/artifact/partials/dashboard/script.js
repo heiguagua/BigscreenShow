@@ -26,13 +26,43 @@
 
       // 中间屏main切换定时器
       $interval(function(){
-        // if($scope.catalogShow) {
-        //   $scope.catalogShow = false;
-        // }
-        // else{
-        //   $scope.catalogShow = true;
-        // }
-      },50000)
+        if($scope.allow_main_toggle){
+          if($scope.catalogShow) {
+            $scope.catalogShow = false;
+          }
+          else{
+            $scope.catalogShow = true;
+          }
+        }
+        
+      },180000)
+
+      //main视图鼠标进入
+      $scope.allow_main_toggle = true;
+      $scope.mainViewTitle = '切换视图';
+      $scope.mainToggleClick = function() { // main视图切换
+        $scope.allow_main_toggle = true;
+        $scope.toggleMain();
+      }
+      $scope.mouseMainEnter = function() {
+        $scope.allow_main_toggle = false;
+      }
+      //main视图鼠标移除
+      $scope.mouseMainLeave = function() {
+        $scope.allow_main_toggle = true;
+      }
+      // main内容切换
+      $scope.catalogShow = true;
+      $scope.toggleMain = function() {
+        if ($scope.allow_main_toggle) { // 鼠标在视图内，禁止自动切换
+          if($scope.catalogShow){
+            $scope.catalogShow = false;
+          }
+          else{
+            $scope.catalogShow = true;
+          }
+        }
+      }
 
       $('#menu-scroll').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
           $scope.current_tab = nextSlide + 1;
@@ -551,7 +581,9 @@
         getIndustrialPolicy();
       }
 
-      init();
+      if(!$scope.catalogShow){
+        init();
+      }
 
       // 信息资源目录和共享情况内容切换
       $scope.toggleDept = function(){

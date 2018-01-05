@@ -32,8 +32,8 @@
   <div class='section dept profile' ng-class="{true:'active',false:'inactive'}[toggleMap ==2]">
     <h1>崇州市政务信息资源目录和共享情况</h1>
     <div class='content dept-data'>
-      <div class='chart-full profile-wrap' >
-        <div class="profile-wrap-left col-md-4" ng-show="reqDone">
+      <div class='chart-full profile-wrap' style="visibility:{{reqDone}}">
+        <div class="profile-wrap-left col-md-4">
           <div class="profile-item">
             <div class="media">
               <div class="media-left">
@@ -113,7 +113,7 @@
                   </a>
                 </div>
                 <div class="media-body">
-                  <h4 class="media-heading">信息资源目录个数/乡镇</h4>
+                  <h4 class="media-heading">乡镇信息资源目录个数</h4>
                   <div class="item-num"><span>{{555}}</span></div>
                 </div>
               </div>
@@ -126,7 +126,7 @@
                   </a>
                 </div>
                 <div class="media-body">
-                  <h4 class="media-heading">目录数据项个数/乡镇</h4>
+                  <h4 class="media-heading">乡镇目录数据项个数</h4>
                   <div class="item-num"><span>{{5431}}</span></div>
                 </div>
               </div>
@@ -139,7 +139,7 @@
                   </a>
                 </div>
                 <div class="media-body">
-                  <h4 class="media-heading">使用垂直信息系统个数/乡镇</h4>
+                  <h4 class="media-heading">乡镇使用垂直信息系统个数</h4>
                   <div class="item-num"><span>{{112}}</span></div>
                 </div>
               </div>
