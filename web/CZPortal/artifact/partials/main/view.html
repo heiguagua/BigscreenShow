@@ -52,9 +52,9 @@
 			<div class="cata-center-bg">
 				<div class="cata-center-data">
 					<div>平台累计支撑应用访问次数</div>
-					<strong class="cata-visit-total">{{invokeNum}}</strong>
+					<strong class="cata-visit-total">{{invokeNum|number}}</strong>
 					<div class="visit-item">已汇聚数据量（万条）  <span class="visit-num">{{dataCountLast[0].dataCount|number}}</span></div>
-					<div class="visit-item">最近一周新增（万条）  <span class="visit-num">+ {{dataCountLast[1].dataCount|number}}</span></div>
+					<div class="visit-item">最近一周新增（万条）  <span class="visit-num">{{dataCountLast[1].dataCount|number}}</span></div>
 				</div>
 				<div class="line-left"></div>
 				<div class="line-right"></div>
@@ -79,7 +79,7 @@
 					</div>
 					<div class="cata-data-wrap">
 						<div class="cata-data-item col-md-6">
-							<p class="item-name">信息化系统个数</p>
+							<p class="item-name">使用垂直系统个数</p>
 							<div class="number_line_3"><strong class="item-number">{{TownCataData.system|number}}</strong></div>
 						</div>
 						<div class="cata-data-item col-md-6">

@@ -717,6 +717,9 @@
 									axisLine: {
 										show: false
 									},
+									axisLabel:{
+										show:false
+									}
 								},
 								yAxis: {
 									data: themeNameTemp,
@@ -945,8 +948,8 @@
 							var sub_str = "";
 							_.forEach(res_data, function(n) {
 								if (n.subjectName.length > 11) {
-									sub_str = n.subjectName.substring(0, 7);
-									n.subjectName = sub_str + "\n" + n.subjectName.substring(7, 15);
+									sub_str = n.subjectName.substring(0, 6);
+									n.subjectName = sub_str + "\n" + n.subjectName.substring(6, 15);
 								} else {
 									sub_str = n.subjectName.substring(0, 4);
 									n.subjectName = sub_str + "\n" + n.subjectName.substring(4, 10);
@@ -959,7 +962,7 @@
 							var group3 = circleGroupMaker(103, 410, 0, res_data[2].subjectName, '   专题个数：' + res_data[2].num, 18, 452, 73);
 							var group4 = circleGroupMaker(64, 120, 260, res_data[3].subjectName, '  专题个数：' + res_data[3].num, 10, 150, 305);
 							var group5 = circleGroupMaker(86, 320, 260, res_data[4].subjectName, ' 专题个数：' + res_data[4].num, 16, 358, 315);
-							var group6 = circleGroupMaker(72, 540, 200, res_data[5].subjectName, '        专题个数：' + res_data[5].num, 10, 552, 250);
+							var group6 = circleGroupMaker(73, 540, 200, res_data[5].subjectName, '        专题个数：' + res_data[5].num, 10, 552, 250);
 							if (screen_width < 1921) {
 								var group1 = circleGroupMaker(60, 20, 30, res_data[0].subjectName, ' 专题个数：' + res_data[0].num, 10, 43, 70);
 								var group2 = circleGroupMaker(55, 160, 95, res_data[1].subjectName, '  专题个数：' + res_data[1].num, 9, 180, 132);
