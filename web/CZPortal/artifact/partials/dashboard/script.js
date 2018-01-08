@@ -48,12 +48,12 @@
       $scope.toggleMain = function() {
         if ($scope.allow_main_toggle) { // 鼠标在视图内，禁止自动切换
           if($scope.catalogShow){
-            $scope.catalogShow = false;
             $("#menu-scroll").slick('slickPlay');
+            $scope.catalogShow = false;
           }
           else{
-            $scope.catalogShow = true;
             $("#menu-scroll").slick('slickPause');
+            $scope.catalogShow = true;
           }
         }
       }
@@ -600,36 +600,10 @@
         
       }
 
-      // 大数据产业综合指数与IPC切换
-      $scope.toggleBigdata = function(){
-        if($scope.allow_ipc_toggle) {// 鼠标在视图内，禁止自动切换
-          if ($scope.toggleIPC) {
-          $scope.toggleIPC = false;
-        } else {
-
-          $scope.toggleIPC = true;
-        }
-        }
-        
-      }
-
-      // $scope.deptToggleClick = function(){// 部门视图切换
-      //   $scope.allow_toggle = true;
-      //   $scope.toggleDept();
-      // }
-
-      $scope.bigdataToggleClick = function(){// bigdata视图切换
-        $scope.allow_ipc_toggle = true;
-        $scope.toggleBigdata();
-      }
 
       // $scope.toggleMap = 0;
-      $scope.toggleIPC = false;
       $scope.deptViewTitle = "切换视图";
-      $interval(function() {
-        //$scope.toggleDept();
-        $scope.toggleBigdata();
-      }, 30000)
+     
 
       //部门视图鼠标进入
       $scope.allow_toggle = true;
@@ -644,16 +618,6 @@
 
       }
 
-      //bigdata视图鼠标进入
-      $scope.allow_ipc_toggle = true;
-      $scope.mouseIPCEnter = function(){
-        $scope.allow_ipc_toggle = false;
-
-      }
-      //部门视图鼠标移除
-      $scope.mouseIPCLeave = function(){
-        $scope.allow_ipc_toggle = true;
-      }
 
       //定时刷新数据
       $interval(function() { // 按天更新的数据
