@@ -385,9 +385,16 @@
 
       }
       .slick-list{
-        min-height:570px;
+        min-height:370px;
+        @media screen and (max-width:1921px) {
+          min-height:270px;
+        }
         .menu-item{
           min-width:324px;
+          @media screen and (max-width:1921px) {
+            min-width:200px;
+            padding:0.5rem 0 0 .8rem;
+          }
         }
       }
       .slick-next {
@@ -423,7 +430,9 @@
           font-size: 1.5rem;
           padding-right: 3rem;
           clear: left;
-
+          @media screen and (max-width:1921px) {
+            font-size: 1rem;
+          }
           span {
             color: rgb(65, 177, 195)
           }
@@ -438,18 +447,40 @@
         padding: 4rem 1rem 4rem 3.2rem;
         overflow: hidden;
         border-bottom: 0;
-
+        @media screen and (max-width:1921px) {
+          padding:1rem .5rem 1rem .3rem;
+        }
         .item {
           padding: 2rem 0;
           color: #679a9b;
-
+          @media screen and (max-width:1921px) {
+            padding:2rem 0 1rem 0
+          }
+          img{
+            @media screen and (max-width:1921px) {
+              width:100px;
+            }
+          }
+          .media-left{
+            img{
+              @media screen and (max-width:1921px) {
+                width:80px;
+              }
+            }
+          }
           .media-body {
             vertical-align: middle;
             padding-left: 1rem;
+            @media screen and (max-width:1921px) {
+                padding-left:0;
+              }
           }
 
           h4 {
             font-size: 1.5rem;
+            @media screen and (max-width:1921px) {
+                font-size: .8rem;
+              }
           }
 
           .item-num {
@@ -460,6 +491,9 @@
               font-size: 3rem;
               position: relative;
               top: 4px;
+              @media screen and (max-width:1921px) {
+                font-size: 1.4rem;
+              }
             }
 
           }
@@ -470,6 +504,9 @@
           font-size: 1.5rem;
           color: rgb(63, 177, 192);
           padding-top: 1rem;
+          @media screen and (max-width:1921px) {
+                font-size: .8rem;
+              }
         }
 
       }
@@ -491,6 +528,9 @@
         max-height: 650px;
         overflow: hidden;
         padding: 4rem 2rem 2rem 3.2rem;
+        @media screen and (max-width:1921px) {
+                padding:1rem 1rem 1rem 0rem
+              }
       }
 
       .serv-right {
@@ -499,20 +539,33 @@
         overflow: hidden;
         padding: 3rem 8rem 2rem 3.2rem;
         background: url(../assets/images/bg-line-vertical.png) no-repeat 24%, url(../assets/images/bg-line-vertical.png) no-repeat 46%, url(../assets/images/bg-line-vertical.png) no-repeat 69%;
-
+        @media screen and (max-width:1921px) {
+                padding:0
+              }
         .serv-item {
           padding: 3rem 2rem 5rem 2rem;
           text-align: center;
           border: 4px;
           color: rgba(12, 114, 152, 1);
-
+          @media screen and (max-width:1921px) {
+                padding:1rem
+              }
           .media-body {
             padding-left: 1.2rem;
           }
-
+          .media-left{
+            img{
+              @media screen and (max-width:1921px) {
+                width:30px;
+              }
+            }
+          }
           h4 {
             font-size: 1.5rem;
             text-align: left;
+            @media screen and (max-width:1921px) {
+                font-size:.8rem
+              }
           }
 
           .item-num {
@@ -524,6 +577,9 @@
               font-size: 3rem;
               position: relative;
               top: 4px;
+              @media screen and (max-width:1921px) {
+                font-size:1.4rem
+              }
             }
 
           }
@@ -536,6 +592,9 @@
 
           .serv-item {
             padding: 4rem 2rem 3rem 2rem;
+             @media screen and (max-width:1921px) {
+                padding:4rem 1rem 1rem 1rem
+              }
           }
 
         }
@@ -560,7 +619,9 @@
         padding: 6rem 1rem 4rem 3.2rem;
         overflow: hidden;
         border-bottom: 0;
-
+        @media screen and (max-width:1921px) {
+            padding:3rem 0;
+          }
         .gov-item {
           padding: 6rem 1rem 7.2rem;
           text-align: center;
@@ -568,13 +629,24 @@
           color: rgba(103, 154, 155, 1);
           background: url(../assets/images/bg-line-vertical.png) no-repeat right;
           background-size: auto 80%;
-
+          @media screen and (max-width:1921px) {
+            padding:2rem .2rem 1rem;
+            &:first-child{
+              padding:3rem 0 !important;
+            }
+          }
           &.bg-none {
             background: none;
           }
 
           .media-left {
             vertical-align: middle;
+            img{
+              width:70px;
+              @media screen and (max-width:1921px) {
+                width:50px;
+              }
+            }
           }
 
           .media-body {
@@ -584,6 +656,9 @@
           h4 {
             font-size: 1.3rem;
             text-align: left;
+            @media screen and (max-width:1921px) {
+            font-size: .8rem;
+          }
           }
 
           .item-num {
@@ -595,6 +670,9 @@
               font-size: 3rem;
               position: relative;
               top: 4px;
+              @media screen and (max-width:1921px) {
+            font-size: 1.2rem;
+          }
             }
 
           }
@@ -627,19 +705,29 @@
           text-align: center;
           border: 4px;
           color: rgba(103, 154, 155, 1);
-
+          @media screen and (max-width:1921px) {
+            padding:2rem 0 0 .2rem;
+            &:first-child{
+              padding-top:1.2rem !important;
+            }
+          }
           .watch-info {
             display: inline-block;
             width: 40%;
             vertical-align: middle;
             padding-left: 1rem;
+            @media screen and (max-width:1921px) {
+            padding-left: .2rem;
+          }
           }
 
           .area-detail {
             padding: 5rem 4rem;
             background: url(../assets/images/bg-line-vertical.png) no-repeat right;
             background-size: auto 80%;
-
+            @media screen and (max-width:1921px) {
+            padding:1rem
+          }
             &:last-child {
               background: none;
             }
@@ -655,31 +743,51 @@
 
           .media-left {
             vertical-align: middle;
+            img{
+               @media screen and (max-width:1921px) {
+             width:54px;
+          }
+            }
           }
 
           .media-body {
             padding: 0.8rem 0rem 0.8rem 0;
+             @media screen and (max-width:1921px) {
+             padding:0.8rem 0rem 0rem 0;
+          }
           }
 
           .info-label {
             font-size: 1.5rem;
             text-align: left;
+             @media screen and (max-width:1921px) {
+             font-size: .7rem;
+             margin-top: .4rem;
+          }
           }
 
           h4 {
             font-size: 1.4rem;
             text-align: left;
+            @media screen and (max-width:1921px) {
+             font-size: .7rem;
+          }
           }
 
           .item-num {
             color: rgb(63, 189, 247);
             font-size: 3rem;
             text-align: left;
-
+            @media screen and (max-width:1921px) {
+                font-size: 1.2rem;
+              }
             span {
               font-size: 3rem;
               position: relative;
               top: 4px;
+              @media screen and (max-width:1921px) {
+             font-size: 1rem;
+          }
             }
 
           }
@@ -718,7 +826,9 @@
           padding: 2rem 4rem;
           overflow: hidden;
           border-bottom: 0;
-
+          @media screen and (max-width:1921px) {
+            padding:1rem;
+          }
           .no-weather {
             display: block;
             text-align: center;
@@ -737,10 +847,16 @@
             color: #edfc02;
             font-size: 2rem;
             margin-bottom: 2rem;
-
+            @media screen and (max-width:1921px) {
+            font-size: 1rem;
+            margin-bottom:1rem;
+          }
             a {
               font-size: 28px;
               color: #41b3c3;
+              @media screen and (max-width:1921px) {
+            font-size: 20px;
+          }
             }
 
           }
@@ -753,7 +869,11 @@
             line-height: 2rem;
             min-height: 2rem;
             width: 100% !important;
-
+            @media screen and (max-width:1921px) {
+              padding:0;
+              font-size:.8rem;
+              line-height:1.5rem;
+            }
             &:nth-child(3) {
             }
 
@@ -861,12 +981,18 @@
             color: rgb(65, 179, 195);
             font-weight: 500;
             font-size: 2rem;
+            @media screen and (max-width:1921px) {
+              font-size:1rem;
+            }
           }
 
           h4 {
             color: rgb(50, 150, 167);
             font-size: 1.5rem;
             padding-top: 10px;
+            @media screen and (max-width:1921px) {
+              font-size:.8rem;
+            }
           }
 
         }
@@ -879,7 +1005,9 @@
         padding: 9rem 0 2rem 1rem;
         overflow: hidden;
         border-bottom: 0;
-
+        @media screen and (max-width:1921px) {
+            padding:3rem 0 0 0;
+          }
         .honor-item {
           width: 20%;
           padding: 0 1rem;
@@ -888,6 +1016,10 @@
             padding: 3px 2rem;
             margin: 0 1rem;
             background: url(../assets/images/corner_1.png) left top no-repeat, url(../assets/images/corner_2.png) right top no-repeat, url(../assets/images/corner_3.png) left bottom no-repeat, url(../assets/images/corner_4.png) right bottom no-repeat;
+            @media screen and (max-width:1921px) {
+              padding: 3px 1rem;
+              margin:0;
+          }
           }
 
           .item-inner {
@@ -897,13 +1029,18 @@
             border-top: 2px solid #1d628a;
             border-bottom: 2px solid #1d628a;
             min-height: 100px;
+            @media screen and (max-width:1921px) {
+              padding:1rem 0;
+          }
           }
 
           .item-detail {
             color: #02929e;
             font-size: 1.5rem;
             padding: .5rem;
-
+             @media screen and (max-width:1921px) {
+              font-size:.7rem;
+          }
             .item-number {
               color: #01ccd1;
             }
@@ -933,11 +1070,19 @@
           .media-left {
             vertical-align: middle;
             padding-right: 0;
+            @media screen and (max-width:1921px) {
+              img{
+              width:100px !important;
+              }
+          }
           }
 
           .media-body {
             padding: 4rem 0 1.8rem 0;
             vertical-align: middle;
+            @media screen and (max-width:1921px) {
+            padding:1rem 0 1.8rem 0;
+          }
           }
 
           .info-label {
@@ -949,13 +1094,18 @@
             font-size: 1.5rem;
             text-align: left;
             color: #e6f608;
+            @media screen and (max-width:1921px) {
+              font-size:.8rem;
+          }
           }
 
           .item-num {
             color: #02929e;
             font-size: 3rem;
             text-align: left;
-
+            @media screen and (max-width:1921px) {
+              font-size:1.2rem;
+          }
             span {
               position: relative;
               top: 4px;
@@ -1007,7 +1157,9 @@
       padding: 2.8rem 1rem 2rem 3.2rem;
       overflow: hidden;
       border-bottom: 0;
-
+      @media screen and(max-width:1921px) {
+        padding:1rem 0 2rem 1rem;
+      }
       .wrap-box {
         position: relative;
 
@@ -1128,6 +1280,10 @@
           text-decoration: none;
           background: rgba(0, 216, 255, .12);
           border: 1px solid transparent;
+          @media screen and (max-width:1921px) {
+            font-size: 0.7rem;
+    padding: 0.5rem 0;
+          }
         }
 
         @media screen and (max-width:1600px) {
@@ -1517,7 +1673,11 @@
     .content {
       .flex-row;
     }
-
+    h1{
+      @media screen and(max-width:1921px) {
+        font-size:1.2rem !important;
+      }
+    }
   }
 
   &.standard {
@@ -1554,6 +1714,11 @@
   &.idcuse {
     background: url("../assets/images/bg_6.png") center no-repeat;
     background-size: 100% 100%;
+    h1{
+      @media screen and(max-width:1921px) {
+        font-size:1.2rem !important;
+      }
+    }
   }
 
   &.bigdata {
@@ -1570,6 +1735,7 @@
     line-height: 4.1rem;
     height: 7%;
     padding-left: 1.5rem;
+
   }
 
   .content {
@@ -1747,7 +1913,9 @@
 
       .pro-item {
         padding: 1rem 0;
-
+        @media screen and(max-width:1921px) {
+          padding:1.1rem 0;
+        }
         .item-ico {
           padding: 4rem 1rem;
           display: inline-block;
@@ -1757,6 +1925,11 @@
           font-size: 26px;
           color: #FFF;
           text-align: center;
+          @media screen and(max-width:1921px) {
+            padding:1rem;
+            min-height:80px;
+            font-size:16px;
+          }
         }
 
         .item-content {
@@ -1772,6 +1945,11 @@
           height: 100%;
           padding: 1rem 0;
           line-height: 2rem;
+          @media screen and(max-width:1921px) {
+              font-size:.6rem;
+              padding:.5rem 0;
+              line-height:1rem;
+          }
         }
 
         &.item-up {
@@ -2852,13 +3030,19 @@
             font-family: '微软雅黑';
             .flex-column;
             .flex-justify(center);
-
+            @media screen and(max-width:1921px) {
+               padding-left:0;
+              }
             h4 {
               padding: 2rem 0 1.5rem;
               color: #E18B16;
               font-size: 0.9rem;
               font-weight: bold;
               font-family: '微软雅黑';
+              @media screen and(max-width:1921px) {
+               padding:0.2rem 0 0rem;
+                font-size:12px;
+              }
             }
 
             p {
@@ -2876,11 +3060,18 @@
             font-family: '微软雅黑';
             .flex-column;
             .flex-justify(center);
-
+            @media screen and(max-width:1921px) {
+                font-size:12px;
+              }
             h3 {
               padding: 1rem 0 0;
               color: #EEFF00;
               font-family: '微软雅黑';
+              @media screen and(max-width:1921px) {
+                padding:0;
+                margin:0;
+                font-size:16px;
+              }
             }
 
           }
@@ -2901,13 +3092,19 @@
             text-align: center;
             font-family: '微软雅黑';
             padding-left: 14px;
-
+            @media screen and(max-width:1921px) {
+               padding-left:0;
+              }
             h4 {
               padding: 2rem 0 1.5rem;
               color: #1595A0;
               font-size: 0.9rem;
               font-weight: bold;
               font-family: '微软雅黑';
+               @media screen and(max-width:1921px) {
+               padding:0.2rem 0 0rem;
+                font-size:12px;
+              }
             }
 
             p {
@@ -2923,11 +3120,18 @@
             color: #FFF;
             font-size: 16px;
             font-family: '微软雅黑';
-
+            @media screen and(max-width:1921px) {
+                font-size:12px;
+              }
             h3 {
               padding: 1rem 0 0;
               color: #EEFF00;
               font-family: '微软雅黑';
+              @media screen and(max-width:1921px) {
+                padding:0;
+                margin:0;
+                font-size:16px;
+              }
             }
 
           }
@@ -2943,6 +3147,10 @@
         font-size: 32px;
         margin-top: 36px;
         margin-bottom: 20px;
+        @media screen and(max-width:1921px) {
+          font-size: 20px;
+        margin-top: 24px;
+        }
       }
 
     }
@@ -2959,6 +3167,10 @@
         font-size: 32px;
         margin-top: 36px;
         margin-bottom: 20px;
+        @media screen and(max-width:1921px) {
+          font-size: 20px;
+        margin-top: 24px;
+        }
       }
 
       .map-chart {

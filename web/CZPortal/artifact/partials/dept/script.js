@@ -73,7 +73,7 @@
 
 			$interval(function() {
 				$scope.toggleDept();
-			}, 50000)
+			}, 120000)
 
 			$interval(function() { // 按1小时更新的数据
 				getDataCount(); // 信息资源目录和共享情况
