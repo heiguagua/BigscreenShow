@@ -7,6 +7,21 @@
 	},
 	"body": [{
 		"dataNum": 285,
+		"DEP_NAME": "市人设局2"
+	}, {
+		"dataNum": 265,
+		"DEP_NAME": "市经信局2"
+	}, {
+		"dataNum": 235,
+		"DEP_NAME": "市城管局2"
+	}, {
+		"dataNum": 214,
+		"DEP_NAME": "安监局2"
+	}, {
+		"dataNum": 192,
+		"DEP_NAME": "国土局2"
+	}, {
+		"dataNum": 285,
 		"DEP_NAME": "市人设局"
 	}, {
 		"dataNum": 265,
@@ -20,7 +35,7 @@
 	}, {
 		"dataNum": 192,
 		"DEP_NAME": "国土局"
-	}, {
+	},{
 		"dataNum": 180,
 		"DEP_NAME": "市文旅局"
 	}, {
@@ -35,5 +50,20 @@
 	},{
 		"dataNum": 60,
 		"DEP_NAME": "市地税局"
+	}, {
+		"dataNum": 180,
+		"DEP_NAME": "市文旅局1"
+	}, {
+		"dataNum": 130,
+		"DEP_NAME": "市政务中心1"
+	}, {
+		"dataNum": 115,
+		"DEP_NAME": "市农发局1"
+	}, {
+		"dataNum": 73,
+		"DEP_NAME": "市交通局1"
+	},{
+		"dataNum": 36,
+		"DEP_NAME": "市地税局1"
 	}]
 }

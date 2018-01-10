@@ -104,7 +104,7 @@
 
 				// 部门已接入数据总量
 				deptService.getAccessDataNum().then(function(result) {
-					$scope.deptAccessData = result.data.body;
+					$scope.deptAccessData = _.take(result.data.body, 15);
 					$scope.deptAccessMax = _.max(_.map($scope.deptAccessData, 'dataNum')) + 30;
 					_.forEach($scope.deptAccessData, function(item) {
 						item.i_width = item.dataNum / $scope.deptAccessMax * 100 + '%';
