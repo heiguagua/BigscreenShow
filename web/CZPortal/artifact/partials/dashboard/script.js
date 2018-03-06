@@ -7,6 +7,8 @@
     '$scope', 'dashboardService', '$rootScope', '$interval', '$timeout',
     function($scope, dashboardService, $rootScope, $interval, $timeout) {
       var vm = this;
+      var screen_width = screen.width;
+
       $rootScope.change_flag = false; // 不切换
       $scope.update_day_date = new Date();
       $scope.update_date = new Date();
@@ -484,7 +486,7 @@
           fontToUpperCase: true
 
         };
-
+        
         //var svg3DTagCloud = new SVG3DTagCloud( document.getElementById( 'holder'  ), settings );
         //$( '#tag-cloud' ).svg3DTagCloud( settings );
         $timeout(function() {
@@ -511,10 +513,20 @@
             maxSpeed: 0.01,
             outlineDashSpeed:0.5
           };
+          if(screen_width<1921){
+            $('#cloudCanvas').width(460);
+            $('#cloudCanvas').height(310);
+            o.textHeight = 14;
+          }
+          if(screen_width<1600){
+            $('#cloudCanvas').width(320);
+            $('#cloudCanvas').height(190);
+            o.textHeight = 14;
+          }
           var s = (new Date).getTime() / 360;
           o.initial[0] = 0.18 * Math.cos(s);
           o.initial[1] = 0.18* Math.sin(s);
-          if (!$('#myCanvas').tagcanvas(o, 'tags')) {
+          if (!$('#cloudCanvas').tagcanvas(o, 'tags')) {
             // something went wrong, hide the canvas container
             $('#myCanvasContainer').hide();
           }
@@ -1142,9 +1154,48 @@
         restrict: 'ACE',
         template: "<div id='carData' style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          var chartInstance = echarts.init((element.find('#carData'))[0]);
+          
           var draw_flag = false; // 是否绘制过
-
+          var screen_width = screen.width;
+          var title_size = 30;
+          var grid_left = '3%';
+          var grid_top = '20%';
+          var grid_bottom = '40%';
+          var grid_right = '35%';
+          var x_label_size = 22;
+          var y_label_size = 22;
+          var line_width = 3;
+          var split_line_width = 2;
+          var symbol_size = 6;
+          if(screen_width < 1921){
+            title_size = 20;
+            x_label_size = 14;
+            y_label_size = 14;
+            line_width = 2;
+            split_line_width = 1
+            grid_left = '8%';
+            grid_top = '20%';
+            grid_bottom = '13%';
+            grid_right = '5%';
+            symbol_size = 4;
+            (element.find('#carData'))[0].style.width = 860 +"px";
+            (element.find('#carData'))[0].style.height = 280 +"px";
+          }
+          if(screen_width < 1600){
+            title_size = 16;
+            x_label_size = 12;
+            y_label_size = 12;
+            line_width = 1;
+            split_line_width = 1
+            grid_left = '8%';
+            grid_top = '20%';
+            grid_bottom = '13%';
+            grid_right = '5%';
+            symbol_size = 3;
+            (element.find('#carData'))[0].style.width = 600 +"px";
+            (element.find('#carData'))[0].style.height = 200 +"px";
+          }
+          var chartInstance = echarts.init((element.find('#carData'))[0]);         
           function draw() {
             dashboardService.getVehicleView().then(function(result) {
               var data = result.data.body;
@@ -1176,13 +1227,14 @@
                 
                 values.push(obj);
               })
-              console.log(values);
+
+              
               var option = {
                 title: {
                   text: '前一天消费趋势图（笔）',
                   left: '3%',
                   textStyle: {
-                    fontSize: 30,
+                    fontSize: title_size,
                     fontWeight: 'normal',
                     color: 'rgb(237,252,2)'
                   }
@@ -1192,10 +1244,10 @@
                 },
 
                 grid: {
-                  left: '3%',
-                  top: '20%',
-                  bottom: '40%',
-                  right: '35%'
+                  left: grid_left,
+                  top: grid_top,
+                  bottom: grid_bottom,
+                  right: grid_right
                 },
 
                 xAxis: {
@@ -1212,7 +1264,7 @@
                   axisLabel: {
                     textStyle: {
                       color: 'rgba(255,255,255,.6)',
-                      fontSize: 22
+                      fontSize: x_label_size
                     }
                   },
                   data: x_data
@@ -1224,7 +1276,7 @@
                     margin: 15,
                     textStyle: {
                       color: 'rgba(255,255,255,.6)',
-                      fontSize: 22
+                      fontSize: y_label_size
                     }
                   },
                   axisLine: {
@@ -1234,7 +1286,7 @@
                   },
                   splitLine: {
                     lineStyle: {
-                      width: 2,
+                      width: split_line_width,
                       color: 'rgb(8,88,123)'
                     }
                   }
@@ -1244,7 +1296,7 @@
                   type: 'line',
                   stack: '总量',
                   data: values,
-                  symbolSize: 6,
+                  symbolSize: symbol_size,
                   itemStyle: {
                     normal: {
                       color: 'rgb(237,252,2)',
@@ -1254,7 +1306,7 @@
                   },
                   lineStyle: {
                     normal: {
-                      width: 3,
+                      width: line_width,
                       color: 'rgb(237,252,2)'
                     }
                   }

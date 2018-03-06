@@ -378,22 +378,39 @@
         left: 44%;
         width: 40px;
         height: 28px;
-
+        @media screen and (max-width:1600px) {
+          top:-4px;
+        }
         &:before {
           content: url(../assets/images/arrow_up.png);
         }
-
+        @media screen and (max-width:1600px) {
+          &:before{
+            background: url(../assets/images/arrow_up.png) no-repeat;
+            width: 24px;
+            height: 14px;
+            content: '';
+            display: block;
+            background-size: 100%;
+          }
+        }
       }
       .slick-list{
         min-height:370px;
         @media screen and (max-width:1921px) {
           min-height:270px;
         }
+        @media screen and (max-width:1600px) {
+          min-height:240px;
+        }
         .menu-item{
           min-width:324px;
           @media screen and (max-width:1921px) {
             min-width:200px;
             padding:0.5rem 0 0 .8rem;
+          }
+          @media screen and (max-width:1600px) {
+            min-width:170px;
           }
         }
       }
@@ -404,9 +421,19 @@
         left: 44%;
 
         &:before {
-          content: url(../assets/images/arrow_down.png);
+          content: url(../assets/images/arrow_down.png) ;
         }
-
+        @media screen and (max-width:1600px) {
+          &:before{
+            background: url(../assets/images/arrow_down.png) no-repeat;
+            width: 24px;
+            height: 14px;
+            content: '';
+            display: block;
+            background-size: 100%;
+          }
+        }
+        
       }
 
     }
@@ -433,6 +460,9 @@
           @media screen and (max-width:1921px) {
             font-size: 1rem;
           }
+          @media screen and (max-width:1600px) {
+            
+          }
           span {
             color: rgb(65, 177, 195)
           }
@@ -450,6 +480,9 @@
         @media screen and (max-width:1921px) {
           padding:1rem .5rem 1rem .3rem;
         }
+        @media screen and (max-width:1600px) {
+          padding-top:1.5rem;
+        }
         .item {
           padding: 2rem 0;
           color: #679a9b;
@@ -465,6 +498,9 @@
             img{
               @media screen and (max-width:1921px) {
                 width:80px;
+              }
+              @media screen and (max-width:1600px) {
+                width:64px;
               }
             }
           }
@@ -486,13 +522,15 @@
           .item-num {
             color: rgb(61, 191, 245);
             font-size: 30px;
-
+            @media screen and (max-width:1921px) {
+              font-size: 20px;
+            }
             span {
               font-size: 3rem;
               position: relative;
               top: 4px;
               @media screen and (max-width:1921px) {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
               }
             }
 
@@ -513,10 +551,13 @@
 
       @media screen and (max-width:1600px) {
         .car-info-wrap {
-          padding: 4rem 1rem 4rem 3.2rem;
-
           .item {
-            padding: 4rem 0;
+            .item-num{
+              font-size:18px;
+              span{
+                top:0;
+              }
+            }
           }
 
         }
@@ -538,7 +579,7 @@
         max-height: 730px;
         overflow: hidden;
         padding: 3rem 8rem 2rem 3.2rem;
-        background: url(../assets/images/bg-line-vertical.png) no-repeat 24%, url(../assets/images/bg-line-vertical.png) no-repeat 46%, url(../assets/images/bg-line-vertical.png) no-repeat 69%;
+        background: url(../assets/images/bg-line-vertical.png) no-repeat 24% / auto 100%, url(../assets/images/bg-line-vertical.png) no-repeat 50% / auto 100%, url(../assets/images/bg-line-vertical.png) no-repeat 74% / auto 100%;
         @media screen and (max-width:1921px) {
                 padding:0
               }
@@ -552,6 +593,8 @@
               }
           .media-body {
             padding-left: 1.2rem;
+          }
+          .more-ico{
           }
           .media-left{
             img{
@@ -578,7 +621,7 @@
               position: relative;
               top: 4px;
               @media screen and (max-width:1921px) {
-                font-size:1.4rem
+                font-size:1.2rem
               }
             }
 
@@ -589,7 +632,10 @@
         .serv-up-wrap {
           overflow: hidden;
           background: url(../assets/images/bg-line-trans.png) no-repeat bottom;
-
+          background-size: 100%;
+          @media screen and (max-width:1600px){
+            background-size: 100%;
+          }
           .serv-item {
             padding: 4rem 2rem 3rem 2rem;
              @media screen and (max-width:1921px) {
@@ -603,10 +649,16 @@
 
       @media screen and (max-width:1600px) {
         .serv-right {
-          padding: 8rem 8rem 2rem 3.2rem;
-
+          padding:1rem 4rem 0rem 1rem;
+          background: url(../assets/images/bg-line-vertical.png) no-repeat 24% / auto 100%, url(../assets/images/bg-line-vertical.png) no-repeat 47% / auto 100%, url(../assets/images/bg-line-vertical.png) no-repeat 69% / auto 100%;
           .serv-item {
-            padding: 5rem 2rem;
+            .more-ico{
+              padding-top:1rem;
+              padding-left:2rem;
+              img{
+                width:50px;
+              }
+            }
           }
 
         }
@@ -634,6 +686,9 @@
             &:first-child{
               padding:3rem 0 !important;
             }
+          }
+          @media screen and (max-width:1600px) {
+            background-size: auto 100%;
           }
           &.bg-none {
             background: none;
@@ -681,12 +736,13 @@
 
         @media screen and (max-width:1600px) {
           .gov-item {
-            padding: 12rem 2rem 12rem 6rem;
-
-            &:first-child {
-              padding: 13rem 2rem 10rem 2rem !important;
+            margin-bottom: 2rem;
+            margin-top: 2rem;
+            .media-left {
+              img{
+                width:40px;
+              }
             }
-
           }
 
         }
@@ -709,6 +765,15 @@
             padding:2rem 0 0 .2rem;
             &:first-child{
               padding-top:1.2rem !important;
+            }
+          }
+          @media screen and (max-width:1600px) {
+            padding:3rem 0 1rem .2rem;
+            &:first-child{
+              padding-top:2.2rem !important;
+                img{
+                  width: 100px;
+                }
             }
           }
           .watch-info {
@@ -734,19 +799,15 @@
 
           }
 
-          @media screen and (max-width:1600px) {
-            .area-detail {
-              padding: 8rem;
-            }
-
-          }
-
           .media-left {
             vertical-align: middle;
             img{
                @media screen and (max-width:1921px) {
-             width:54px;
-          }
+                  width:54px;
+                }
+                @media screen and (max-width:1600px) {
+                  width:40px;
+                }
             }
           }
 
@@ -794,12 +855,6 @@
 
         }
 
-        @media screen and (max-width:1600px) {
-          .area-item {
-            padding: 6rem 1rem 0 2rem;
-          }
-
-        }
 
       }
 
@@ -828,19 +883,31 @@
           border-bottom: 0;
           @media screen and (max-width:1921px) {
             padding:1rem;
+            height:90%;
+          }
+          @media screen and (max-width:1600px) {
+            height:90%;
           }
           .no-weather {
             display: block;
             text-align: center;
             position: relative;
             top: -2rem;
-
+            
             img {
               width: 350px;
               margin: 0 auto;
               cursor: pointer;
             }
-
+            @media screen and (max-width:1921px) {
+              top:-5rem;
+            }
+            @media screen and (max-width:1600px) {
+              top:-7rem;
+              img{
+                width: 260px;
+              }
+            }
           }
 
           h3.weather-title {
@@ -914,8 +981,11 @@
             width: 280px;
             margin: 0 auto;
             cursor: pointer;
+            @media screen and (max-width:1600px) {
+                width: 210px;
+            }
           }
-
+          
         }
 
         .weather-time {
@@ -1011,7 +1081,9 @@
         .honor-item {
           width: 20%;
           padding: 0 1rem;
-
+          @media screen and (max-width:1921px) {
+            padding: 1rem 0 0;
+        }
           &.corner {
             padding: 3px 2rem;
             margin: 0 1rem;
@@ -1116,21 +1188,6 @@
         }
 
         @media screen and (max-width:1600px) {
-          .honor-item {
-            &.corner {
-              padding: 3px 6rem;
-            }
-
-            &:nth-child(2) {
-              position: relative;
-              top: 0.7rem;
-            }
-
-            .item-inner {
-              min-height: 200px
-            }
-
-          }
 
         }
 
@@ -1138,7 +1195,6 @@
 
       @media screen and(max-width:1600px) {
         .honor-wrap {
-          padding: 14rem 0 2rem 1rem;
 
           .update-time {
             position: relative;
@@ -1288,7 +1344,7 @@
 
         @media screen and (max-width:1600px) {
           a {
-            padding: 2.2rem 1.1rem;
+            padding: .72rem 0rem;
           }
 
         }
@@ -1616,13 +1672,13 @@
 
           @media screen and(max-width:1921px) {
             width: 121px;
-            height: 62px;
+            height: 70px;
             top: 42.5%;
           }
 
           @media screen and(max-width:1400px) {
             width: 86px;
-            height: 42px;
+            height: 49px;
             top: 43%
           }
 
@@ -1639,13 +1695,13 @@
 
           @media screen and(max-width:1921px) {
             width: 121px;
-            height: 62px;
+            height: 70px;
             top: 42.5%;
           }
 
           @media screen and(max-width:1400px) {
             width: 86px;
-            height: 42px;
+            height: 49px;
             top: 43%
           }
 
@@ -1877,16 +1933,31 @@
         }
 
         #pro-list {
-          padding: 2rem 1rem 2rem 8rem;
         }
 
       }
-
+      .slick-list{
+        max-height:360px;
+        overflow:hidden;
+      }
       .slick-prev {
         top: 0;
         left: 50%;
         width: 40px;
         height: 28px;
+        &:before {
+          content: url(../assets/images/arrow_up.png);
+        }
+        @media screen and (max-width:1600px) {
+          &:before{
+            background: url(../assets/images/arrow_up.png) no-repeat;
+            width: 24px;
+            height: 14px;
+            content: '';
+            display: block;
+            background-size: 100%;
+          }
+        }
       }
 
       .slick-next {
@@ -1894,14 +1965,19 @@
         height: 28px;
         top: 100%;
         left: 50%;
-      }
-
-      .slick-next:before {
-        content: url(../assets/images/arrow_down.png);
-      }
-
-      .slick-prev:before {
-        content: url(../assets/images/arrow_up.png);
+        &:before {
+          content: url(../assets/images/arrow_down.png);
+        }
+        @media screen and (max-width:1600px) {
+          &:before{
+            background: url(../assets/images/arrow_down.png) no-repeat;
+            width: 24px;
+            height: 14px;
+            content: '';
+            display: block;
+            background-size: 100%;
+          }
+        }
       }
 
       .exchange {
@@ -1914,7 +1990,10 @@
       .pro-item {
         padding: 1rem 0;
         @media screen and(max-width:1921px) {
-          padding:1.1rem 0;
+          padding:.8rem 0;
+        }
+        @media screen and(max-width:1600px) {
+          padding:.4rem 0;
         }
         .item-ico {
           padding: 4rem 1rem;
@@ -1929,6 +2008,9 @@
             padding:1rem;
             min-height:80px;
             font-size:16px;
+          }
+          @media screen and(max-width:1600px) {
+            padding:2rem 1rem;
           }
         }
 
@@ -2005,10 +2087,7 @@
 
         @media screen and(max-width:1600px) {
           .item-ico {
-            width: 140px;
-            height: 140px;
-            min-height: inherit;
-            padding: 4rem 1rem;
+            
           }
 
           &.item-up {
@@ -3003,7 +3082,10 @@
       float: left;
       padding-left: 4rem;
       .flex-column;
-
+      @media screen and(max-width:1921px) {
+        padding-left:1rem;
+        width:52%;
+      }
       .data-chart {
         .flex-num(1);
         .flex-column;
@@ -3013,7 +3095,9 @@
         background: url("../assets/images/bg_cat.png") top no-repeat;
         background-size: auto 100%;
         margin-bottom: 45px;
-
+        @media screen and(max-width:1600px) {
+          margin-bottom: 10px;
+         }
         .gov-data {
           .flex-num(1);
           .flex-row;
@@ -3032,7 +3116,11 @@
             .flex-justify(center);
             @media screen and(max-width:1921px) {
                padding-left:0;
+               .flex-num(2);
               }
+              @media screen and(max-width:1600px) {
+                .flex-num(2);
+               }
             h4 {
               padding: 2rem 0 1.5rem;
               color: #E18B16;
@@ -3094,7 +3182,11 @@
             padding-left: 14px;
             @media screen and(max-width:1921px) {
                padding-left:0;
+               .flex-num(2);
               }
+              @media screen and(max-width:1600px) {
+                .flex-num(2);
+               }
             h4 {
               padding: 2rem 0 1.5rem;
               color: #1595A0;
@@ -3123,6 +3215,7 @@
             @media screen and(max-width:1921px) {
                 font-size:12px;
               }
+              
             h3 {
               padding: 1rem 0 0;
               color: #EEFF00;
@@ -3131,6 +3224,9 @@
                 padding:0;
                 margin:0;
                 font-size:16px;
+              }
+              @media screen and (max-width:1600px) {
+                font-size:14px;
               }
             }
 
